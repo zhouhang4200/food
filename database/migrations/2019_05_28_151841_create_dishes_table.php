@@ -15,15 +15,16 @@ class CreateDishesTable extends Migration
     {
         Schema::create('dishes', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('merchant_id')->comment('商户id');
             $table->string('name')->comment('菜名');
-            $table->tinyInteger('category')->comment('分类');
+            $table->tinyInteger('category_id')->comment('分类');
             $table->string('tag')->default('不辣')->comment('口味标记');
             $table->integer('amount')->comment('单价：分');
             $table->integer('original_amount')->comment('原单价：分');
             $table->integer('rate')->default(100)->comment('折扣：默认100');
             $table->string('logo')->comment('菜单图片');
-            $table->string('material')->default('')->comment('配料');
-            $table->string('intro', 500)->default('')->comment('简介');
+            $table->string('material')->default('暂无')->comment('配料');
+            $table->string('intro', 500)->default('暂无')->comment('简介');
             $table->timestamps();
         });
     }

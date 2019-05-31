@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Category;
 use Illuminate\Database\Eloquent\Model;
 
 class Dish extends Model
 {
     public $fillable = [
-        'name', 'amount', 'original_amount', 'rate', 'logo', 'material', 'category'
+        'name', 'amount', 'original_amount', 'rate', 'logo',
+        'material', 'category', 'merchant_id', 'tag', 'intro'
     ];
 
     /**
@@ -26,5 +28,10 @@ class Dish extends Model
         }
 
         return $query;
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

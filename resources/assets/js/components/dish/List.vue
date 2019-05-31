@@ -6,11 +6,10 @@
                     <el-form-item label="类目">
                         <el-select v-model="searchParams.category" placeholder="请选择">
                             <el-option
-                                    v-for="value,key in categories"
-                                    :key="key"
-                                    :label="value"
-                                    :value="key">
-                                {{ value }}
+                                    v-for="category in categories"
+                                    :key="category.id"
+                                    :label="category.name"
+                                    :value="category.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
@@ -37,11 +36,6 @@
                 v-loading="loading"
                 border
                 style="width: 100%; margin-top: 1px">
-            <!--<el-table-column-->
-            <!--prop="merchantId"-->
-            <!--label="商户ID"-->
-            <!--width="200">-->
-            <!--</el-table-column>-->
             <el-table-column
                     prop="name"
                     label="菜肴名称"
@@ -57,7 +51,7 @@
                     prop="category"
                     width="200">
                 <template slot-scope="scope">
-                    {{ categories[scope.row.category] }}
+                    {{ scope.row.category.name }}
                 </template>
             </el-table-column>
             <el-table-column
@@ -65,7 +59,7 @@
                     prop="logo"
                     width="">
                 <template slot-scope="scope">
-                    <img src="../../image/a.jpg" style="width: 100%;height: 100%;display: block;">
+                    <img :src="scope.row.logo" style="width: 100%;height: 100%;display: block;">
                 </template>
             </el-table-column>
             <el-table-column
@@ -102,7 +96,7 @@
                 style="margin-top: 25px"
                 background
                 @current-change="handleCurrentChange"
-                :current-page.sync="searchParams.pageNum"
+                :current-page.sync="searchParams.page"
                 :page-size="10"
                 layout="total, prev, pager, next, jumper"
                 :total="TotalPage">
@@ -113,13 +107,12 @@
                     <el-input v-model="form.name" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="所属类目" prop="category">
-                    <el-select v-model="form.category" placeholder="请选择">
+                    <el-select v-model="form.category_id" placeholder="请选择">
                         <el-option
-                                v-for="value,key in categories"
-                                :key="key"
-                                :label="value"
-                                :value="key">
-                            {{ value }}
+                                v-for="category in categories"
+                                :key="category.id"
+                                :label="category.name"
+                                :value="category.id">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -132,7 +125,7 @@
                     </el-checkbox-group>
                 </el-form-item>
                 <el-form-item label="菜肴配料" prop="material">
-                    <el-input v-model.number="form.material" autocomplete="off"></el-input>
+                    <el-input v-model="form.material" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="预览图片" prop="logo">
                     <el-upload
@@ -150,8 +143,11 @@
                 <el-form-item label="价格" prop="amount">
                     <el-input v-model.number="form.amount" autocomplete="off"></el-input>
                 </el-form-item>
+                <el-form-item label="原价" prop="original_amount">
+                    <el-input v-model.number="form.original_amount" autocomplete="off"></el-input>
+                </el-form-item>
                 <el-form-item label="简介" prop="intro">
-                    <el-input v-model.number="form.intro" autocomplete="off"></el-input>
+                    <el-input v-model="form.intro" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button v-if="isAdd" type="primary" @click="submitFormAdd('form')">确认</el-button>
@@ -202,51 +198,62 @@
                 dialogFormVisible:false,
                 AccountBlackListName:{},
                 searchParams:{
-                    pageNum:1,
+                    name:'',
+                    category:'',
+                    page:1,
                 },
                 TotalPage:0,
                 tableData: [],
                 rules:{
                     name:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
                     amount:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
+                    original_amount:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
                     category:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
                     logo:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
                 },
                 form: {
                     name: '',
-                    category: '',
-                    tag: '',
-                    material: '',
-                    logo: '123',
+                    category_id: '',
+                    tag: '不辣',
+                    material: '暂无',
+                    logo: '',
                     amount: '',
-                    intro: ''
+                    original_amount:'',
+                    intro: '暂无'
                 },
                 categories:{
-                    1 : '主菜',
-                    2 : '主食',
-                    3 : '饮料',
                 },
                 tagList: [],
             }
         },
         methods: {
+            handleCategory(){
+                this.$api.category().then(res => {
+                    this.categories=res.data;
+                }).catch(err => {
+                    this.$message({
+                        type: 'error',
+                        message: '数据初始化异常'
+                    });
+                });
+            },
             //新增按钮
             dishAdd(){
+                this.form={};
                 this.isAdd=true;
                 this.isUpdate=false;
                 this.title='添加';
                 this.dialogFormVisible = true;
-                this.form={
-                    merchantId: '1',
-                };
                 this.tagList=['不辣'];
             },
             // 编辑按钮
             dishUpdate(row) {
+                this.handleTableData();
                 this.tagList=[];
                 this.isAdd=false;
                 this.isUpdate=true;
                 this.title='修改';
+                this.imageUrl = row.logo;
                 this.dialogFormVisible = true;
                 this.form=JSON.parse(JSON.stringify(row));
                 if (row.tag) {
@@ -265,7 +272,7 @@
                         this.$api.dishAdd(this.form).then(res => {
                             this.$message({
                                 showClose: true,
-                                type: res.messageType == 'SUCCESS' ? 'success' : 'error',
+                                type: res.status === 1 ? 'success' : 'error',
                                 message: res.message
                             });
                             this.handleTableData();
@@ -288,7 +295,7 @@
                         this.$api.dishUpdate(this.form).then(res => {
                             this.$message({
                                 showClose: true,
-                                type: res.messageType == 'SUCCESS' ? 'success' : 'error',
+                                type: res.status === 1 ? 'success' : 'error',
                                 message: res.message
                             });
                             this.handleTableData();
@@ -306,7 +313,7 @@
             // 加载数据
             handleTableData(){
                 this.$api.dishList(this.searchParams).then(res => {
-                    this.tableData = res.data.pagerList;
+                    this.tableData = res.data.data;
                     this.TotalPage = res.data.total;
                     this.loading=false;
                 }).catch(err => {
@@ -329,26 +336,10 @@
                 // });
             },
             handleSearch() {
-                var name = document.getElementById('name').value;
-                var category = document.getElementById('category').value;
-
-                if (name) {
-                    this.searchParams['name'] = name;
-                    delete this.searchParams.pageNum;
-                } else {
-                    delete this.searchParams.name;
-                }
-
-                if (category) {
-                    this.searchParams['category'] = category;
-                    delete this.searchParams.pageNum;
-                } else {
-                    delete this.searchParams.category;
-                }
                 this.handleTableData();
             },
-            handleCurrentChange(pageNum) {
-                this.searchParams.pageNum = pageNum;
+            handleCurrentChange(page) {
+                this.searchParams.page = page;
                 this.handleTableData();
             },
             // 删除
@@ -361,7 +352,7 @@
                     this.$api.dishDelete({id:id}).then(res => {
                         this.$message({
                             showClose: true,
-                            type: res.messageType == 'SUCCESS' ? 'success' : 'error',
+                            type: res.status === 1 ? 'success' : 'error',
                             message: res.message
                         });
                         this.handleTableData();
@@ -410,6 +401,7 @@
             this.handleTableData();
             this.handleName();
             this.handleTableHeight();
+            this.handleCategory();
             window.addEventListener('resize', this.handleTableHeight);
         },
         destroyed() {

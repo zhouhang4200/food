@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Vue;
 
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -46,6 +47,23 @@ class ServiceController extends Controller
             return response()->json(['status' => 1, 'path' => $finalPath]);
         } catch (\Exception $e) {
             return response()->ajaxFail('图片上传失败：服务器异常！');
+        }
+    }
+
+    /**
+     * 获取所有的分类
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function category(Request $request)
+    {
+        try {
+            $data = Category::get();
+
+            return response()->json(['status' => 1, 'data' => $data]);
+        } catch (\Exception $e) {
+            return response()->ajaxFail('服务器异常！');
         }
     }
 }

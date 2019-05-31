@@ -63806,6 +63806,11 @@ module.exports = function (css) {
         return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/register', params);
     },
 
+    // 菜单删除
+    category: function category(params) {
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/category', params);
+    },
+
     // 餐桌
     tableList: function tableList(params) {
         return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/tables/list', params);

@@ -11,6 +11,10 @@ export default {
     register(params) {
         return post('/register', params);
     },
+    // 菜单删除
+    category(params) {
+        return post('/category', params);
+    },
     // 餐桌
     tableList(params) {
         return post('/tables/list', params);

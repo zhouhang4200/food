@@ -36,8 +36,14 @@ Route::namespace('Vue')->group(function () {
     Route::middleware(['auth'])->group(function () {
         // 图片上传
         Route::post('/upload/image', 'ServiceController@uploadImage');
+        // 获取所有的分类
+        Route::post('/category', 'ServiceController@category');
+        // 菜单
         Route::prefix('dish')->group(function () {
-            Route::post('list', 'DishController@list');
+            Route::post('list', 'DishController@list'); // 列表
+            Route::post('add', 'DishController@add'); // 添加
+            Route::post('update', 'DishController@update'); // 编辑
+            Route::post('delete', 'DishController@delete'); // 删除
         });
     });
 });

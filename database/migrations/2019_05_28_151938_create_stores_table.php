@@ -20,10 +20,10 @@ class CreateStoresTable extends Migration
             $table->integer('merchant_id')->comment('店长');
             $table->string('ali_open_id')->comment('阿里open_id');
             $table->string('wechat_open_id')->comment('微信open_id');
-            $table->string('address')->default('')->comment('地址');
-            $table->string('license_number')->default('')->comment('营业执照号');
-            $table->string('legal_person')->default('')->comment('法人姓名');
-            $table->string('legal_phone')->default('')->comment('法人电话');
+            $table->string('address')->default('暂无')->comment('地址');
+            $table->string('license_number')->default('暂无')->comment('营业执照号');
+            $table->string('legal_person')->default('暂无')->comment('法人姓名');
+            $table->string('legal_phone')->default('暂无')->comment('法人电话');
             $table->timestamps();
         });
     }
