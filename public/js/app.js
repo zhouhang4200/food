@@ -45357,7 +45357,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 type: 'warning'
             }).then(function () {
                 _this.$api.logout().then(function (res) {
-                    sessionStorage.setItem('login', ' ');
+                    sessionStorage.setItem('login', '');
                     window.location.href = '/login';
                 });
             }).catch(function () {});

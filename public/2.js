@@ -267,7 +267,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 name: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
                 amount: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
                 original_amount: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
-                category: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
+                category_id: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
                 logo: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }]
             },
             form: {

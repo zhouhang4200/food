@@ -22,6 +22,7 @@ class CreateMerchantsTable extends Migration
             $table->tinyInteger('status')->default(1)->comment('状态:1 正常 0  到期');
             $table->date('date')->comment('状态：注册日期，年费会员用');
             $table->softDeletes();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

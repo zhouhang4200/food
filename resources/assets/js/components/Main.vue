@@ -138,7 +138,7 @@
                     type: 'warning'
                 }).then(() => {
                     this.$api.logout().then(res => {
-                        sessionStorage.setItem('login', ' ');
+                        sessionStorage.setItem('login', '');
                         window.location.href = '/login';
                     })
                 }).catch(() => {

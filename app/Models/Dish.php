@@ -9,7 +9,7 @@ class Dish extends Model
 {
     public $fillable = [
         'name', 'amount', 'original_amount', 'rate', 'logo',
-        'material', 'category', 'merchant_id', 'tag', 'intro'
+        'material', 'category_id', 'merchant_id', 'tag', 'intro'
     ];
 
     /**
