@@ -24,9 +24,7 @@ class Dish extends Model
         }
 
         if ($filters['category_id']) {
-            $categoryIds = Category::where('name', 'like', "%".$filters['category_id']."%")
-                ->pluck('id');
-            $query->whereIn('category_id', $categoryIds);
+            $query->where('category_id', $filters['category_id']);
         }
 
         return $query;
