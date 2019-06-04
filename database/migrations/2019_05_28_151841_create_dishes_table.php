@@ -18,7 +18,7 @@ class CreateDishesTable extends Migration
             $table->integer('merchant_id')->comment('商户id');
             $table->string('name')->comment('菜名');
             $table->tinyInteger('category_id')->comment('分类');
-            $table->string('tag')->default('不辣')->comment('口味标记');
+            $table->string('tag')->default('')->comment('口味标记');
             $table->integer('amount')->comment('单价：分');
             $table->integer('original_amount')->comment('原单价：分');
             $table->integer('rate')->default(100)->comment('折扣：默认100');

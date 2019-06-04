@@ -34,6 +34,7 @@ class DishController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function add(Request $request)
     {
@@ -42,6 +43,7 @@ class DishController extends Controller
 
             return response()->json(['status' => 1, 'data' => $data, 'message' => '添加成功']);
         } catch (\Exception $e) {
+            myLog('dish_add_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
             return response()->json(['status' => 0, 'data' => '', 'message' => '添加失败']);
         }
     }

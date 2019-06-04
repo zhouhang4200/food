@@ -273,7 +273,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             form: {
                 name: '',
                 category_id: '',
-                tag: '不辣',
+                tag: "",
                 material: '暂无',
                 logo: '',
                 amount: '',
@@ -306,7 +306,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.isUpdate = false;
             this.title = '添加';
             this.dialogFormVisible = true;
-            this.tagList = ['不辣'];
+            this.tagList = [];
+            this.imageUrl = false;
         },
 
         // 编辑按钮
