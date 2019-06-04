@@ -9,10 +9,11 @@ use App\Http\Controllers\Controller;
 class DishController extends Controller
 {
     /**
-     * 菜单列表
+     * 菜肴列表
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function list(Request $request)
     {
@@ -30,7 +31,7 @@ class DishController extends Controller
     }
 
     /**
-     * 添加
+     * 菜肴添加
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -49,7 +50,7 @@ class DishController extends Controller
     }
 
     /**
-     * 修改
+     * 菜肴修改
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -69,10 +70,11 @@ class DishController extends Controller
     }
 
     /**
-     * 删除
+     * 菜肴删除
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function delete(Request $request)
     {
@@ -82,6 +84,7 @@ class DishController extends Controller
 
             return response()->json(['status' => 1, 'data' => $data, 'message' => '删除成功']);
         } catch (\Exception $e) {
+            myLog('dish_delete_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
             return response()->json(['status' => 0, 'data' => '', 'message' => '删除失败']);
         }
     }
