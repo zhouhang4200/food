@@ -142,6 +142,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -160,15 +164,16 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             accountShow: false,
             showNumber: false,
             images: ["h5.keeper.test/images/banner1.jpg", "h5.keeper.test/images/banner2.jpg"],
-            imageURL: "/images/banner1.jpg",
+            imageURL: "",
             hot: '热卖中',
-            price: '1.00',
-            originPrice: '2.00',
+            price: '',
+            originPrice: '',
             desc: '微辣',
-            title: '鱼香肉丝',
+            title: '',
             number: 0,
             totalAmount: 0,
-            dishData: {}
+            dishData: {},
+            customerDishDetail: []
         };
     },
     created: function created() {},
@@ -180,13 +185,63 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
 
     methods: {
         sub: function sub(dish) {
-            console.log(document.getElementById(dish.id));
-            var id = dish.id;
-            console.log($("#id "));
-            // document.getElementById(dish.id).attri+=1;
-            // this.number+=1;
+            var dishId = dish.id;
+            var id = 'number' + dishId;
+            var numberObject = document.getElementById(id);
+            var numberValue = Number(numberObject.value);
+            var finalNumber = 0;
+
+            if (numberValue > 0) {
+                finalNumber = numberValue - 1;
+                numberObject.value = finalNumber;
+
+                if (this.customerDishDetail.length > 0) {
+                    for (var i = 0; i < this.customerDishDetail.length; i++) {
+                        if (this.customerDishDetail[i].dish_id === dishId) {
+                            this.customerDishDetail[i].number = finalNumber;
+
+                            if (finalNumber < 1) {
+                                this.customerDishDetail.splice(i, 1);
+                            }
+
+                            // 总价减去次价格
+                            this.totalAmount -= Number(dish.amount) * 100;
+                        }
+                    }
+                }
+            }
         },
-        add: function add(dish) {},
+        add: function add(dish) {
+            var dishId = dish.id;
+            var id = 'number' + dishId;
+            var numberObject = document.getElementById(id);
+            var numberValue = Number(numberObject.value);
+            var finalNumber = 0;
+
+            finalNumber = numberValue + 1;
+            numberObject.value = finalNumber;
+            // console.log(numberObject.value);
+            if (this.customerDishDetail.length > 0 && numberValue > 0) {
+                for (var i = 0; i < this.customerDishDetail.length; i++) {
+                    if (this.customerDishDetail[i].dish_id === dishId) {
+                        this.customerDishDetail[i].number = finalNumber;
+
+                        // 总价增加
+                        this.totalAmount += Number(dish.amount) * 100;
+                    }
+                }
+            } else {
+                var newJson = {};
+                newJson.dish_id = dishId;
+                newJson.number = finalNumber;
+                this.customerDishDetail.push(newJson);
+
+                // 总价增加
+                this.totalAmount += Number(dish.amount) * 100;
+            }
+
+            // console.log(Number(dish.amount), this.totalAmount, dish.amount);
+        },
         dishes: function dishes() {
             var _this = this;
 
@@ -305,7 +360,6 @@ var render = function() {
                     "van-card",
                     {
                       attrs: {
-                        num: _vm.number,
                         price: dish.amount,
                         title: dish.name,
                         thumb: dish.logo,
@@ -313,38 +367,57 @@ var render = function() {
                       }
                     },
                     [
-                      _c(
-                        "div",
-                        { attrs: { slot: "footer" }, slot: "footer" },
-                        [
+                      _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
+                        _c("div", { staticClass: "amount_container" }, [
                           _c(
-                            "van-button",
-                            {
-                              attrs: { size: "mini", id: dish.id },
-                              on: {
-                                click: function($event) {
-                                  return _vm.sub(dish)
+                            "div",
+                            { staticClass: "amount_box" },
+                            [
+                              _c(
+                                "van-button",
+                                {
+                                  attrs: { size: "mini" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.sub(dish)
+                                    }
+                                  }
+                                },
+                                [_vm._v("-")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                staticStyle: {
+                                  width: "40px",
+                                  "text-align": "center"
+                                },
+                                attrs: {
+                                  type: "number",
+                                  value: "0",
+                                  id: "number" + dish.id,
+                                  maxlength: "2",
+                                  pattern: "[0-9]*",
+                                  readonly: "readonly"
                                 }
-                              }
-                            },
-                            [_vm._v("-")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "van-button",
-                            {
-                              attrs: { size: "mini", id: dish.id },
-                              on: {
-                                click: function($event) {
-                                  return _vm.add(dish)
-                                }
-                              }
-                            },
-                            [_vm._v("+")]
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "van-button",
+                                {
+                                  attrs: { size: "mini" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.add(dish)
+                                    }
+                                  }
+                                },
+                                [_vm._v("+")]
+                              )
+                            ],
+                            1
                           )
-                        ],
-                        1
-                      )
+                        ])
+                      ])
                     ]
                   )
                 ],

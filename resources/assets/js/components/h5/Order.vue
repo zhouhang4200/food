@@ -13,15 +13,19 @@
                 <van-swipe-cell :right-width="10" :on-close="onClose" v-for="dish in dishData" :key="dish.id">
                     <van-cell-group>
                         <van-card
-                                :num="number"
                                 :price="dish.amount"
                                 :title="dish.name"
                                 :thumb="dish.logo"
                                 :origin-price="dish.original_amount"
                         >
                             <div slot="footer">
-                                <van-button size="mini" :id="dish.id" @click="sub(dish)">-</van-button>
-                                <van-button size="mini" :id="dish.id" @click="add(dish)">+</van-button>
+                                <div class="amount_container">
+                                    <div class="amount_box">
+                                        <van-button size="mini"  @click="sub(dish)">-</van-button>
+                                            <input type="number" style="width: 40px; text-align: center;" value=0 :id="'number'+dish.id" maxlength="2" pattern="[0-9]*" readonly="readonly"/>
+                                        <van-button size="mini" @click="add(dish)">+</van-button>
+                                    </div>
+                                </div>
                             </div>
                         </van-card>
                     </van-cell-group>
@@ -66,15 +70,18 @@
                     "h5.keeper.test/images/banner1.jpg",
                     "h5.keeper.test/images/banner2.jpg",
                 ],
-                imageURL:"/images/banner1.jpg",
+                imageURL:"",
                 hot:'热卖中',
-                price:'1.00',
-                originPrice:'2.00',
+                price:'',
+                originPrice:'',
                 desc:'微辣',
-                title:'鱼香肉丝',
+                title:'',
                 number:0,
                 totalAmount:0,
-                dishData: {}
+                dishData: {},
+                customerDishDetail:[
+
+                ]
             };
         },
         created() {
@@ -85,14 +92,62 @@
         },
         methods: {
             sub(dish) {
-                console.log(document.getElementById(dish.id));
-                let id = dish.id;
-                console.log($("#id "))
-                // document.getElementById(dish.id).attri+=1;
-                // this.number+=1;
+                let dishId = dish.id;
+                let id='number'+ dishId;
+                let numberObject = document.getElementById(id);
+                let numberValue = Number(numberObject.value);
+                let finalNumber = 0;
+
+                if (numberValue > 0) {
+                    finalNumber = numberValue - 1;
+                    numberObject.value = finalNumber;
+
+                    if (this.customerDishDetail.length > 0) {
+                        for (let i = 0; i < this.customerDishDetail.length; i++) {
+                            if (this.customerDishDetail[i].dish_id === dishId) {
+                                this.customerDishDetail[i].number = finalNumber;
+
+                                if (finalNumber < 1) {
+                                    this.customerDishDetail.splice(i, 1);
+                                }
+
+                                // 总价减去次价格
+                                this.totalAmount -= Number(dish.amount)*100;
+                            }
+                        }
+                    }
+                }
             },
             add(dish) {
+                let dishId = dish.id;
+                let id='number'+ dishId;
+                let numberObject = document.getElementById(id);
+                let numberValue = Number(numberObject.value);
+                let finalNumber = 0;
 
+                finalNumber = numberValue + 1;
+                numberObject.value = finalNumber;
+                // console.log(numberObject.value);
+                if (this.customerDishDetail.length > 0 && numberValue > 0) {
+                    for (let i = 0; i < this.customerDishDetail.length; i++) {
+                        if (this.customerDishDetail[i].dish_id === dishId) {
+                            this.customerDishDetail[i].number = finalNumber;
+
+                            // 总价增加
+                            this.totalAmount += Number(dish.amount)*100;
+                        }
+                    }
+                } else {
+                    let newJson = {};
+                    newJson.dish_id = dishId;
+                    newJson.number = finalNumber;
+                    this.customerDishDetail.push(newJson);
+
+                    // 总价增加
+                    this.totalAmount += Number(dish.amount)*100;
+                }
+
+                // console.log(Number(dish.amount), this.totalAmount, dish.amount);
             },
             dishes() {
                 this.$api.h5DishList({merchant_id:1}).then(res => {

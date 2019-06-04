@@ -16,3 +16,4 @@ Route::get('/{vue?}', 'H5Controller@index')->where('vue', '[\/\w\.-]*')->where('
 
 
 Route::post('/dish/list', 'OrderController@dishList');
+Route::post('/customer/detail', 'OrderController@customerDishDetail');

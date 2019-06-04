@@ -15,6 +15,10 @@ export default {
     h5DishList(params) {
         return post('/h5/dish/list', params);
     },
+    // h5 点餐详情
+    h5CustomerDishDetail(params) {
+        return post('/h5/customer/detail', params);
+    },
     // 菜单删除
     category(params) {
         return post('/category', params);

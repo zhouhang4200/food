@@ -63811,6 +63811,11 @@ module.exports = function (css) {
         return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/h5/dish/list', params);
     },
 
+    // h5 点餐详情
+    h5CustomerDishDetail: function h5CustomerDishDetail(params) {
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/h5/customer/detail', params);
+    },
+
     // 菜单删除
     category: function category(params) {
         return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/category', params);
