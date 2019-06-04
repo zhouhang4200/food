@@ -20,8 +20,8 @@
                                 :origin-price="dish.original_amount"
                         >
                             <div slot="footer">
-                                <van-button size="mini">-</van-button>
-                                <van-button size="mini">+</van-button>
+                                <van-button size="mini" :id="dish.id" @click="sub(dish)">-</van-button>
+                                <van-button size="mini" :id="dish.id" @click="add(dish)">+</van-button>
                             </div>
                         </van-card>
                     </van-cell-group>
@@ -84,6 +84,16 @@
             this.dishes();
         },
         methods: {
+            sub(dish) {
+                console.log(document.getElementById(dish.id));
+                let id = dish.id;
+                console.log($("#id "))
+                // document.getElementById(dish.id).attri+=1;
+                // this.number+=1;
+            },
+            add(dish) {
+
+            },
             dishes() {
                 this.$api.h5DishList({merchant_id:1}).then(res => {
                     if (res.status === 1) {

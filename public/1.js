@@ -179,6 +179,14 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
     },
 
     methods: {
+        sub: function sub(dish) {
+            console.log(document.getElementById(dish.id));
+            var id = dish.id;
+            console.log($("#id "));
+            // document.getElementById(dish.id).attri+=1;
+            // this.number+=1;
+        },
+        add: function add(dish) {},
         dishes: function dishes() {
             var _this = this;
 
@@ -309,13 +317,31 @@ var render = function() {
                         "div",
                         { attrs: { slot: "footer" }, slot: "footer" },
                         [
-                          _c("van-button", { attrs: { size: "mini" } }, [
-                            _vm._v("-")
-                          ]),
+                          _c(
+                            "van-button",
+                            {
+                              attrs: { size: "mini", id: dish.id },
+                              on: {
+                                click: function($event) {
+                                  return _vm.sub(dish)
+                                }
+                              }
+                            },
+                            [_vm._v("-")]
+                          ),
                           _vm._v(" "),
-                          _c("van-button", { attrs: { size: "mini" } }, [
-                            _vm._v("+")
-                          ])
+                          _c(
+                            "van-button",
+                            {
+                              attrs: { size: "mini", id: dish.id },
+                              on: {
+                                click: function($event) {
+                                  return _vm.add(dish)
+                                }
+                              }
+                            },
+                            [_vm._v("+")]
+                          )
                         ],
                         1
                       )
