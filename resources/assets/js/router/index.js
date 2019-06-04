@@ -25,7 +25,7 @@ const router = new Router({
             component: resolve => void(require(['../components/auth/Login'], resolve)),
         },
         {
-            name: "h5",
+            name: "h5Order",
             menu: false,
             path: "/h5/order",
             meta:{title:'h5订单'},
@@ -79,7 +79,7 @@ function canVisit(to) {
 
 //vue-router 前置拦截器
 router.beforeEach((to, from, next) => {
-    if(to.name === 'login' || to.name === 'register' || to.path === '/login') {
+    if(to.name === 'login' || to.name === 'register' || to.path === '/login' || to.name === 'h5Order' || to.path === '/h5/order') {
         next();
     } else {
         if (! sessionStorage.getItem('token') || sessionStorage.getItem('token') == null) {

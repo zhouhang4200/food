@@ -45067,7 +45067,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
             return void __webpack_require__.e/* require */(0/* duplicate */).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(142)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
         }
     }, {
-        name: "h5",
+        name: "h5Order",
         menu: false,
         path: "/h5/order",
         meta: { title: 'h5订单' },
@@ -45120,7 +45120,7 @@ function canVisit(to) {
 
 //vue-router 前置拦截器
 router.beforeEach(function (to, from, next) {
-    if (to.name === 'login' || to.name === 'register' || to.path === '/login') {
+    if (to.name === 'login' || to.name === 'register' || to.path === '/login' || to.name === 'h5Order' || to.path === '/h5/order') {
         next();
     } else {
         if (!sessionStorage.getItem('token') || sessionStorage.getItem('token') == null) {
@@ -63804,6 +63804,11 @@ module.exports = function (css) {
     },
     register: function register(params) {
         return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/register', params);
+    },
+
+    // h5 菜肴
+    h5DishList: function h5DishList(params) {
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/h5/dish/list', params);
     },
 
     // 菜单删除

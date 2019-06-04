@@ -23,8 +23,10 @@ class Dish extends Model
             $query->where('name', 'like', "%".$filters['name']."%");
         }
 
-        if ($filters['category']) {
-            $query->where('category', 'like', "%".$filters['category']."%");
+        if ($filters['category_id']) {
+            $categoryIds = Category::where('name', 'like', "%".$filters['category_id']."%")
+                ->pluck('id');
+            $query->whereIn('category_id', $categoryIds);
         }
 
         return $query;

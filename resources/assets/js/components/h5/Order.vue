@@ -1,31 +1,23 @@
 <template>
     <div style="margin-top: 20px">
         <div class="head">
-            <van-swipe :autoplay="3000" :height="150">
-                <van-swipe-item v-for="(image, index) in images" :key="index">
-                    <img v-lazy="image"/>
-                </van-swipe-item>
+            <van-swipe :autoplay="3000" :height="150" indicator-color="white" class="imageStyle">
+                <van-swipe-item><img src="/images/banner1.jpg"></van-swipe-item>
+                <van-swipe-item><img src="/images/banner2.jpg"></van-swipe-item>
+                <van-swipe-item><img src="/images/banner1.jpg"></van-swipe-item>
+                <van-swipe-item><img src="/images/banner2.jpg"></van-swipe-item>
             </van-swipe>
         </div>
         <div class="body">
-            <div class="left" style="position:relative; width: 20%; background-color: azure; float:left; height: 100%">
-                <ul>
-                    <li>主菜</li>
-                    <li>米饭</li>
-                    <li>饮料</li>
-                </ul>
-            </div>
-            <div class="main" style="position:relative; width: 80%; float: right">
-                <van-swipe-cell :right-width="65" :on-close="onClose" v-for="(i,key) in shopData" :key="key">
+            <div class="main" style="position:relative; width: 100%; float: right">
+                <van-swipe-cell :right-width="10" :on-close="onClose" v-for="dish in dishData" :key="dish.id">
                     <van-cell-group>
                         <van-card
-                                num="1"
-                                :tag="hot"
-                                :price="price"
-                                :desc="desc"
-                                :title="title"
-                                :thumb="imageURL"
-                                :origin-price="originPrice"
+                                :num="number"
+                                :price="dish.amount"
+                                :title="dish.name"
+                                :thumb="dish.logo"
+                                :origin-price="dish.original_amount"
                         >
                             <div slot="footer">
                                 <van-button size="mini">-</van-button>
@@ -38,7 +30,7 @@
         </div>
         <div class="foot">
             <van-submit-bar
-                    :price="3050"
+                    :price="totalAmount"
                     button-text="提交订单"
                     @submit="onSubmit"
             />
@@ -71,39 +63,37 @@
                 accountShow: false,
                 showNumber: false,
                 images: [
-                    "http://img2.imgtn.bdimg.com/it/u=234634259,4236876085&fm=26&gp=0.jpg",
-                    "http://img2.imgtn.bdimg.com/it/u=234634259,4236876085&fm=26&gp=0.jpg",
+                    "h5.keeper.test/images/banner1.jpg",
+                    "h5.keeper.test/images/banner2.jpg",
                 ],
-                imageURL:"http://img2.imgtn.bdimg.com/it/u=234634259,4236876085&fm=26&gp=0.jpg",
+                imageURL:"/images/banner1.jpg",
                 hot:'热卖中',
                 price:'1.00',
                 originPrice:'2.00',
                 desc:'微辣',
                 title:'鱼香肉丝',
-                shopData: [
-                    1, 2, 3, 5, 6
-                ]
+                number:0,
+                totalAmount:0,
+                dishData: {}
             };
         },
         created() {
         },
         computed: {},
         mounted() {
-            this.getAccountOptions();
+            this.dishes();
         },
         methods: {
-            onClickLeft() {
-                this.$router.push({name: 'finance-withdraw-list', query: {}});
-            },
-            getAccountOptions() {
-                this.$api.FinanceWithdrawAccountList({}).then(res => {
+            dishes() {
+                this.$api.h5DishList({merchant_id:1}).then(res => {
                     if (res.status === 1) {
-                        this.accountOptions = res.data;
+                        console.log(res.data);
+                        this.dishData = res.data;
                     } else if (res.status === 3) {
                         Toast.fail(res.message);
-                        this.$router.push({name: 'login', query: {}});
+                        // this.$router.push({name: 'login', query: {}});
                     } else {
-
+                        Toast.fail(res.message);
                     }
                 });
             },
@@ -144,9 +134,59 @@
 </script>
 
 <style lange="less">
+    .imageStyle img {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+    .van-card__thumb {
+        width: 100px;
+        height: 70px;
+        margin-right: 10px;
+        /* -webkit-box-align: center; */
+        /* -webkit-align-items: center; */
+        /* align-items: center; */
+        /* -webkit-box-pack: center; */
+        -webkit-justify-content: center;
+        /* justify-content: center; */
+        /* -webkit-box-flex: 0; */
+        -webkit-flex: none;
+        /* flex: none; */
+        /* margin-top: 20px; */
+    }
+
     .van-button--warning {
         color: #fff;
         background-color: #409eff;
         border: 1px solid #409eff;
+    }
+
+    .van-card {
+        position: relative;
+        color: #323233;
+        padding: 10px 15px;
+        font-size: 14px;
+        box-sizing: border-box;
+        background-color: #fafafa;
+    }
+    .van-card__content, .van-card__header {
+        height: 44px;
+    }
+    .van-card__title {
+        line-height: 16px;
+        max-height: 32px;
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        padding-top: 5px;
+    }
+
+    .van-card__bottom, .van-card__desc {
+        line-height: 20px;
+        margin-top: 4px;
+        font-size: 14px;
     }
 </style>

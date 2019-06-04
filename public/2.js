@@ -258,7 +258,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             AccountBlackListName: {},
             searchParams: {
                 name: '',
-                category: '',
+                category_id: '',
                 page: 1
             },
             TotalPage: 0,
@@ -524,11 +524,11 @@ var render = function() {
                         {
                           attrs: { placeholder: "请选择" },
                           model: {
-                            value: _vm.searchParams.category,
+                            value: _vm.searchParams.category_id,
                             callback: function($$v) {
-                              _vm.$set(_vm.searchParams, "category", $$v)
+                              _vm.$set(_vm.searchParams, "category_id", $$v)
                             },
-                            expression: "searchParams.category"
+                            expression: "searchParams.category_id"
                           }
                         },
                         _vm._l(_vm.categories, function(category) {
@@ -636,7 +636,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "所属类目", prop: "category", width: "200" },
+            attrs: { label: "所属类目", prop: "category_id", width: "200" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -789,7 +789,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "所属类目", prop: "category" } },
+                { attrs: { label: "所属类目", prop: "category_id" } },
                 [
                   _c(
                     "el-select",

@@ -87,7 +87,7 @@ exports = module.exports = __webpack_require__(34)(false);
 
 
 // module
-exports.push([module.i, "\n.van-button--warning {\n    color: #fff;\n    background-color: #409eff;\n    border: 1px solid #409eff;\n}\n", ""]);
+exports.push([module.i, "\n.imageStyle img {\n    width: 100%;\n    height: 100%;\n    display: block;\n}\n.van-card__thumb {\n    width: 100px;\n    height: 70px;\n    margin-right: 10px;\n    /* -webkit-box-align: center; */\n    /* -webkit-align-items: center; */\n    /* align-items: center; */\n    /* -webkit-box-pack: center; */\n    -webkit-justify-content: center;\n    /* justify-content: center; */\n    /* -webkit-box-flex: 0; */\n    -webkit-flex: none;\n    /* flex: none; */\n    /* margin-top: 20px; */\n}\n.van-button--warning {\n    color: #fff;\n    background-color: #409eff;\n    border: 1px solid #409eff;\n}\n.van-card {\n    position: relative;\n    color: #323233;\n    padding: 10px 15px;\n    font-size: 14px;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    background-color: #fafafa;\n}\n.van-card__content, .van-card__header {\n    height: 44px;\n}\n.van-card__title {\n    line-height: 16px;\n    max-height: 32px;\n    font-weight: 500;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    display: -webkit-box;\n    -webkit-line-clamp: 2;\n    -webkit-box-orient: vertical;\n    padding-top: 5px;\n}\n.van-card__bottom, .van-card__desc {\n    line-height: 20px;\n    margin-top: 4px;\n    font-size: 14px;\n}\n", ""]);
 
 // exports
 
@@ -102,14 +102,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vant__ = __webpack_require__(141);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -167,37 +159,39 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             accountOptions: [],
             accountShow: false,
             showNumber: false,
-            images: ["http://img2.imgtn.bdimg.com/it/u=234634259,4236876085&fm=26&gp=0.jpg", "http://img2.imgtn.bdimg.com/it/u=234634259,4236876085&fm=26&gp=0.jpg"],
-            imageURL: "http://img2.imgtn.bdimg.com/it/u=234634259,4236876085&fm=26&gp=0.jpg",
+            images: ["h5.keeper.test/images/banner1.jpg", "h5.keeper.test/images/banner2.jpg"],
+            imageURL: "/images/banner1.jpg",
             hot: '热卖中',
             price: '1.00',
             originPrice: '2.00',
             desc: '微辣',
             title: '鱼香肉丝',
-            shopData: [1, 2, 3, 5, 6]
+            number: 0,
+            totalAmount: 0,
+            dishData: {}
         };
     },
     created: function created() {},
 
     computed: {},
     mounted: function mounted() {
-        this.getAccountOptions();
+        this.dishes();
     },
 
     methods: {
-        onClickLeft: function onClickLeft() {
-            this.$router.push({ name: 'finance-withdraw-list', query: {} });
-        },
-        getAccountOptions: function getAccountOptions() {
+        dishes: function dishes() {
             var _this = this;
 
-            this.$api.FinanceWithdrawAccountList({}).then(function (res) {
+            this.$api.h5DishList({ merchant_id: 1 }).then(function (res) {
                 if (res.status === 1) {
-                    _this.accountOptions = res.data;
+                    console.log(res.data);
+                    _this.dishData = res.data;
                 } else if (res.status === 3) {
                     __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
-                    _this.$router.push({ name: 'login', query: {} });
-                } else {}
+                    // this.$router.push({name: 'login', query: {}});
+                } else {
+                    __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
+                }
             });
         },
         onConfirmAccount: function onConfirmAccount(value, index) {
@@ -254,21 +248,27 @@ var render = function() {
       [
         _c(
           "van-swipe",
-          { attrs: { autoplay: 3000, height: 150 } },
-          _vm._l(_vm.images, function(image, index) {
-            return _c("van-swipe-item", { key: index }, [
-              _c("img", {
-                directives: [
-                  {
-                    name: "lazy",
-                    rawName: "v-lazy",
-                    value: image,
-                    expression: "image"
-                  }
-                ]
-              })
+          {
+            staticClass: "imageStyle",
+            attrs: { autoplay: 3000, height: 150, "indicator-color": "white" }
+          },
+          [
+            _c("van-swipe-item", [
+              _c("img", { attrs: { src: "/images/banner1.jpg" } })
+            ]),
+            _vm._v(" "),
+            _c("van-swipe-item", [
+              _c("img", { attrs: { src: "/images/banner2.jpg" } })
+            ]),
+            _vm._v(" "),
+            _c("van-swipe-item", [
+              _c("img", { attrs: { src: "/images/banner1.jpg" } })
+            ]),
+            _vm._v(" "),
+            _c("van-swipe-item", [
+              _c("img", { attrs: { src: "/images/banner2.jpg" } })
             ])
-          }),
+          ],
           1
         )
       ],
@@ -276,18 +276,19 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("div", { staticClass: "body" }, [
-      _vm._m(0),
-      _vm._v(" "),
       _c(
         "div",
         {
           staticClass: "main",
-          staticStyle: { position: "relative", width: "80%", float: "right" }
+          staticStyle: { position: "relative", width: "100%", float: "right" }
         },
-        _vm._l(_vm.shopData, function(i, key) {
+        _vm._l(_vm.dishData, function(dish) {
           return _c(
             "van-swipe-cell",
-            { key: key, attrs: { "right-width": 65, "on-close": _vm.onClose } },
+            {
+              key: dish.id,
+              attrs: { "right-width": 10, "on-close": _vm.onClose }
+            },
             [
               _c(
                 "van-cell-group",
@@ -296,13 +297,11 @@ var render = function() {
                     "van-card",
                     {
                       attrs: {
-                        num: "1",
-                        tag: _vm.hot,
-                        price: _vm.price,
-                        desc: _vm.desc,
-                        title: _vm.title,
-                        thumb: _vm.imageURL,
-                        "origin-price": _vm.originPrice
+                        num: _vm.number,
+                        price: dish.amount,
+                        title: dish.name,
+                        thumb: dish.logo,
+                        "origin-price": dish.original_amount
                       }
                     },
                     [
@@ -338,7 +337,7 @@ var render = function() {
       { staticClass: "foot" },
       [
         _c("van-submit-bar", {
-          attrs: { price: 3050, "button-text": "提交订单" },
+          attrs: { price: _vm.totalAmount, "button-text": "提交订单" },
           on: { submit: _vm.onSubmit }
         })
       ],
@@ -346,35 +345,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "left",
-        staticStyle: {
-          position: "relative",
-          width: "20%",
-          "background-color": "azure",
-          float: "left",
-          height: "100%"
-        }
-      },
-      [
-        _c("ul", [
-          _c("li", [_vm._v("主菜")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("米饭")]),
-          _vm._v(" "),
-          _c("li", [_vm._v("饮料")])
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

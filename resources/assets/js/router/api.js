@@ -11,6 +11,10 @@ export default {
     register(params) {
         return post('/register', params);
     },
+    // h5 菜肴
+    h5DishList(params) {
+        return post('/h5/dish/list', params);
+    },
     // 菜单删除
     category(params) {
         return post('/category', params);

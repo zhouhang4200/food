@@ -4,7 +4,7 @@
             <el-row :gutter="12">
                 <el-col :span="4">
                     <el-form-item label="类目">
-                        <el-select v-model="searchParams.category" placeholder="请选择">
+                        <el-select v-model="searchParams.category_id" placeholder="请选择">
                             <el-option
                                     v-for="category in categories"
                                     :key="category.id"
@@ -48,7 +48,7 @@
             </el-table-column>
             <el-table-column
                     label="所属类目"
-                    prop="category"
+                    prop="category_id"
                     width="200">
                 <template slot-scope="scope">
                     {{ scope.row.category.name }}
@@ -106,7 +106,7 @@
                 <el-form-item label="菜肴名称" prop="name">
                     <el-input v-model="form.name" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="所属类目" prop="category">
+                <el-form-item label="所属类目" prop="category_id">
                     <el-select v-model="form.category_id" placeholder="请选择">
                         <el-option
                                 v-for="category in categories"
@@ -199,7 +199,7 @@
                 AccountBlackListName:{},
                 searchParams:{
                     name:'',
-                    category:'',
+                    category_id:'',
                     page:1,
                 },
                 TotalPage:0,

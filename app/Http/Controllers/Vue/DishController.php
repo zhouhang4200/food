@@ -24,6 +24,7 @@ class DishController extends Controller
 
             return response()->json(['status' => 1, 'data' => $data]);
         } catch (\Exception $e) {
+            myLog('dish_list_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
             return response()->json(['status' => 0, 'data' => '']);
         }
     }
@@ -50,16 +51,17 @@ class DishController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function update(Request $request)
     {
         try {
             $data = Dish::where('id', $request->all()['id'])
-                ->update($request->except(['id', 'merchant_id']));
+                ->update($request->except(['id', 'merchant_id', 'category']));
 
             return response()->json(['status' => 1, 'data' => $data, 'message' => '编辑成功']);
         } catch (\Exception $e) {
-            dd($e);
+            myLog('dish_update_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
             return response()->json(['status' => 0, 'data' => '', 'message' => '编辑失败']);
         }
     }
