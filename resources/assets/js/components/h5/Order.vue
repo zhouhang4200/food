@@ -34,9 +34,10 @@
         </div>
         <div class="foot">
             <van-submit-bar
+                    id="pay"
                     :price="totalAmount"
                     button-text="提交订单"
-                    @submit="onSubmit"
+                    @submit="onSubmit()"
             />
         </div>
     </div>
@@ -99,6 +100,7 @@
                 let finalNumber = 0;
 
                 if (numberValue > 0) {
+                    numberObject.setAttribute("style", "width: 40px; text-align: center;color: #f44");
                     finalNumber = numberValue - 1;
                     numberObject.value = finalNumber;
 
@@ -117,6 +119,17 @@
                         }
                     }
                 }
+                if (finalNumber < 1) {
+                    numberObject.setAttribute("style", "width: 40px; text-align: center;");
+                }
+
+                // if (this.totalAmount > 0) {
+                //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #f44;border: 1px solid #f44;")
+                // } else {
+                //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
+                // }
+
+                console.log(this.customerDishDetail);
             },
             add(dish) {
                 let dishId = dish.id;
@@ -124,6 +137,7 @@
                 let numberObject = document.getElementById(id);
                 let numberValue = Number(numberObject.value);
                 let finalNumber = 0;
+                numberObject.setAttribute("style", "width: 40px; text-align: center;color: #f44");
 
                 finalNumber = numberValue + 1;
                 numberObject.value = finalNumber;
@@ -147,12 +161,36 @@
                     this.totalAmount += Number(dish.amount)*100;
                 }
 
+                // if (this.totalAmount > 0) {
+                //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #f44;border: 1px solid #f44;")
+                // } else {
+                //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
+                // }
+
+                console.log(this.customerDishDetail);
                 // console.log(Number(dish.amount), this.totalAmount, dish.amount);
+            },
+            onSubmit() {
+                if (this.totalAmount > 0) {
+                    let params = this.$route.params;
+                    params.amount = this.totalAmount;
+                    params.detail = this.customerDishDetail;
+
+                    this.$api.h5Pay(params).then(res => {
+                        if (res.status === 1) {
+                            console.log('pay_success');
+                        } else if (res.status === 3) {
+                            // Toast.fail(res.message);
+                        } else {
+                            // Toast.fail(res.message);
+                        }
+                    });
+                }
+                // console.log(this.$route.params);
             },
             dishes() {
                 this.$api.h5DishList({merchant_id:1}).then(res => {
                     if (res.status === 1) {
-                        console.log(res.data);
                         this.dishData = res.data;
                     } else if (res.status === 3) {
                         Toast.fail(res.message);
@@ -254,4 +292,5 @@
         margin-top: 4px;
         font-size: 14px;
     }
+
 </style>

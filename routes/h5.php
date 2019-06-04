@@ -17,3 +17,9 @@ Route::get('/{vue?}', 'H5Controller@index')->where('vue', '[\/\w\.-]*')->where('
 
 Route::post('/dish/list', 'OrderController@dishList');
 Route::post('/customer/detail', 'OrderController@customerDishDetail');
+Route::post('/pay', 'OrderController@pay');
+Route::post('/alipay/notify', 'OrderController@alipayNotify');
+Route::post('/alipay/return', 'OrderController@alipayReturn');
+
+Route::post('/wechat/notify', 'OrderController@wechatNotify');
+Route::post('/wechat/return', 'OrderController@wechatReturn');

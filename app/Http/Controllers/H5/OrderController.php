@@ -4,8 +4,12 @@ namespace App\Http\Controllers\H5;
 
 use App\Models\CustomerDishDetail;
 use App\Models\Dish;
+use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Yansongda\Pay\Pay;
 
 class OrderController extends Controller
 {
@@ -19,6 +23,186 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             return response()->json(['status' => 0, 'data' => '']);
         }
+    }
+
+    public function pay(Request $request)
+    {
+        try {
+            // 支付渠道
+            $channel = 0;
+
+            //判断是不是微信
+            if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {
+                $channel = 1;
+            }
+
+            //判断是不是支付宝
+            if (strpos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient') !== false) {
+                $channel = 2;
+            }
+
+            // 菜肴id
+            $dish_id = $request->input('dish_id');
+
+            // 生成订单号
+            $trade_no = generateOrderNo();
+
+            // 实付金额
+            $amount = $request->input('amount');
+
+            // 获取点餐详情
+            $details = $request->input('detail');
+
+            // 桌号
+            $table_id = $request->input('table_id');
+
+            // 座位号
+            $seat_id = $request->input('seat_id');
+
+            // 商户号
+            $merchant_id = $request->input('merchant_id');
+
+            foreach ($details as $detail) {
+                $detail->table_id = $table_id;
+                $detail->seat_id = $seat_id;
+                $detail->merchant_id = $merchant_id;
+            }
+
+            $order = Order::create([
+                'trade_no' => $trade_no,
+                'date' => Carbon::now()->toDateString(),
+                'out_trade_no' => '',
+                'status' => 0, // 未支付
+                'channel' => $channel,
+                'buyer_id' => '',
+                'buyer_open_id' => '',
+                'amount' => $amount, // 单位分
+                'original_amount' => $amount,
+                'detail' => json_encode($details),
+            ]);
+
+            // 支付
+            if ($channel == 1) { # 微信支付
+//                // 获取授权信息
+//                $wxAuthInfo = session('wechat.oauth_user.default');
+//
+//                // 下单
+//                $app = Factory::payment(config('wechat.payment.default'));
+//                $result = $app->order->unify([
+//                    'body' => '微信支付下单',
+//                    'detail' => '丸子代练',
+//                    'out_trade_no' => $order->trade_no,
+//                    'total_fee' => $amount,
+//                    'trade_type' => 'JSAPI',
+//                    'openid' => $wxAuthInfo->getId(),
+//                    'notify_url' => route('channel.game-leveling.wx.pay.notify'),
+//                    'return_url' => url('/channel/order/pay/success', ['trade_no' => $order->trade_no]),
+//                ]);
+//
+//                $payPar = $app->jssdk->bridgeConfig($result['prepay_id'], false);
+//
+//                return response()->ajax(1, 'success', ['channel' => 1, 'trade_no' => $order->trade_no, 'par' => $payPar]);
+            } elseif ($channel == 2) { # 支付宝支付
+                $payPar = Pay::alipay(config('ali.base_config'))->wap([
+                    'out_trade_no' => $order->trade_no,
+                    'total_amount' => bcdiv($order->amount, 100, 2),
+                    'subject' => '代练订单支付',
+                ]);
+//                return response()->json(['status' => config('ali.base_config')]);
+                return response()->json(['status' => $payPar->getContent()]);
+                return response()->ajax(1, 'success', ['channel' => 2, 'trade_no' => $order->trade_no, 'par' => $payPar->getContent()]);
+            }
+
+            return response()->json(['status' => 1, 'data' => $order]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 0, 'data' => '']);
+            myLog('h5_pay', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+        }
+    }
+
+    /**
+     * 支付宝通知
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Yansongda\Pay\Exceptions\InvalidConfigException
+     * @throws \Yansongda\Pay\Exceptions\InvalidSignException
+     */
+    public function alipayNotify()
+    {
+        $alipay = Pay::alipay(config('ali.base_config'));
+
+        try{
+            $data = $alipay->verify();
+
+            myLog('alipay', [$data]);
+
+            # 支付宝确认交易成功
+            if (in_array($data->trade_status,  ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
+                // 查找 订单
+                $order = Order::where('out_trade_no', $data->out_trade_no)
+                    ->where('amount', $data->total_amount)
+                    ->first();
+
+                # 查到充值订单
+                if ($order) {
+                    DB::beginTransaction();
+
+                    try {
+                        $order->status = 1; // 成功
+                        $order->buyer_id=$data->buyer_id;
+                        $order->buyer_open_id=$data->buyer_open_id;
+                        $order->save();
+
+                        // 支付成功，写入点餐详情
+                        $insertData = [];
+                        foreach (json_decode($order->detail, true) as $detail) {
+                            $insertData[] = [
+                                'open_id' => '',
+                                'channel' => $order->channel,
+                                'dish_id' => $detail->dish_id,
+                                'table_id' => $detail->table_id,
+                                'seat_id' => $detail->seat_id,
+                                'number' => $detail->number,
+                                'tag' => '',
+                                'created_at' => Carbon::now()->toDateString(),
+                                'updated_at' => Carbon::now()->toDateString(),
+                            ];
+                        }
+
+                        DB::table('customer_dish_details')->insert($insertData);
+
+                        // 下单
+
+                    } catch (\Exception $exception) {
+                        myLog('alipayNotify', [$exception->getLine(), $exception->getMessage()]);
+                        DB::rollback();
+                    }
+
+                    DB::commit();
+
+                    # 发送通知
+                    event((new NotificationEvent('channelPcPayResult', [
+                        'message' => '充值成功',
+                    ])));
+                }
+            }
+        } catch (Exception $e) {
+            \Log::debug('Alipay notify Error', [$e->getMessage()]);
+        }
+
+        return $alipay->success();
+    }
+    public function alipayReturn()
+    {
+
+    }
+    public function wechatNotify()
+    {
+
+    }
+    public function wechatReturn()
+    {
+
     }
 
     /**

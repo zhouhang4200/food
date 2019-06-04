@@ -16,7 +16,8 @@ class CreateCustomerDishDetailsTable extends Migration
         Schema::create('customer_dish_details', function (Blueprint $table) {
             $table->increments('id');
             $table->string('open_id')->comment('客户的微信open_id或支付宝open_id');
-            $table->tinyInteger('type')->comment('用什么方式扫的桌位二维码，支付宝：1，微信：2');
+            $table->tinyInteger('channel')->default(0)->comment('用什么方式扫的桌位二维码，微信：1,支付宝：2，');
+            $table->integer('merchant_id');
             $table->integer('dish_id');
             $table->integer('table_id');
             $table->integer('seat_id');

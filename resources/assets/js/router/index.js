@@ -27,7 +27,7 @@ const router = new Router({
         {
             name: "h5Order",
             menu: false,
-            path: "/h5/order",
+            path: "/h5/order/:merchant_id/:table_id/:seat_id",
             meta:{title:'h5订单'},
             component: resolve => void(require(['../components/h5/Order'], resolve)),
         },

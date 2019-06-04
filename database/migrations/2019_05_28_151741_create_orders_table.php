@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('trade_no')->comment('内部订单号');
             $table->string('out_trade_no')->comment('外部订单号');
+            $table->date('date')->comment('日期');
             $table->tinyInteger('status')->comment('支付装备：默认0未支付 1支付成功 2支付失败');
             $table->tinyInteger('channel')->comment('支付渠道： 1支付宝 2微信');
             $table->string('buyer_id')->comment('支付人id');

@@ -45069,7 +45069,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     }, {
         name: "h5Order",
         menu: false,
-        path: "/h5/order",
+        path: "/h5/order/:merchant_id/:table_id/:seat_id",
         meta: { title: 'h5订单' },
         component: function component(resolve) {
             return void __webpack_require__.e/* require */(1).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(337)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
@@ -63814,6 +63814,11 @@ module.exports = function (css) {
     // h5 点餐详情
     h5CustomerDishDetail: function h5CustomerDishDetail(params) {
         return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/h5/customer/detail', params);
+    },
+
+    // h5 支付
+    h5Pay: function h5Pay(params) {
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/h5/pay', params);
     },
 
     // 菜单删除

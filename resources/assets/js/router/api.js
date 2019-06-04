@@ -19,6 +19,10 @@ export default {
     h5CustomerDishDetail(params) {
         return post('/h5/customer/detail', params);
     },
+    // h5 支付
+    h5Pay(params) {
+        return post('/h5/pay', params);
+    },
     // 菜单删除
     category(params) {
         return post('/category', params);

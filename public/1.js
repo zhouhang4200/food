@@ -87,7 +87,7 @@ exports = module.exports = __webpack_require__(34)(false);
 
 
 // module
-exports.push([module.i, "\n.imageStyle img {\n    width: 100%;\n    height: 100%;\n    display: block;\n}\n.van-card__thumb {\n    width: 100px;\n    height: 70px;\n    margin-right: 10px;\n    /* -webkit-box-align: center; */\n    /* -webkit-align-items: center; */\n    /* align-items: center; */\n    /* -webkit-box-pack: center; */\n    -webkit-justify-content: center;\n    /* justify-content: center; */\n    /* -webkit-box-flex: 0; */\n    -webkit-flex: none;\n    /* flex: none; */\n    /* margin-top: 20px; */\n}\n.van-button--warning {\n    color: #fff;\n    background-color: #409eff;\n    border: 1px solid #409eff;\n}\n.van-card {\n    position: relative;\n    color: #323233;\n    padding: 10px 15px;\n    font-size: 14px;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    background-color: #fafafa;\n}\n.van-card__content, .van-card__header {\n    height: 44px;\n}\n.van-card__title {\n    line-height: 16px;\n    max-height: 32px;\n    font-weight: 500;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    display: -webkit-box;\n    -webkit-line-clamp: 2;\n    -webkit-box-orient: vertical;\n    padding-top: 5px;\n}\n.van-card__bottom, .van-card__desc {\n    line-height: 20px;\n    margin-top: 4px;\n    font-size: 14px;\n}\n", ""]);
+exports.push([module.i, "\n.imageStyle img {\n    width: 100%;\n    height: 100%;\n    display: block;\n}\n.van-card__thumb {\n    width: 100px;\n    height: 70px;\n    margin-right: 10px;\n    /* -webkit-box-align: center; */\n    /* -webkit-align-items: center; */\n    /* align-items: center; */\n    /* -webkit-box-pack: center; */\n    -webkit-justify-content: center;\n    /* justify-content: center; */\n    /* -webkit-box-flex: 0; */\n    -webkit-flex: none;\n    /* flex: none; */\n    /* margin-top: 20px; */\n}\n.van-button--warning {\n    color: #fff;\n    background-color: #409eff;\n    border: 1px solid #409eff;\n}\n.van-card {\n    position: relative;\n    color: #323233;\n    padding: 10px 15px;\n    font-size: 14px;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    background-color: #fafafa;\n}\n.van-card__content, .van-card__header {\n    height: 44px;\n}\n.van-card__title {\n    line-height: 16px;\n    max-height: 32px;\n    font-weight: 500;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    display: -webkit-box;\n    -webkit-line-clamp: 2;\n    -webkit-box-orient: vertical;\n    padding-top: 5px;\n}\n.van-card__bottom, .van-card__desc {\n    line-height: 20px;\n    margin-top: 4px;\n    font-size: 14px;\n}\n\n", ""]);
 
 // exports
 
@@ -102,6 +102,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vant__ = __webpack_require__(141);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
+//
 //
 //
 //
@@ -192,6 +193,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             var finalNumber = 0;
 
             if (numberValue > 0) {
+                numberObject.setAttribute("style", "width: 40px; text-align: center;color: #f44");
                 finalNumber = numberValue - 1;
                 numberObject.value = finalNumber;
 
@@ -210,6 +212,17 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                     }
                 }
             }
+            if (finalNumber < 1) {
+                numberObject.setAttribute("style", "width: 40px; text-align: center;");
+            }
+
+            // if (this.totalAmount > 0) {
+            //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #f44;border: 1px solid #f44;")
+            // } else {
+            //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
+            // }
+
+            console.log(this.customerDishDetail);
         },
         add: function add(dish) {
             var dishId = dish.id;
@@ -217,6 +230,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             var numberObject = document.getElementById(id);
             var numberValue = Number(numberObject.value);
             var finalNumber = 0;
+            numberObject.setAttribute("style", "width: 40px; text-align: center;color: #f44");
 
             finalNumber = numberValue + 1;
             numberObject.value = finalNumber;
@@ -240,14 +254,38 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                 this.totalAmount += Number(dish.amount) * 100;
             }
 
+            // if (this.totalAmount > 0) {
+            //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #f44;border: 1px solid #f44;")
+            // } else {
+            //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
+            // }
+
+            console.log(this.customerDishDetail);
             // console.log(Number(dish.amount), this.totalAmount, dish.amount);
+        },
+        onSubmit: function onSubmit() {
+            if (this.totalAmount > 0) {
+                var params = this.$route.params;
+                params.amount = this.totalAmount;
+                params.detail = this.customerDishDetail;
+
+                this.$api.h5Pay(params).then(function (res) {
+                    if (res.status === 1) {
+                        console.log('pay_success');
+                    } else if (res.status === 3) {
+                        // Toast.fail(res.message);
+                    } else {
+                            // Toast.fail(res.message);
+                        }
+                });
+            }
+            // console.log(this.$route.params);
         },
         dishes: function dishes() {
             var _this = this;
 
             this.$api.h5DishList({ merchant_id: 1 }).then(function (res) {
                 if (res.status === 1) {
-                    console.log(res.data);
                     _this.dishData = res.data;
                 } else if (res.status === 3) {
                     __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
@@ -436,8 +474,16 @@ var render = function() {
       { staticClass: "foot" },
       [
         _c("van-submit-bar", {
-          attrs: { price: _vm.totalAmount, "button-text": "提交订单" },
-          on: { submit: _vm.onSubmit }
+          attrs: {
+            id: "pay",
+            price: _vm.totalAmount,
+            "button-text": "提交订单"
+          },
+          on: {
+            submit: function($event) {
+              return _vm.onSubmit()
+            }
+          }
         })
       ],
       1
