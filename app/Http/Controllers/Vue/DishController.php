@@ -41,8 +41,7 @@ class DishController extends Controller
     {
         try {
             $data = $request->all();
-            $data['amount'] = bcmul($request->input('amount'), 100); // 单位分
-            $data['original_amount'] = bcmul($request->input('amount'), 100); // 单位分
+
             $data = Dish::create(array_merge($data, ['merchant_id' => $request->user('web')->id]));
 
             return response()->json(['status' => 1, 'data' => $data, 'message' => '添加成功']);
@@ -63,8 +62,6 @@ class DishController extends Controller
     {
         try {
             $data = $request->all();
-            $data['amount'] = bcmul($request->input('amount'), 100); // 单位分
-            $data['original_amount'] = bcmul($request->input('amount'), 100); // 单位分
 
             $result = Dish::where('id', $data['id'])
                 ->update($request->except(['id', 'merchant_id', 'category']));
