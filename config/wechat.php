@@ -15,6 +15,8 @@ return [
         'cert_key' => './apiclient_key.pem',            // 客户端秘钥路径，退款时需要用到
         'notify_url'     => 'http://http://h5.diancan.nanmingyu.com/h5/wechat/notify',
         'return_url'     => 'http://http://h5.diancan.nanmingyu.com/h5/wechat/return',
+        'secret' => '31ae38caf6074540fc8ce5ea65630e18',
+        'callback_url' => '/h5/callback',
 
 
 //        'app_id' => "2016091400506627",

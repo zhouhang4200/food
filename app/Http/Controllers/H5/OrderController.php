@@ -6,6 +6,7 @@ use App\Models\CustomerDishDetail;
 use App\Models\Dish;
 use App\Models\Order;
 use Carbon\Carbon;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +23,8 @@ class OrderController extends Controller
     public function dishList(Request $request)
     {
         try {
+            H5Controller::getCode();
+
             $data = Dish::where('merchant_id', $request->merchant_id)
                 ->get();
 
