@@ -13,6 +13,12 @@ use Yansongda\Pay\Pay;
 
 class OrderController extends Controller
 {
+    /**
+     * 菜肴列表
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function dishList(Request $request)
     {
         try {
@@ -25,6 +31,13 @@ class OrderController extends Controller
         }
     }
 
+    /**
+     * 支付
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function pay(Request $request)
     {
         try {
@@ -63,11 +76,12 @@ class OrderController extends Controller
             $merchant_id = $request->input('merchant_id');
 
             foreach ($details as $detail) {
-                $detail->table_id = $table_id;
-                $detail->seat_id = $seat_id;
-                $detail->merchant_id = $merchant_id;
+                $detail['table_id'] = $table_id;
+                $detail['seat_id'] = $seat_id;
+                $detail['merchant_id'] = $merchant_id;
             }
 
+            //  创建订单
             $order = Order::create([
                 'trade_no' => $trade_no,
                 'date' => Carbon::now()->toDateString(),
@@ -103,20 +117,31 @@ class OrderController extends Controller
 //
 //                return response()->ajax(1, 'success', ['channel' => 1, 'trade_no' => $order->trade_no, 'par' => $payPar]);
             } elseif ($channel == 2) { # 支付宝支付
+//                return response()->json(['status' => '111']);
                 $payPar = Pay::alipay(config('ali.base_config'))->wap([
                     'out_trade_no' => $order->trade_no,
                     'total_amount' => bcdiv($order->amount, 100, 2),
                     'subject' => '代练订单支付',
                 ]);
 //                return response()->json(['status' => config('ali.base_config')]);
-                return response()->json(['status' => $payPar->getContent()]);
-                return response()->ajax(1, 'success', ['channel' => 2, 'trade_no' => $order->trade_no, 'par' => $payPar->getContent()]);
+//                return response()->json(['status' => $payPar->getContent()]);
+//
+                return response()->json(['status' => 1, 'message' => 'success', ['channel' => 2, 'trade_no' => $order->trade_no, 'par' => $payPar->getContent()]]);
             }
+
+            $payPar = Pay::alipay(config('ali.base_config'))->wap([
+                'out_trade_no' => $order->trade_no,
+                'total_amount' => bcdiv($order->amount, 100, 2),
+                'subject' => '代练订单支付',
+            ]);
+//                return response()->json(['status' => config('ali.base_config')]);
+            return response()->json(['status' => $payPar]);
 
             return response()->json(['status' => 1, 'data' => $order]);
         } catch (\Exception $e) {
-            return response()->json(['status' => 0, 'data' => '']);
             myLog('h5_pay', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+            return response()->json(['status' => 0, 'data' => '']);
+
         }
     }
 

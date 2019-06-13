@@ -147,6 +147,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -381,113 +387,117 @@ var render = function() {
         "div",
         {
           staticClass: "main",
-          staticStyle: { position: "relative", width: "100%", float: "right" }
-        },
-        _vm._l(_vm.dishData, function(dish) {
-          return _c(
-            "van-swipe-cell",
-            {
-              key: dish.id,
-              attrs: { "right-width": 10, "on-close": _vm.onClose }
-            },
-            [
-              _c(
-                "van-cell-group",
-                [
-                  _c(
-                    "van-card",
-                    {
-                      attrs: {
-                        price: dish.amount,
-                        title: dish.name,
-                        thumb: dish.logo,
-                        "origin-price": dish.original_amount
-                      }
-                    },
-                    [
-                      _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
-                        _c("div", { staticClass: "amount_container" }, [
-                          _c(
-                            "div",
-                            { staticClass: "amount_box" },
-                            [
-                              _c(
-                                "van-button",
-                                {
-                                  attrs: { size: "mini" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.sub(dish)
-                                    }
-                                  }
-                                },
-                                [_vm._v("-")]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticStyle: {
-                                  width: "40px",
-                                  "text-align": "center"
-                                },
-                                attrs: {
-                                  type: "number",
-                                  value: "0",
-                                  id: "number" + dish.id,
-                                  maxlength: "2",
-                                  pattern: "[0-9]*",
-                                  readonly: "readonly"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "van-button",
-                                {
-                                  attrs: { size: "mini" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.add(dish)
-                                    }
-                                  }
-                                },
-                                [_vm._v("+")]
-                              )
-                            ],
-                            1
-                          )
-                        ])
-                      ])
-                    ]
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        }),
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "foot" },
-      [
-        _c("van-submit-bar", {
-          attrs: {
-            id: "pay",
-            price: _vm.totalAmount,
-            "button-text": "提交订单"
-          },
-          on: {
-            submit: function($event) {
-              return _vm.onSubmit()
-            }
+          staticStyle: {
+            position: "relative",
+            width: "100%",
+            float: "right",
+            "margin-bottom": "55px"
           }
-        })
-      ],
-      1
-    )
+        },
+        [
+          _vm._l(_vm.dishData, function(dish) {
+            return _c(
+              "van-swipe-cell",
+              {
+                key: dish.id,
+                attrs: { "right-width": 10, "on-close": _vm.onClose }
+              },
+              [
+                _c(
+                  "van-cell-group",
+                  [
+                    _c(
+                      "van-card",
+                      {
+                        attrs: {
+                          price: dish.amount,
+                          title: dish.name,
+                          thumb: dish.logo,
+                          "origin-price": dish.original_amount
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { attrs: { slot: "footer" }, slot: "footer" },
+                          [
+                            _c("div", { staticClass: "amount_container" }, [
+                              _c(
+                                "div",
+                                { staticClass: "amount_box" },
+                                [
+                                  _c(
+                                    "van-button",
+                                    {
+                                      attrs: { size: "mini" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.sub(dish)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("-")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticStyle: {
+                                      width: "40px",
+                                      "text-align": "center"
+                                    },
+                                    attrs: {
+                                      type: "number",
+                                      value: "0",
+                                      id: "number" + dish.id,
+                                      maxlength: "2",
+                                      pattern: "[0-9]*",
+                                      readonly: "readonly"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "van-button",
+                                    {
+                                      attrs: { size: "mini" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.add(dish)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("+")]
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          }),
+          _vm._v(" "),
+          _c("van-submit-bar", {
+            attrs: {
+              id: "pay",
+              price: _vm.totalAmount,
+              "button-text": "提交订单"
+            },
+            on: {
+              submit: function($event) {
+                return _vm.onSubmit()
+              }
+            }
+          })
+        ],
+        2
+      )
+    ])
   ])
 }
 var staticRenderFns = []

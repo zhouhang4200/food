@@ -9,7 +9,7 @@
             </van-swipe>
         </div>
         <div class="body">
-            <div class="main" style="position:relative; width: 100%; float: right">
+            <div class="main" style="position:relative; width: 100%; float: right; margin-bottom: 55px">
                 <van-swipe-cell :right-width="10" :on-close="onClose" v-for="dish in dishData" :key="dish.id">
                     <van-cell-group>
                         <van-card
@@ -30,16 +30,22 @@
                         </van-card>
                     </van-cell-group>
                 </van-swipe-cell>
+                <van-submit-bar
+                        id="pay"
+                        :price="totalAmount"
+                        button-text="提交订单"
+                        @submit="onSubmit()"
+                />
             </div>
         </div>
-        <div class="foot">
-            <van-submit-bar
-                    id="pay"
-                    :price="totalAmount"
-                    button-text="提交订单"
-                    @submit="onSubmit()"
-            />
-        </div>
+        <!--<div class="foot">-->
+            <!--<van-submit-bar-->
+                    <!--id="pay"-->
+                    <!--:price="totalAmount"-->
+                    <!--button-text="提交订单"-->
+                    <!--@submit="onSubmit()"-->
+            <!--/>-->
+        <!--</div>-->
     </div>
 </template>
 
