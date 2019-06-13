@@ -232,5 +232,5 @@ return [
 
     ],
 
-    'h5_domain' => 'h5.nanmingyu.com',
+    'h5_domain' => 'h5.diancan.nanmingyu.com',
 ];
