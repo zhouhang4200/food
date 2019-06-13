@@ -97,30 +97,39 @@ class OrderController extends Controller
 
             // 支付
             if ($channel == 1) { # 微信支付
-                // 获取授权信息
-                $wxAuthInfo = session('wechat.oauth_user.default');
-
-                // 下单
-                $app = Factory::payment(config('wechat.payment.default'));
-                $result = $app->order->unify([
-                    'body' => '微信支付下单',
-                    'detail' => '丸子代练',
-                    'out_trade_no' => $order->trade_no,
-                    'total_fee' => $amount*100, // 单位分
-                    'trade_type' => 'JSAPI',
-                    'openid' => $wxAuthInfo->getId(),
-                    'notify_url' => route('channel.game-leveling.wx.pay.notify'),
-                    'return_url' => url('/channel/order/pay/success', ['trade_no' => $order->trade_no]),
+                $payPar = Pay::wechat(config('wechat.base_config'))->wap([
+                    'out_trade_no' => $order->trade_no,           // 订单号
+                    'total_fee' => $order->amount,              // 订单金额，**单位：分**
+                    'body' => '点餐订单支付',                   // 订单描述
+                    'spbill_create_ip' => $request->getClientIp(),       // 支付人的 IP
                 ]);
 
-                $payPar = $app->jssdk->bridgeConfig($result['prepay_id'], false);
+                return response()->json(['status' => 1, 'message' => 'success', ['channel' => 2, 'trade_no' => $order->trade_no, 'par' => $payPar->getContent()]]);
 
-                return response()->ajax(1, 'success', ['channel' => 1, 'trade_no' => $order->trade_no, 'par' => $payPar]);
+//                // 获取授权信息
+//                $wxAuthInfo = session('wechat.oauth_user.default');
+//
+//                // 下单
+//                $app = Factory::payment(config('wechat.payment.default'));
+//                $result = $app->order->unify([
+//                    'body' => '微信支付下单',
+//                    'detail' => '丸子代练',
+//                    'out_trade_no' => $order->trade_no,
+//                    'total_fee' => $amount*100, // 单位分
+//                    'trade_type' => 'JSAPI',
+//                    'openid' => $wxAuthInfo->getId(),
+//                    'notify_url' => route('channel.game-leveling.wx.pay.notify'),
+//                    'return_url' => url('/channel/order/pay/success', ['trade_no' => $order->trade_no]),
+//                ]);
+//
+//                $payPar = $app->jssdk->bridgeConfig($result['prepay_id'], false);
+//
+//                return response()->ajax(1, 'success', ['channel' => 1, 'trade_no' => $order->trade_no, 'par' => $payPar]);
             } elseif ($channel == 2) { # 支付宝支付
                 $payPar = Pay::alipay(config('ali.base_config'))->wap([
                     'out_trade_no' => $order->trade_no,
                     'total_amount' => $order->amount, // 单位元
-                    'subject' => '代练订单支付',
+                    'subject' => '点餐订单支付',
                 ]);
 
                 return response()->json(['status' => 1, 'message' => 'success', ['channel' => 2, 'trade_no' => $order->trade_no, 'par' => $payPar->getContent()]]);
