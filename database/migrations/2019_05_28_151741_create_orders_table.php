@@ -22,8 +22,8 @@ class CreateOrdersTable extends Migration
             $table->tinyInteger('channel')->comment('支付渠道： 1支付宝 2微信');
             $table->string('buyer_id')->comment('支付人id');
             $table->string('buyer_open_id')->comment('支付人open_id');
-            $table->integer('amount')->comment('实际支付金额');
-            $table->integer('original_amount')->comment('原始金额');
+            $table->decimal('amount', 10, 2)->comment('实际支付金额');
+            $table->decimal('original_amount', 10, 2)->comment('原始金额');
             $table->string('detail')->comment('详情');
             $table->timestamps();
         });

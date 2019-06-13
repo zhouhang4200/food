@@ -19,8 +19,8 @@ class CreateDishesTable extends Migration
             $table->string('name')->comment('菜名');
             $table->tinyInteger('category_id')->comment('分类');
             $table->string('tag')->default('')->comment('口味标记');
-            $table->integer('amount')->comment('单价：分');
-            $table->integer('original_amount')->comment('原单价：分');
+            $table->decimal('amount', 10, 2)->comment('单价：元');
+            $table->decimal('original_amount', 10, 2)->comment('原单价：元');
             $table->integer('rate')->default(100)->comment('折扣：默认100');
             $table->string('logo')->comment('菜单图片');
             $table->string('material')->default('暂无')->comment('配料');
