@@ -1,18 +1,18 @@
 webpackJsonp([1],{
 
-/***/ 337:
+/***/ 338:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(345)
+  __webpack_require__(350)
 }
 var normalizeComponent = __webpack_require__(81)
 /* script */
-var __vue_script__ = __webpack_require__(347)
+var __vue_script__ = __webpack_require__(352)
 /* template */
-var __vue_template__ = __webpack_require__(348)
+var __vue_template__ = __webpack_require__(353)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52,13 +52,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 345:
+/***/ 350:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(346);
+var content = __webpack_require__(351);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79,7 +79,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 346:
+/***/ 351:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(34)(false);
@@ -94,7 +94,7 @@ exports.push([module.i, "\n.imageStyle img {\n    width: 100%;\n    height: 100%
 
 /***/ }),
 
-/***/ 347:
+/***/ 352:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -183,14 +183,55 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             customerDishDetail: []
         };
     },
-    created: function created() {},
+    created: function created() {
+        // let code=getUrlKey("code");
+        // if(code){
+        //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
+        //     this.getOpenIdApi(code);
+        // }else{
+        //     this.getCodeApi("123");
+        // }
+    },
 
     computed: {},
     mounted: function mounted() {
+        // let code=this.getUrlKey("code");
+        // if(code){
+        //     console.log(code);
+        //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
+        //     this.getOpenIdApi(code);
+        // }else{
+        //     console.log('code');
+        //     this.getCodeApi("123");
+        // }
         this.dishes();
     },
 
     methods: {
+        getUrlKey: function getUrlKey(name) {
+            //获取url 参数
+            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null;
+        },
+        getCodeApi: function getCodeApi(state) {
+            //获取code
+            var urlNow = encodeURIComponent(window.location.href);
+            var scope = 'snsapi_base'; //snsapi_userinfo   //静默授权 用户无感知
+            var appid = 'wx5e0fd315aff830a4';
+            var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + urlNow + '&response_type=code&scope=' + scope + '&state=' + state + '#wechat_redirect';
+            window.location.replace(url);
+        },
+        getOpenIdApi: function getOpenIdApi(code) {
+            this.$api.getopenId({ code: code }).then(function (res) {
+                console.log(123122312);
+                if (res.status === 1) {
+                    console.log('pay_success');
+                } else if (res.status === 3) {
+                    // Toast.fail(res.message);
+                } else {
+                        // Toast.fail(res.message);
+                    }
+            });
+        },
         sub: function sub(dish) {
             var dishId = dish.id;
             var id = 'number' + dishId;
@@ -290,7 +331,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
         dishes: function dishes() {
             var _this = this;
 
-            this.$api.h5DishList({ merchant_id: 1 }).then(function (res) {
+            var merchant_id = this.$route.query.merchant_id;
+            // console.log(merchant_id);
+            this.$api.h5DishList({ merchant_id: merchant_id }).then(function (res) {
                 if (res.status === 1) {
                     _this.dishData = res.data;
                 } else if (res.status === 3) {
@@ -341,7 +384,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
 
 /***/ }),
 
-/***/ 348:
+/***/ 353:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {

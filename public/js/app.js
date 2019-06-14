@@ -1,4 +1,4 @@
-webpackJsonp([4],[
+webpackJsonp([5],[
 /* 0 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -45056,7 +45056,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
         path: "/login",
         meta: { title: '登录' },
         component: function component(resolve) {
-            return void __webpack_require__.e/* require */(0/* duplicate */).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(142)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+            return void __webpack_require__.e/* require */(8/* duplicate */).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(142)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
         }
     }, {
         name: "register",
@@ -45064,15 +45064,39 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
         path: "/register",
         meta: { title: '注册' },
         component: function component(resolve) {
-            return void __webpack_require__.e/* require */(0/* duplicate */).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(142)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+            return void __webpack_require__.e/* require */(8/* duplicate */).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(142)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+        }
+    }, {
+        name: "h5Auth",
+        menu: false,
+        path: "/h5/auth",
+        meta: { title: '身份认证' },
+        component: function component(resolve) {
+            return void __webpack_require__.e/* require */(11).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(337)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+        }
+    }, {
+        name: "wechatOrder",
+        menu: false,
+        path: "/h5/wechat/order",
+        meta: { title: 'h5订单' },
+        component: function component(resolve) {
+            return void __webpack_require__.e/* require */(10).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(359)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+        }
+    }, {
+        name: "alipayOrder",
+        menu: false,
+        path: "/h5/alipay/order",
+        meta: { title: 'h5订单' },
+        component: function component(resolve) {
+            return void __webpack_require__.e/* require */(9).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(364)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
         }
     }, {
         name: "h5Order",
         menu: false,
-        path: "/h5/order/:merchant_id/:table_id/:seat_id",
+        path: "/h5/order",
         meta: { title: 'h5订单' },
         component: function component(resolve) {
-            return void __webpack_require__.e/* require */(1).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(337)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+            return void __webpack_require__.e/* require */(0).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(338)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
         }
     }, {
         name: "dish",
@@ -45089,7 +45113,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
             path: "list",
             meta: { title: '菜肴信息' },
             component: function component(resolve) {
-                return void __webpack_require__.e/* require */(2).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(338)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+                return void __webpack_require__.e/* require */(12).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(339)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
             }
         }]
     }, {
@@ -45107,7 +45131,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
             path: "list",
             meta: { title: '订单信息' },
             component: function component(resolve) {
-                return void __webpack_require__.e/* require */(3).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(339)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+                return void __webpack_require__.e/* require */(13).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(340)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
             }
         }]
     }]
@@ -45120,7 +45144,47 @@ function canVisit(to) {
 
 //vue-router 前置拦截器
 router.beforeEach(function (to, from, next) {
-    if (to.name === 'login' || to.name === 'register' || to.path === '/login' || to.name === 'h5Order' || to.path === '/h5/order') {
+    if (to.name === 'login' || to.name === 'register') {
+        next();
+    } else if (to.name === 'h5Auth') {
+        var ua = window.navigator.userAgent.toLowerCase();
+        //判断是不是微信
+        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+            next({
+                name: 'wechatOrder',
+                query: {
+                    merchant_id: 1,
+                    table: 1,
+                    seat: 1
+                }
+            });
+        }
+        //判断是不是支付宝
+        if (ua.match(/AlipayClient/i) == 'alipayclient') {
+            next({
+                name: 'alipayOrder',
+                query: {
+                    merchant_id: 1,
+                    table: 1,
+                    seat: 1
+                }
+            });
+        }
+        // console.log(to.query.merchant_id);
+        // 当前路由的merchant_id
+        var merchant_id = to.query.merchant_id;
+        var table_id = to.query.table_id;
+        var seat_id = to.query.seat_id;
+
+        next({
+            name: 'wechatOrder',
+            query: {
+                merchant_id: merchant_id,
+                table_id: table_id,
+                seat_id: seat_id
+            }
+        });
+    } else if (to.path === '/h5/order') {
         next();
     } else {
         if (!sessionStorage.getItem('token') || sessionStorage.getItem('token') == null) {
@@ -63814,6 +63878,11 @@ module.exports = function (css) {
     // h5 点餐详情
     h5CustomerDishDetail: function h5CustomerDishDetail(params) {
         return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/h5/customer/detail', params);
+    },
+
+    // 获取openid
+    getOpenId: function getOpenId(params) {
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/h5/openid', params);
     },
 
     // h5 支付

@@ -25,12 +25,13 @@ class OrderController extends Controller
         try {
 //            H5Controller::getCode();
 
-            $data = Dish::where('merchant_id', $request->merchant_id)
+            $data = Dish::where('merchant_id', $request->input('merchant_id'))
                 ->get();
 
+//            return response()->json(['status' => 1, 'data' => $request->input('merchant_id')]);
             return response()->json(['status' => 1, 'data' => $data]);
         } catch (\Exception $e) {
-            return response()->json(['status' => 0, 'data' => '']);
+            return response()->json(['status' => 0, 'data' => $e->getMessage()]);
         }
     }
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        111
+        222
     </div>
 </template>
 
@@ -24,50 +24,73 @@
             };
         },
         created() {
-            // let code=getUrlKey("code");
-            // if(code){
-            //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-            //     this.getOpenIdApi(code);
-            // }else{
-            //     this.getCodeApi("123");
-            // }
+            // this.getCode();
         },
         computed: {},
         mounted() {
-            // let code=this.getUrlKey("code");
-            // if(code){
-            //     console.log(code);
-            //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-            //     this.getOpenIdApi(code);
-            // }else{
-            //     console.log('code');
-            //     this.getCodeApi("123");
-            // }
         },
         methods: {
-            // getUrlKey(name){//获取url 参数
-            //     return decodeURIComponent((new RegExp('[?|&]'+name+'='+'([^&;]+?)(&|#|;|$)').exec(location.href)||[,""])[1].replace(/\+/g,'%20'))||null;
-            // },
-            // getCodeApi(state) {//获取code
-            //     let urlNow=encodeURIComponent(window.location.href);
-            //     let scope='snsapi_base';    //snsapi_userinfo   //静默授权 用户无感知
-            //     let appid='wx5e0fd315aff830a4';
-            //     let url=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
-            //     window.location.replace(url);
-            // },
-            // getOpenIdApi(code) {
-            //     this.$api.getopenId({code:code}).then(res => {
-            //         console.log(123122312);
-            //         if (res.status === 1) {
-            //             console.log('pay_success');
-            //         } else if (res.status === 3) {
-            //             // Toast.fail(res.message);
+            getCode() {
+                // 非静默授权，第一次有弹框
+                const code = this.getUrlParam("code"); // 截取路径中的code，如果没有就去微信授权，如果已经获取到了就直接传code给后台获取openId
+                const local = window.location.href;
+                const APPID = "wx5e0fd315aff830a4"; // 企业微信
+                if (code === null || code === "") {
+                    window.location.href =
+                        "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
+                        APPID +
+                        "&redirect_uri=" +
+                        encodeURIComponent(local) +
+                        "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+                } else {
+                    this.getOpenId(code); //把code传给后台获取用户信息
+                    console.log(code);
+                }
+            },
+            getUrlParam(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+
+                var r = window.location.search.substr(1).match(reg);
+                console.log(r);
+
+                if (r != null) return unescape(r[2]);
+
+                return null;
+            },
+
+            getOpenId(code) {
+                // 通过code获取 openId等用户信息，/api/user/wechat/login 为后台接口
+                let _this = this;
+                console.log(code);
+                this.$api.getOpenId({code: code}).then(res => {
+                    console.log(res);
+                    let openid ;
+                    if (res.data.status === 0) {
+                        openid = res.data;
+                        this.$router.push({ name: "h5Order" });
+                    }else{
+                        console.log(res);
+                        return;
+                    }
+                    localStorage.setItem("openid", openid);
+                    _this.getindexOne(openid);
+                });
+            },
+            // getindexOne(openid) {
+            //     let params = {
+            //         'channel': "qyvx",
+            //         'openID': openid
+            //     };
+            //     api("/app/arrange/judgeOrder", "get", params).then(res => {
+            //         if (res.data.status == 0) {
+            //             this.$router.push({ name: "h5Order" });
+            //             //   window.location.replace("/#/index");
             //         } else {
-            //             // Toast.fail(res.message);
+            //             // this.$router.push({ name: "" });
+            //             //   window.location.replace("/#/about");
             //         }
             //     });
-            // },
-
+            // }
         }
     }
 </script>

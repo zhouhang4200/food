@@ -22,7 +22,7 @@
                                 <div class="amount_container">
                                     <div class="amount_box">
                                         <van-button size="mini"  @click="sub(dish)">-</van-button>
-                                            <input type="number" style="width: 40px; text-align: center;" value=0 :id="'number'+dish.id" maxlength="2" pattern="[0-9]*" readonly="readonly"/>
+                                        <input type="number" style="width: 40px; text-align: center;" value=0 :id="'number'+dish.id" maxlength="2" pattern="[0-9]*" readonly="readonly"/>
                                         <van-button size="mini" @click="add(dish)">+</van-button>
                                     </div>
                                 </div>
@@ -39,12 +39,12 @@
             </div>
         </div>
         <!--<div class="foot">-->
-            <!--<van-submit-bar-->
-                    <!--id="pay"-->
-                    <!--:price="totalAmount"-->
-                    <!--button-text="提交订单"-->
-                    <!--@submit="onSubmit()"-->
-            <!--/>-->
+        <!--<van-submit-bar-->
+        <!--id="pay"-->
+        <!--:price="totalAmount"-->
+        <!--button-text="提交订单"-->
+        <!--@submit="onSubmit()"-->
+        <!--/>-->
         <!--</div>-->
     </div>
 </template>

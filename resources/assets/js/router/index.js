@@ -25,16 +25,30 @@ const router = new Router({
             component: resolve => void(require(['../components/auth/Login'], resolve)),
         },
         {
-            name: "auth",
+            name: "h5Auth",
             menu: false,
             path: "/h5/auth",
             meta:{title:'身份认证'},
             component: resolve => void(require(['../components/h5/Auth'], resolve)),
         },
         {
+            name: "wechatOrder",
+            menu: false,
+            path: "/h5/wechat/order",
+            meta:{title:'h5订单'},
+            component: resolve => void(require(['../components/h5/WechatOrder'], resolve)),
+        },
+        {
+            name: "alipayOrder",
+            menu: false,
+            path: "/h5/alipay/order",
+            meta:{title:'h5订单'},
+            component: resolve => void(require(['../components/h5/AlipayOrder'], resolve)),
+        },
+        {
             name: "h5Order",
             menu: false,
-            path: "/h5/order/:merchant_id/:table_id/:seat_id",
+            path: "/h5/order",
             meta:{title:'h5订单'},
             component: resolve => void(require(['../components/h5/Order'], resolve)),
         },
@@ -86,12 +100,48 @@ function canVisit(to) {
 
 //vue-router 前置拦截器
 router.beforeEach((to, from, next) => {
-    if(to.name === 'login' || to.name === 'register' || to.path === '/login' || to.path === '/h5/order') {
-        if (to.name === 'h5Order') {
-            next({path:'/h5/auth'});
-        } else {
-            // next();
+    if(to.name === 'login' || to.name === 'register') {
+        next();
+    } else if(to.name === 'h5Auth') {
+        var ua = window.navigator.userAgent.toLowerCase();
+        //判断是不是微信
+        if (ua.match(/MicroMessenger/i) == 'micromessenger' ) {
+            next({
+                name:'wechatOrder',
+                query:{
+                    merchant_id:1,
+                    table:1,
+                    seat:1
+                }
+            });
         }
+        //判断是不是支付宝
+        if (ua.match(/AlipayClient/i) == 'alipayclient') {
+            next({
+                name:'alipayOrder',
+                query:{
+                    merchant_id:1,
+                    table:1,
+                    seat:1
+                }
+            });
+        }
+        // console.log(to.query.merchant_id);
+        // 当前路由的merchant_id
+        let merchant_id = to.query.merchant_id;
+        let table_id = to.query.table_id;
+        let seat_id = to.query.seat_id;
+
+        next({
+            name:'wechatOrder',
+            query:{
+                merchant_id:merchant_id,
+                table_id:table_id,
+                seat_id:seat_id
+            }
+        });
+    } else if(to.path === '/h5/order') {
+        next();
     } else {
         if (! sessionStorage.getItem('token') || sessionStorage.getItem('token') == null) {
             // next({path:'/login'});
