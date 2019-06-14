@@ -23,6 +23,8 @@ class OrderController extends Controller
     public function dishList(Request $request)
     {
         try {
+            H5Controller::getCode();
+
             $data = Dish::where('merchant_id', $request->merchant_id)
                 ->get();
 

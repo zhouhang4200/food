@@ -11,7 +11,7 @@ class H5Controller extends Controller
 {
     function index()
     {
-        H5Controller::getCode();
+//        H5Controller::getCode();
 
         return view('vue');
     }
@@ -20,10 +20,11 @@ class H5Controller extends Controller
     {
         try {
             $config = [
-//                'scope'  => 'snsapi_base',
+                'app_id' => config('pay.wechat.app_id'),
+                'scope'  => 'snsapi_base',
                 'oauth'  => [
-                    'scopes'        => ['snsapi_userinfo'],
-//                    'response_type' => 'code',
+                    'scopes'        => ['snsapi_base'],
+                    'response_type' => 'code',
                     'callback'      => config('app.h5_domain') . '/h5/callback',
                 ],
             ];
@@ -33,7 +34,7 @@ class H5Controller extends Controller
 
             myLog('code_response', ['data' => $oauth]);
 
-            return $oauth;
+//            return $oauth;
         } catch (\Exception $e) {
             myLog('code_error', ['data' => '[' . $e->getLine() . ']' . $e->getMessage()]);
         }
