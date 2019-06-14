@@ -34,11 +34,12 @@ class H5Controller extends Controller
 
                     if (isset($result['openid']) && $result['openid']) {
                         session('open_id', $result['openid']);
+                        myLog('openid_response', ['user' => $result['openid']]);
+
+                        return view('vue');
                     } else {
                         throw new \Exception('openid 获取失败！');
                     }
-
-                    return view('vue');
                 } else {
                     // 静默授权，跳转获取 code
                     $url = sprintf("https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_base#wechat_redirect",
