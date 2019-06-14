@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\H5;
 
+use EasyWeChat\Work\Application;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,15 +16,21 @@ class H5Controller extends Controller
 
     public static function getCode()
     {
-        $client = new Client();
+        try {
+            $config = [
+                'oauth' => [
+                    'scopes'   => ['snsapi_userinfo'],
+                    'callback' => '/h5/callback',
+                ],
+            ];
 
-        $response = $client->request('post', 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.config('wechat.base_url.app_id').'&redirect_uri='.config('wechat.base_url.callback_url').'&response_type=code&scope=SCOPE&state=STATE', [
-            'multipart' => [],
-        ]);
+            $app = new Application($config);
+            $oauth = $app->oauth->redirect();
 
-        $result = $response->getBody()->getContents();
-
-        myLog('code_response', ['result' => $result]);
+            myLog('code_response', ['data' => $oauth]);
+        } catch (\Exception $e) {
+            myLog('code_error', ['data' => '['.$e->getLine().']'.$e->getMessage()]);
+        }
     }
 
     public function callback()

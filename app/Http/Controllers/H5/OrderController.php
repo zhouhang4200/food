@@ -100,7 +100,7 @@ class OrderController extends Controller
 
             // 支付
             if ($channel == 1) { # 微信支付
-                $payPar = Pay::wechat(config('wechat.base_config'))->mp([
+                $payPar = Pay::wechat(config('pay.wechat'))->mp([
                     'out_trade_no' => $order->trade_no,           // 订单号
                     'total_fee' => $order->amount,              // 订单金额，**单位：分**
                     'body' => '点餐订单支付',                   // 订单描述
@@ -129,7 +129,7 @@ class OrderController extends Controller
 //
 //                return response()->ajax(1, 'success', ['channel' => 1, 'trade_no' => $order->trade_no, 'par' => $payPar]);
             } elseif ($channel == 2) { # 支付宝支付
-                $payPar = Pay::alipay(config('ali.base_config'))->wap([
+                $payPar = Pay::alipay(config('pay.ali'))->wap([
                     'out_trade_no' => $order->trade_no,
                     'total_amount' => $order->amount, // 单位元
                     'subject' => '点餐订单支付',
