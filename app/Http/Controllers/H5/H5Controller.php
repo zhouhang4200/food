@@ -21,7 +21,7 @@ class H5Controller extends Controller
         try {
             // 静默授权，跳转获取 code
             $url = sprintf("https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_base#wechat_redirect",
-                config('pay.wechat.app_id'), urlencode(config('app.h5_domain') . '/h5/callback'));
+                config('pay.wechat.app_id'), urlencode('http://'.config('app.h5_domain') . '/h5/callback'));
             Header("Location: $url");
             exit();
 //            $result = redirect($url);
