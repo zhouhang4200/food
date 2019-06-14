@@ -23,10 +23,10 @@ class H5Controller extends Controller
             $url = sprintf("https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_base#wechat_redirect",
                 config('pay.wechat.app_id'), urlencode('http://'.config('app.h5_domain') . '/h5/callback'));
             Header("Location: $url");
-            exit();
+//            exit();
 //            $result = redirect($url);
 
-            myLog('code_response', ['data' => $result]);
+//            myLog('code_response', ['data' => $result]);
 
 //            $config = [
 //                'app_id' => config('pay.wechat.app_id'),
@@ -51,8 +51,8 @@ class H5Controller extends Controller
         }
     }
 
-    public function callback()
+    public function callback(Request $request)
     {
-        myLog('callback_response', ['result' => 'success']);
+        myLog('callback_response', ['result' => $request->input('code', '')]);
     }
 }
