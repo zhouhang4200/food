@@ -102,15 +102,15 @@
         },
         computed: {},
         mounted() {
-            let code=this.getUrlKey("code");
-            if(code){
-                console.log(code);
-                //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-                this.getOpenIdApi(code);
-            }else{
-                console.log('code');
-                this.getCodeApi("123");
-            }
+            // let code=this.getUrlKey("code");
+            // if(code){
+            //     console.log(code);
+            //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
+            //     this.getOpenIdApi(code);
+            // }else{
+            //     console.log('code');
+            //     this.getCodeApi("123");
+            // }
             this.dishes();
         },
         methods: {

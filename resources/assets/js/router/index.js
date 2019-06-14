@@ -25,6 +25,13 @@ const router = new Router({
             component: resolve => void(require(['../components/auth/Login'], resolve)),
         },
         {
+            name: "auth",
+            menu: false,
+            path: "/h5/auth",
+            meta:{title:'身份认证'},
+            component: resolve => void(require(['../components/h5/Auth'], resolve)),
+        },
+        {
             name: "h5Order",
             menu: false,
             path: "/h5/order/:merchant_id/:table_id/:seat_id",
@@ -79,8 +86,12 @@ function canVisit(to) {
 
 //vue-router 前置拦截器
 router.beforeEach((to, from, next) => {
-    if(to.name === 'login' || to.name === 'register' || to.path === '/login' || to.name === 'h5Order' || to.path === '/h5/order') {
-        next();
+    if(to.name === 'login' || to.name === 'register' || to.path === '/login' || to.path === '/h5/order') {
+        if (to.path === '/h5/order') {
+            next({path:'/h5/auth'});
+        } else {
+            next();
+        }
     } else {
         if (! sessionStorage.getItem('token') || sessionStorage.getItem('token') == null) {
             // next({path:'/login'});
