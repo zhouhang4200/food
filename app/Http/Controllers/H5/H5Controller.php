@@ -11,7 +11,7 @@ class H5Controller extends Controller
 {
     function index()
     {
-        H5Controller::getCode();
+//        H5Controller::getCode();
 
         return view('vue');
     }
