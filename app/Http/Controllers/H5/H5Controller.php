@@ -33,7 +33,7 @@ class H5Controller extends Controller
                     if (isset($result['openid']) && $result['openid']) {
                         session('open_id', $result['openid']);
                     } else {
-                        throw new Exception('openid 获取失败！');
+                        throw new \Exception('openid 获取失败！');
                     }
 
                     myLog('user_response', ['user' => $result]);
