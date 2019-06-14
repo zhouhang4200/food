@@ -36,7 +36,7 @@ class H5Controller extends Controller
                         myLog('user_response', ['user' => $result]);
 
                         if (isset($result['openid']) && $result['openid']) {
-                            session('open_id', $result['openid']);
+                            $request->session()->put('open_id', $result['openid']);
                             myLog('openid_response', ['openid' => $result['openid']]);
 
                             return view('vue');
