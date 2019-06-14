@@ -18,7 +18,7 @@ class H5Controller extends Controller
                 if (! session('open_id')) {
                     $code = $request->input('code', ''); // 获取微信授权的code
 
-                    if ($code && session('code') && session('code') != $code) {
+                    if ($code && session('code') != $code) {
                         session()->put('code', $code);
 
                         myLog('code_response', ['code' => $code]);
