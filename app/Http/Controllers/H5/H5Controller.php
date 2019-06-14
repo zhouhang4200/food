@@ -34,7 +34,7 @@ class H5Controller extends Controller
 
             myLog('code_response', ['data' => $oauth]);
 
-//            return $oauth;
+            return $oauth;
         } catch (\Exception $e) {
             myLog('code_error', ['data' => '[' . $e->getLine() . ']' . $e->getMessage()]);
         }
