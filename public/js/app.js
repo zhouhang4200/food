@@ -45150,12 +45150,16 @@ router.beforeEach(function (to, from, next) {
         var ua = window.navigator.userAgent.toLowerCase();
         //判断是不是微信
         if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+            var _merchant_id = to.query.merchant_id;
+            var _table_id = to.query.table_id;
+            var _seat_id = to.query.seat_id;
+
             next({
                 name: 'wechatOrder',
                 query: {
-                    merchant_id: 1,
-                    table: 1,
-                    seat: 1
+                    merchant_id: _merchant_id,
+                    table_id: _table_id,
+                    seat_id: _seat_id
                 }
             });
         }
