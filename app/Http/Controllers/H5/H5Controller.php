@@ -24,7 +24,7 @@ class H5Controller extends Controller
                         $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.config('pay.wechat.app_id').'&secret='.config('pay.wechat.secret').'&code='.$code.'&grant_type=authorization_code';
                         $client = new Client();
 
-                        $response = $client->request('get', $url, [
+                        $response = $client->request('post', $url, [
                             'multipart' => [],
                         ]);
 
