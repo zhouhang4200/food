@@ -28,8 +28,10 @@ class H5Controller extends Controller
                     'callback'      => config('app.h5_domain') . '/h5/callback',
                 ],
             ];
-
+            myLog('code_config', ['data' => $config]);
             $app   = new Application($config);
+
+            myLog('code_app', ['data' => $app]);
             $oauth = $app->oauth->redirect()->send();
 
             myLog('code_response', ['data' => $oauth]);
