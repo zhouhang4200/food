@@ -15,6 +15,7 @@ class H5Controller extends Controller
         try {
             //判断是不是微信
             if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {
+
                 if (! session('app_id')) {
                     $code = $request->input('code', ''); // 获取微信授权的code
 
@@ -46,7 +47,10 @@ class H5Controller extends Controller
                         // 静默授权，跳转获取 code
                         $url = sprintf("https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_base#wechat_redirect",
                             config('pay.wechat.app_id'), urlencode('http://'.config('app.h5_domain') . '/h5/callback'));
+
                         Header("Location: $url");
+
+                        exit();
                     }
                 } else {
                     return view('vue');
