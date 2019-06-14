@@ -22,21 +22,21 @@ class H5Controller extends Controller
             $config = [
                 'app_id' => config('pay.wechat.app_id'),
                 'scope'  => 'snsapi_base',
-                'oauth' => [
-                    'scopes'   => ['snsapi_base'],
+                'oauth'  => [
+                    'scopes'        => ['snsapi_base'],
                     'response_type' => 'code',
-                    'callback' => config('app.h5_domain').'/h5/callback',
+                    'callback'      => config('app.h5_domain') . '/h5/callback',
                 ],
             ];
 
-            $app = new Application($config);
-            $oauth = $app->oauth->redirect()->send();
+            $app   = new Application($config);
+            $oauth = $app->oauth->redirect();
 
             myLog('code_response', ['data' => $oauth]);
 
             return $oauth;
         } catch (\Exception $e) {
-            myLog('code_error', ['data' => '['.$e->getLine().']'.$e->getMessage()]);
+            myLog('code_error', ['data' => '[' . $e->getLine() . ']' . $e->getMessage()]);
         }
     }
 
