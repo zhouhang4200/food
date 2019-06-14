@@ -87,7 +87,7 @@ function canVisit(to) {
 //vue-router 前置拦截器
 router.beforeEach((to, from, next) => {
     if(to.name === 'login' || to.name === 'register' || to.path === '/login' || to.path === '/h5/order') {
-        if (to.path === '/h5/order') {
+        if (to.name === 'h5Order') {
             next({path:'/h5/auth'});
         } else {
             next();
