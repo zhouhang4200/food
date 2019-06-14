@@ -90,7 +90,7 @@ router.beforeEach((to, from, next) => {
         if (to.name === 'h5Order') {
             next({path:'/h5/auth'});
         } else {
-            next();
+            // next();
         }
     } else {
         if (! sessionStorage.getItem('token') || sessionStorage.getItem('token') == null) {
