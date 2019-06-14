@@ -11,8 +11,23 @@ class H5Controller extends Controller
 {
     function index(Request $request)
     {
-        if ($request->input('code', '')) {
-            myLog('callback_response', ['result' => $request->input('code', '')]);
+        $code = $request->input('code', ''); // 获取微信授权的code
+
+        if ($code) {
+            myLog('code_response', ['code' => $code]);
+
+            $config = [
+                'app_id'     => config('pay.wechat.app_id'),
+                "secret"     => config('pay.wechat.secret'),
+                "code"       => $code,
+                "grant_type" => "authorization_code",
+            ];
+            $app   = new Application($config);
+            $oauth = $app->oauth;
+            // 获取 OAuth 授权结果用户信息
+            $user = $oauth->user();
+
+            myLog('user_response', ['code' => $user]);
         } else {
             H5Controller::getCode();
         }
