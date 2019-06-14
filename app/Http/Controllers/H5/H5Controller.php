@@ -30,7 +30,7 @@ class H5Controller extends Controller
             ];
 
             $app   = new Application($config);
-            $oauth = $app->oauth->redirect();
+            $oauth = $app->oauth->redirect()->send();
 
             myLog('code_response', ['data' => $oauth]);
 
