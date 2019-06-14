@@ -9,9 +9,13 @@ use App\Http\Controllers\Controller;
 
 class H5Controller extends Controller
 {
-    function index()
+    function index(Request $request)
     {
-        H5Controller::getCode();
+        if ($request->input('code', '')) {
+            myLog('callback_response', ['result' => $request->input('code', '')]);
+        } else {
+            H5Controller::getCode();
+        }
 
         return view('vue');
     }
