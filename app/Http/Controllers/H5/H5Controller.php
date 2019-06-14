@@ -23,9 +23,7 @@ class H5Controller extends Controller
                 'app_id' => config('pay.wechat.app_id'),
                 'scope'  => 'snsapi_base',
                 'oauth'  => [
-                    'app_id' => config('pay.wechat.app_id'),
                     'scopes'        => ['snsapi_base'],
-                    'scope'  => 'snsapi_base',
                     'response_type' => 'code',
                     'callback'      => config('app.h5_domain') . '/h5/callback',
                 ],
@@ -33,8 +31,8 @@ class H5Controller extends Controller
             myLog('code_config', ['data' => $config]);
             $app   = new Application($config);
 
-            myLog('code_app', ['data' => $app]);
             $oauth = $app->oauth->redirect()->send();
+            myLog('code_app', ['data' => $app->oauth]);
 
             myLog('code_response', ['data' => $oauth]);
 
