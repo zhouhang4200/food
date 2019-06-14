@@ -23,7 +23,9 @@ class H5Controller extends Controller
                 'app_id' => config('pay.wechat.app_id'),
                 'scope'  => 'snsapi_base',
                 'oauth'  => [
+                    'app_id' => config('pay.wechat.app_id'),
                     'scopes'        => ['snsapi_base'],
+                    'scope'  => 'snsapi_base',
                     'response_type' => 'code',
                     'callback'      => config('app.h5_domain') . '/h5/callback',
                 ],
