@@ -92,6 +92,16 @@
             };
         },
         created() {
+            // let code=getUrlKey("code");
+            // if(code){
+            //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
+            //     this.getOpenIdApi(code);
+            // }else{
+            //     this.getCodeApi("123");
+            // }
+        },
+        computed: {},
+        mounted() {
             let code=getUrlKey("code");
             if(code){
                 //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
@@ -99,9 +109,6 @@
             }else{
                 this.getCodeApi("123");
             }
-        },
-        computed: {},
-        mounted() {
             this.dishes();
         },
         methods: {
@@ -114,6 +121,7 @@
             },
             getOpenIdApi(code) {
                 this.$api.getopenId({code:code}).then(res => {
+                    console.log(123122312);
                     if (res.status === 1) {
                         console.log('pay_success');
                     } else if (res.status === 3) {
