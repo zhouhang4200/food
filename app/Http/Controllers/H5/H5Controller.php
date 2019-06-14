@@ -18,7 +18,9 @@ class H5Controller extends Controller
                 if (! session('open_id')) {
                     $code = $request->input('code', ''); // 获取微信授权的code
 
-                    if ($code) {
+                    if ($code && session('code') && session('code') != $code) {
+                        session()->put('code', $code);
+
                         myLog('code_response', ['code' => $code]);
 
                         $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.config('pay.wechat.app_id').'&secret='.config('pay.wechat.secret').'&code='.$code.'&grant_type=authorization_code';
