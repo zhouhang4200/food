@@ -180,7 +180,7 @@ return [
         //
         App\Providers\ResponseMacroServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-//        Overtrue\LaravelWeChat\ServiceProvider::class,
+        Overtrue\LaravelWeChat\ServiceProvider::class,
 
     ],
 
@@ -231,7 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-//        'EasyWeChat' => Overtrue\LaravelWeChat\Facade::class,
+        'EasyWeChat' => Overtrue\LaravelWeChat\Facade::class,
 
     ],
 
