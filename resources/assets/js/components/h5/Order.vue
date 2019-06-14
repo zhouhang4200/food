@@ -102,7 +102,7 @@
         },
         computed: {},
         mounted() {
-            let code=getUrlKey("code");
+            let code=this.getUrlKey("code");
             if(code){
                 console.log(code);
                 //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
