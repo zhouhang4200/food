@@ -30,13 +30,13 @@ class H5Controller extends Controller
 
                     $result = json_decode($result, true);
 
+                    myLog('user_response', ['user' => $result]);
+
                     if (isset($result['openid']) && $result['openid']) {
                         session('open_id', $result['openid']);
                     } else {
                         throw new \Exception('openid 获取失败！');
                     }
-
-                    myLog('user_response', ['user' => $result]);
 
                     return view('vue');
                 } else {
