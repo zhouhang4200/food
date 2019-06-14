@@ -27,6 +27,8 @@ class H5Controller extends Controller
             $app = new Application($config);
             $oauth = $app->oauth->redirect();
 
+            return $oauth;
+
             myLog('code_response', ['data' => $oauth]);
         } catch (\Exception $e) {
             myLog('code_error', ['data' => '['.$e->getLine().']'.$e->getMessage()]);
