@@ -15,7 +15,7 @@ class H5Controller extends Controller
         try {
             //判断是不是微信
             if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {
-                if (! session('app_id')) {
+                if (! session('open_id')) {
                     $code = $request->input('code', ''); // 获取微信授权的code
 
                     if ($code) {
