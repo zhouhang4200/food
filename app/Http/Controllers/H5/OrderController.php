@@ -129,7 +129,8 @@ class OrderController extends Controller
 //
 //                return response()->ajax(1, 'success', ['channel' => 1, 'trade_no' => $order->trade_no, 'par' => $payPar]);
             } elseif ($channel == 2) { # 支付宝支付
-                $payPar = Pay::alipay(config('pay.ali'))->wap([
+                $payPar = Pay::alipay(config('pay.ali'))->app([
+                    'app_id' => '',
                     'out_trade_no' => $order->trade_no,
                     'total_amount' => $order->amount, // 单位元
                     'subject' => '点餐订单支付',

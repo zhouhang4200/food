@@ -20,7 +20,7 @@ class H5Controller extends Controller
     {
         try {
             $config = [
-                'appid' => config('pay.wechat.app_id'),
+                'app_id' => config('pay.wechat.app_id'),
                 'scope'  => 'snsapi_base',
                 'oauth'  => [
                     'scopes'        => ['snsapi_base'],
