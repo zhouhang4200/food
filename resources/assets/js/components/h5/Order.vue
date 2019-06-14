@@ -114,6 +114,9 @@
             this.dishes();
         },
         methods: {
+            getUrlKey(name){//获取url 参数
+                return decodeURIComponent((new RegExp('[?|&]'+name+'='+'([^&;]+?)(&|#|;|$)').exec(location.href)||[,""])[1].replace(/\+/g,'%20'))||null;
+            },
             getCodeApi(state) {//获取code
                 let urlNow=encodeURIComponent(window.location.href);
                 let scope='snsapi_base';    //snsapi_userinfo   //静默授权 用户无感知
