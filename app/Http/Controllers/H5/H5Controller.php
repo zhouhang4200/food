@@ -16,18 +16,19 @@ class H5Controller extends Controller
         if ($code) {
             myLog('code_response', ['code' => $code]);
 
-            $config = [
-                'app_id'     => config('pay.wechat.app_id'),
-                "secret"     => config('pay.wechat.secret'),
-                "code"       => $code,
-                "grant_type" => "authorization_code",
-            ];
-            $app   = new Application($config);
-            $oauth = $app->oauth;
-            // 获取 OAuth 授权结果用户信息
-            $user = $oauth->user();
+            $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$this->_appid.'&secret='.$this->_appsecret.'&code='.$code.'&grant_type=authorization_code';
+            $client = new Client();
 
-            myLog('user_response', ['code' => $user]);
+            $response = $client->request('get', $url, [
+                'multipart' => [],
+            ]);
+
+            $result = $response->getBody()->getContents();
+
+            $result = json_decode($result);
+
+
+            myLog('user_response', ['user' => $result]);
         } else {
             H5Controller::getCode();
         }
