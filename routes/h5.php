@@ -24,4 +24,4 @@ Route::post('/alipay/return', 'OrderController@alipayReturn');
 Route::post('/wechat/notify', 'OrderController@wechatNotify');
 Route::post('/wechat/return', 'OrderController@wechatReturn');
 // 获取 open_id
-Route::get('/callback', 'H5ControllerController@callback'); // 获取code回调地址
+Route::get('/openid', 'H5ControllerController@getOpenId'); // 获取code回调地址

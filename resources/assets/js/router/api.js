@@ -19,6 +19,10 @@ export default {
     h5CustomerDishDetail(params) {
         return post('/h5/customer/detail', params);
     },
+    // 获取openid
+    getOpenId(params) {
+        return post('/h5/openid', params);
+    },
     // h5 支付
     h5Pay(params) {
         return post('/h5/pay', params);
@@ -47,4 +51,5 @@ export default {
     dishDelete(params) {
         return post('/dish/delete', params);
     }
+
 }

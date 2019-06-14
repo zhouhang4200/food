@@ -92,12 +92,37 @@
             };
         },
         created() {
+            let code=getUrlKey("code");
+            if(code){
+                //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
+                this.getOpenIdApi(code);
+            }else{
+                this.getCodeApi("123");
+            }
         },
         computed: {},
         mounted() {
             this.dishes();
         },
         methods: {
+            getCodeApi(state) {//获取code
+                let urlNow=encodeURIComponent(window.location.href);
+                let scope='snsapi_base';    //snsapi_userinfo   //静默授权 用户无感知
+                let appid='wx5e0fd315aff830a4';
+                let url=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
+                window.location.replace(url);
+            },
+            getOpenIdApi(code) {
+                this.$api.getopenId({code:code}).then(res => {
+                    if (res.status === 1) {
+                        console.log('pay_success');
+                    } else if (res.status === 3) {
+                        // Toast.fail(res.message);
+                    } else {
+                        // Toast.fail(res.message);
+                    }
+                });
+            },
             sub(dish) {
                 let dishId = dish.id;
                 let id='number'+ dishId;
