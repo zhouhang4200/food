@@ -28,7 +28,7 @@ class H5Controller extends Controller
 
                     $result = $response->getBody()->getContents();
 
-                    $result = json_decode($result);
+                    $result = json_decode($result, true);
 
                     if (isset($result['openid']) && $result['openid']) {
                         session('open_id', $result['openid']);
