@@ -42,7 +42,7 @@ class H5Controller extends Controller
                         myLog('three-no-openid', ['original_url' => $original_url, 'cookie' => session('open_id'), 'vue' => $vue]);
 
                         $url = sprintf("https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_base#wechat_redirect",
-                            config('pay.wechat.app_id'), urlencode('http://'.config('app.h5_domain') . '/auth/wechat/code/callback?original_url'.$original_url));
+                            config('pay.wechat.app_id'), urlencode('http://'.config('app.h5_domain') . '/auth/wechat/code/callback?original_url='.$original_url));
 
                         Header("Location: $url");
 
