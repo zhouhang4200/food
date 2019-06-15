@@ -65,7 +65,7 @@ class OrderController extends Controller
             $amount = $request->input('amount');
 
             // 获取点餐详情
-            $details = $request->input('detail');
+            $details = json_decode($request->input('detail'), true);
 
             // 桌号
             $table_id = $request->input('table_id');
