@@ -102,49 +102,8 @@ function canVisit(to) {
 router.beforeEach((to, from, next) => {
     if(to.name === 'login' || to.name === 'register') {
         next();
-    } else if(to.name === 'h5Auth') {
-        // var ua = window.navigator.userAgent.toLowerCase();
-        // //判断是不是微信
-        // if (ua.match(/MicroMessenger/i) == 'micromessenger' ) {
-        //     let merchant_id = to.query.merchant_id;
-        //     let table_id = to.query.table_id;
-        //     let seat_id = to.query.seat_id;
-        //
-        //     next({
-        //         name:'wechatOrder',
-        //         query:{
-        //             merchant_id:merchant_id,
-        //             table_id:table_id,
-        //             seat_id:seat_id
-        //         }
-        //     });
-        // }
-        // //判断是不是支付宝
-        // if (ua.match(/AlipayClient/i) == 'alipayclient') {
-        //     next({
-        //         name:'alipayOrder',
-        //         query:{
-        //             merchant_id:1,
-        //             table:1,
-        //             seat:1
-        //         }
-        //     });
-        // }
-        // // console.log(to.query.merchant_id);
-        // // 当前路由的merchant_id
-        // let merchant_id = to.query.merchant_id;
-        // let table_id = to.query.table_id;
-        // let seat_id = to.query.seat_id;
+    } else if(to.name === 'h5Auth' || to.name === 'wechatOrder' || to.name === 'alipayOrder') {
         next();
-
-        // next({
-        //     name:'wechatOrder',
-        //     query:{
-        //         merchant_id:merchant_id,
-        //         table_id:table_id,
-        //         seat_id:seat_id
-        //     }
-        // });
     } else if(to.name === 'h5Order') {
         let ua = window.navigator.userAgent.toLowerCase();
         //判断是不是微信
@@ -161,9 +120,7 @@ router.beforeEach((to, from, next) => {
                     seat_id:seat_id
                 }
             });
-        }
-        //判断是不是支付宝
-        if (ua.match(/AlipayClient/i) == 'alipayclient') {
+        } else if (ua.match(/AlipayClient/i) == 'alipayclient') {         //判断是不是支付宝
             next({
                 name:'alipayOrder',
                 query:{
@@ -172,22 +129,22 @@ router.beforeEach((to, from, next) => {
                     seat:1
                 }
             });
+        } else {
+            let merchant_id = to.query.merchant_id;
+            let table_id = to.query.table_id;
+            let seat_id = to.query.seat_id;
+
+            next({
+                name:'wechatOrder',
+                query:{
+                    merchant_id:merchant_id,
+                    table_id:table_id,
+                    seat_id:seat_id,
+                    open_id:open_id
+                }
+            });
         }
 
-        let merchant_id = to.query.merchant_id;
-        let table_id = to.query.table_id;
-        let seat_id = to.query.seat_id;
-        let open_id = to.query.open_id;
-
-        next({
-            name:'wechatOrder',
-            query:{
-                merchant_id:merchant_id,
-                table_id:table_id,
-                seat_id:seat_id,
-                open_id:open_id
-            }
-        });
     } else if(to.name === 'dish' || to.name === 'order') {
         if (! sessionStorage.getItem('token') || sessionStorage.getItem('token') == null) {
             // next({path:'/login'});
