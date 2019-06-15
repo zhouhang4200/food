@@ -221,7 +221,8 @@
                     params.detail = this.customerDishDetail;
                     params.open_id = this.$route.query.open_id;
 
-                    this.$api.h5Pay({amount:this.totalAmount, detail:this.customerDishDetail, open_id:this.$route.query.open_id}).then(res => {
+                    this.$api.h5Pay({params}).then(res => {
+                    // this.$api.h5Pay({amount:this.totalAmount, detail:this.customerDishDetail, open_id:this.$route.query.open_id}).then(res => {
                         if (res.status === 1) {
                             console.log('pay_success');
                         } else if (res.status === 3) {

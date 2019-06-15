@@ -23,12 +23,9 @@ class OrderController extends Controller
     public function dishList(Request $request)
     {
         try {
-//            H5Controller::getCode();
-
             $data = Dish::where('merchant_id', $request->input('merchant_id'))
                 ->get();
 
-//            return response()->json(['status' => 1, 'data' => $request->input('merchant_id')]);
             return response()->json(['status' => 1, 'data' => $data]);
         } catch (\Exception $e) {
             return response()->json(['status' => 0, 'data' => $e->getMessage()]);
@@ -81,7 +78,7 @@ class OrderController extends Controller
             // open_id
             $open_id = $request->input('open_id');
 
-            myLog('pay', ['open_id' => $open_id]);
+            myLog('pay', ['request' => $request->all()]);
 
             foreach ($details as $detail) {
                 $detail['table_id'] = $table_id;
