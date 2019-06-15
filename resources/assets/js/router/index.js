@@ -146,6 +146,7 @@ router.beforeEach((to, from, next) => {
         //     }
         // });
     } else if(to.name === 'h5Order') {
+        let ua = window.navigator.userAgent.toLowerCase();
         //判断是不是微信
         if (ua.match(/MicroMessenger/i) == 'micromessenger' ) {
             let merchant_id = to.query.merchant_id;

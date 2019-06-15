@@ -45190,6 +45190,7 @@ router.beforeEach(function (to, from, next) {
         //     }
         // });
     } else if (to.name === 'h5Order') {
+        var ua = window.navigator.userAgent.toLowerCase();
         //判断是不是微信
         if (ua.match(/MicroMessenger/i) == 'micromessenger') {
             var merchant_id = to.query.merchant_id;
