@@ -33,7 +33,9 @@ class H5Controller extends Controller
             // 判断当前路由是不是下单选菜页面
             if ($vue == 'order') {
                 if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { //判断是不是微信
+                    myLog('second-wechat', ['query' => $query, 'cookie' => Cookie::get('open_id'), 'vue' => $vue]);
                     if (! Cookie::get('open_id')) { // 不存在openid
+                        myLog('three-no-openid', ['query' => $query, 'cookie' => Cookie::get('open_id'), 'vue' => $vue]);
 //                        $code = $request->input('code', ''); // 获取微信授权的code
 //
 //                        if ($code) {
@@ -71,11 +73,14 @@ class H5Controller extends Controller
                             exit();
 //                        }
                     } else { // 存在oepnid 则让通行
+                        myLog('three-have-openid', ['query' => $query, 'cookie' => Cookie::get('open_id'), 'vue' => $vue]);
                         return view('vue');
                     }
                 } elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient') !== false) { // 支付宝
+                    myLog('second-alipay', ['query' => $query, 'cookie' => Cookie::get('open_id'), 'vue' => $vue]);
                     return view('vue');
                 } else { // 都不是
+                    myLog('second-none', ['query' => $query, 'cookie' => Cookie::get('open_id'), 'vue' => $vue]);
                     return view('vue');
                 }
             }
