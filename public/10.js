@@ -317,6 +317,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                 params.amount = this.totalAmount;
                 params.detail = this.customerDishDetail;
                 params.open_id = this.$route.query.open_id;
+                params.merchant_id = this.$route.query.merchant_id;
+                params.seat_id = this.$route.query.seat_id;
+                params.table_id = this.$route.query.table_id;
                 params.query = this.$route.query;
                 console.log(params, this.$route.query);
                 this.$api.h5Pay({ params: params }).then(function (res) {

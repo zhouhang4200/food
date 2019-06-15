@@ -65,7 +65,7 @@ class OrderController extends Controller
             $amount = $request->input('amount');
 
             // 获取点餐详情
-            $details = json_decode($request->input('detail'), true);
+            $details = $request->input('detail');
 
             // 桌号
             $table_id = $request->input('table_id');
@@ -78,14 +78,15 @@ class OrderController extends Controller
             // open_id
             $open_id = $request->input('open_id');
 
-            myLog('pay', ['request' => $request->all()]);
+            myLog('pay', ['amount' => $amount, 'details' => $details, 'table_id' => $table_id, 'seat_id' => $seat_id, 'merchant_id' => $merchant_id, 'open_id' => $open_id]);
 
-            foreach ($details as $detail) {
-                $detail['table_id'] = $table_id;
-                $detail['seat_id'] = $seat_id;
-                $detail['merchant_id'] = $merchant_id;
+            if (is_array($details) && count($details) > 0) {
+                foreach ($details as $detail) {
+                    $detail['table_id'] = $table_id;
+                    $detail['seat_id'] = $seat_id;
+                    $detail['merchant_id'] = $merchant_id;
+                }
             }
-
             //  创建订单
             $order = Order::create([
                 'trade_no' => $trade_no,
