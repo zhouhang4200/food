@@ -27,7 +27,7 @@ class H5Controller extends Controller
 //            die;Header("Location: http://www.baidu.com");
             // 获取网站query后缀
             $query = $request->getQueryString();
-            myLog('start', ['query' => $query, 'vue' => $vue]);
+            myLog('start', ['query' => $query, 'vue' => $vue, 'url' => $request->fullUrl()]);
 //            dd($request->getQueryString());
 //            dd(parse_url($request->fullUrl()));
             // 判断当前路由是不是下单选菜页面

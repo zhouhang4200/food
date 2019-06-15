@@ -219,6 +219,7 @@
                     let params = this.$route.params;
                     params.amount = this.totalAmount;
                     params.detail = this.customerDishDetail;
+                    params.open_id = this.$route.query.open_id;
 
                     this.$api.h5Pay(params).then(res => {
                         if (res.status === 1) {
