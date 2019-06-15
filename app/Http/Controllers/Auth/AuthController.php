@@ -15,7 +15,10 @@ class AuthController extends Controller
             $code = $request->input('code');
             $original_url = $request->input('original_url');
 
+            myLog('callback_first', ['code' => $code, 'original_url' => $original_url]);
+
             if ($code) {
+                myLog('callback_second', ['code' => $code, 'original_url' => $original_url]);
                 $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.config('pay.wechat.app_id').'&secret='.config('pay.wechat.secret').'&code='.$code.'&grant_type=authorization_code';
 
                 $client = new Client();
@@ -31,20 +34,20 @@ class AuthController extends Controller
                 myLog('wechat_openid_response', ['openid' => $result]);
 
                 if (isset($result['openid']) && $result['openid']) {
+                    myLog('callback_third', ['code' => $code, 'original_url' => $original_url, 'openid' => $result['openid']]);
+
                     cookie('open_id', $result['openid'], 5);
 
-                    myLog('wechat_openid', ['openid' => $result['openid'], 'cookie' => cookie('open_id')]);
+                    myLog('wechat_openid', ['openid' => $result['openid'], 'cookie' => Cookie::get('open_id')]);
 
                     Header("Location: $original_url");
                 } else {
-                    myLog('wechat_openid_error', ['data' => 'openid获取失败']);
+                    myLog('wechat_openid_no_openid', ['data' => 'openid获取失败']);
                 }
                 return response()->json(['status' => 1, 'data' => $code]);
-            } else {
-                return response()->json(['status' => 0, 'data' => $code]);
             }
 
-            myLog('wechat_code', ['data' => $code]);
+            myLog('callback_no_code', ['code' => $code, 'original_url' => $original_url]);
         } catch (\Exception $e) {
             myLog('wechat_code_error', ['data' => $e->getMessage()]);
         }
