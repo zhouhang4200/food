@@ -224,7 +224,7 @@
                     let seat_id = this.$route.query.seat_id;
                     let table_id = this.$route.query.table_id;
                     let query = this.$route.query;
-                    console.log(params, this.$route.query);
+
                     // this.$api.h5Pay({params}).then(res => {
                     this.$api.h5Pay({amount:amount, detail:detail, open_id:open_id, merchant_id:merchant_id, seat_id:seat_id, table_id:table_id, query:query}).then(res => {
                         if (res.status === 1) {

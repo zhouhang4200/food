@@ -320,7 +320,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                 var seat_id = this.$route.query.seat_id;
                 var table_id = this.$route.query.table_id;
                 var query = this.$route.query;
-                console.log(params, this.$route.query);
+
                 // this.$api.h5Pay({params}).then(res => {
                 this.$api.h5Pay({ amount: amount, detail: detail, open_id: open_id, merchant_id: merchant_id, seat_id: seat_id, table_id: table_id, query: query }).then(function (res) {
                     if (res.status === 1) {
