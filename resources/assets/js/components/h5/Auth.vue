@@ -24,7 +24,7 @@
             };
         },
         created() {
-            // this.getCode();
+            this.getCode();
         },
         computed: {},
         mounted() {
@@ -67,7 +67,11 @@
                     let openid ;
                     if (res.data.status === 0) {
                         openid = res.data;
-                        this.$router.push({ name: "h5Order" });
+                        this.$router.push({ name: "wechatOrder", query:{
+                                merchant_id:merchant_id,
+                                table_id:table_id,
+                                seat_id:seat_id
+                            }});
                     }else{
                         console.log(res);
                         return;
