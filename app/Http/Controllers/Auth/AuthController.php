@@ -13,7 +13,8 @@ class AuthController extends Controller
     {
         try {
             $code = $request->input('code');
-            $original_url = $request->input('original_url');
+
+            $original_url = urldecode($request->input('original_url'));
 
             myLog('callback_first', ['code' => $code, 'original_url' => $original_url]);
 

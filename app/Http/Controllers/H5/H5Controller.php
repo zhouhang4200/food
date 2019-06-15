@@ -37,12 +37,12 @@ class H5Controller extends Controller
 
                     if (! session('open_id')) { // 不存在openid
                         // 静默授权，跳转获取 code
-                        $original_url = 'http://'.config('app.h5_domain').'/h5/'.$vue.'?'.$query;
+                        $original_url = urlencode('http://'.config('app.h5_domain').'/h5/'.$vue.'?'.$query);
 
                         myLog('three-no-openid', ['original_url' => $original_url, 'cookie' => session('open_id'), 'vue' => $vue]);
 
                         $url = sprintf("https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_base#wechat_redirect",
-                            config('pay.wechat.app_id'), urlencode('http://'.config('app.h5_domain') . '/auth/wechat/code/callback?original_url='.$original_url));
+                            config('pay.wechat.app_id'), urlencode('http://'.config('app.h5_domain') . '/auth/wechat/code/callback?original_url'.$original_url));
 
                         Header("Location: $url");
 
