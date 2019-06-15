@@ -27,19 +27,19 @@ class H5Controller extends Controller
 //            die;Header("Location: http://www.baidu.com");
             // 获取网站query后缀
             $query = $request->getQueryString();
-            myLog('start', ['query' => $query, 'cookie' => session('open_id'), 'vue' => $vue]);
+            myLog('start', ['query' => $query, 'vue' => $vue]);
 //            dd($request->getQueryString());
 //            dd(parse_url($request->fullUrl()));
             // 判断当前路由是不是下单选菜页面
             if ($vue == 'order') {
                 if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { //判断是不是微信
-                    myLog('second-wechat', ['query' => $query, 'cookie' => session('open_id'), 'vue' => $vue]);
+                    myLog('second-wechat', ['query' => $query, 'vue' => $vue]);
 
-                    if (! session('open_id')) { // 不存在openid
+                    if (! $request->input('open_id')) { // 不存在openid
                         // 静默授权，跳转获取 code
                         $original_url = urlencode('http://'.config('app.h5_domain').'/h5/'.$vue.'?'.$query);
 
-                        myLog('three-no-openid', ['original_url' => $original_url, 'cookie' => session('open_id'), 'vue' => $vue]);
+                        myLog('three-no-openid', ['original_url' => $original_url, 'vue' => $vue]);
 
                         $url = sprintf("https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_base#wechat_redirect",
                             config('pay.wechat.app_id'), urlencode('http://'.config('app.h5_domain') . '/auth/wechat/code/callback?original_url='.$original_url));
@@ -48,14 +48,14 @@ class H5Controller extends Controller
 
                         exit();
                     } else { // 存在oepnid 则让通行
-                        myLog('three-have-openid', ['query' => $query, 'cookie' => session('open_id'), 'vue' => $vue]);
+                        myLog('three-have-openid', ['query' => $query, 'vue' => $vue]);
                         return view('vue');
                     }
                 } elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient') !== false) { // 支付宝
-                    myLog('second-alipay', ['query' => $query, 'cookie' => session('open_id'), 'vue' => $vue]);
+                    myLog('second-alipay', ['query' => $query, 'vue' => $vue]);
                     return view('vue');
                 } else { // 都不是
-                    myLog('second-none', ['query' => $query, 'cookie' => session('open_id'), 'vue' => $vue]);
+                    myLog('second-none', ['query' => $query, 'vue' => $vue]);
                     return view('vue');
                 }
             }
