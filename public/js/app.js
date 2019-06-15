@@ -45193,16 +45193,16 @@ router.beforeEach(function (to, from, next) {
         var ua = window.navigator.userAgent.toLowerCase();
         //判断是不是微信
         if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-            var merchant_id = to.query.merchant_id;
-            var table_id = to.query.table_id;
-            var seat_id = to.query.seat_id;
+            var _merchant_id = to.query.merchant_id;
+            var _table_id = to.query.table_id;
+            var _seat_id = to.query.seat_id;
 
             next({
                 name: 'wechatOrder',
                 query: {
-                    merchant_id: merchant_id,
-                    table_id: table_id,
-                    seat_id: seat_id
+                    merchant_id: _merchant_id,
+                    table_id: _table_id,
+                    seat_id: _seat_id
                 }
             });
         }
@@ -45218,7 +45218,20 @@ router.beforeEach(function (to, from, next) {
             });
         }
 
-        next();
+        var merchant_id = to.query.merchant_id;
+        var table_id = to.query.table_id;
+        var seat_id = to.query.seat_id;
+        var open_id = to.query.open_id;
+
+        next({
+            name: 'wechatOrder',
+            query: {
+                merchant_id: merchant_id,
+                table_id: table_id,
+                seat_id: seat_id,
+                open_id: open_id
+            }
+        });
     } else if (to.name === 'dish' || to.name === 'order') {
         if (!sessionStorage.getItem('token') || sessionStorage.getItem('token') == null) {
             // next({path:'/login'});
