@@ -103,7 +103,7 @@ class OrderController extends Controller
 
             // 支付
             if ($channel == 1) { # 微信支付
-                $payPar = Pay::wechat(config('pay.wechat'))->mp([
+                return Pay::wechat(config('pay.wechat'))->mp([
                     'out_trade_no' => $order->trade_no,           // 订单号
                     'total_fee' => $order->amount,              // 订单金额，**单位：分** 传过来的就是分
                     'body' => '点餐订单支付',                   // 订单描述
