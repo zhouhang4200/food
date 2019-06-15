@@ -311,12 +311,13 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             // console.log(Number(dish.amount), this.totalAmount, dish.amount);
         },
         onSubmit: function onSubmit() {
+            console.log(this.totalAmount);
             if (this.totalAmount > 0) {
                 var params = this.$route.params;
                 params.amount = this.totalAmount;
                 params.detail = this.customerDishDetail;
                 params.open_id = this.$route.query.open_id;
-
+                console.log(params, this.$route.query);
                 this.$api.h5Pay({ params: params }).then(function (res) {
                     // this.$api.h5Pay({amount:this.totalAmount, detail:this.customerDishDetail, open_id:this.$route.query.open_id}).then(res => {
                     if (res.status === 1) {

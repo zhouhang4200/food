@@ -215,12 +215,13 @@
                 // console.log(Number(dish.amount), this.totalAmount, dish.amount);
             },
             onSubmit() {
+                console.log(this.totalAmount);
                 if (this.totalAmount > 0) {
                     let params = this.$route.params;
                     params.amount = this.totalAmount;
                     params.detail = this.customerDishDetail;
                     params.open_id = this.$route.query.open_id;
-
+                    console.log(params, this.$route.query);
                     this.$api.h5Pay({params}).then(res => {
                     // this.$api.h5Pay({amount:this.totalAmount, detail:this.customerDishDetail, open_id:this.$route.query.open_id}).then(res => {
                         if (res.status === 1) {
