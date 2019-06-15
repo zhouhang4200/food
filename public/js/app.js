@@ -45180,13 +45180,15 @@ router.beforeEach(function (to, from, next) {
             var _merchant_id = to.query.merchant_id;
             var _table_id = to.query.table_id;
             var _seat_id = to.query.seat_id;
+            var _open_id = to.query.open_id;
 
             next({
                 name: 'wechatOrder',
                 query: {
                     merchant_id: _merchant_id,
                     table_id: _table_id,
-                    seat_id: _seat_id
+                    seat_id: _seat_id,
+                    open_id: _open_id
                 }
             });
         }

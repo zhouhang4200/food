@@ -135,6 +135,7 @@ router.beforeEach((to, from, next) => {
             let merchant_id = to.query.merchant_id;
             let table_id = to.query.table_id;
             let seat_id = to.query.seat_id;
+            let open_id = to.query.open_id;
 
             next({
                 name:'wechatOrder',
@@ -142,6 +143,7 @@ router.beforeEach((to, from, next) => {
                     merchant_id:merchant_id,
                     table_id:table_id,
                     seat_id:seat_id,
+                    open_id:open_id
                 }
             });
         }
