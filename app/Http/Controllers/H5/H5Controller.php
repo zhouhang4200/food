@@ -48,7 +48,8 @@ class H5Controller extends Controller
 
                         exit();
                     } else { // 存在oepnid 则让通行
-                        myLog('three-have-openid', ['query' => $query, 'vue' => $vue]);
+                        myLog('three-have-openid', ['query' => $query, 'vue' => $vue, 'url' => $request->fullUrl()]);
+
                         return view('vue');
                     }
                 } elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient') !== false) { // 支付宝

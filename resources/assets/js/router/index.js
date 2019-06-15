@@ -146,8 +146,33 @@ router.beforeEach((to, from, next) => {
         //     }
         // });
     } else if(to.name === 'h5Order') {
-        next();
-    } else {
+        //判断是不是微信
+        if (ua.match(/MicroMessenger/i) == 'micromessenger' ) {
+            let merchant_id = to.query.merchant_id;
+            let table_id = to.query.table_id;
+            let seat_id = to.query.seat_id;
+
+            next({
+                name:'wechatOrder',
+                query:{
+                    merchant_id:merchant_id,
+                    table_id:table_id,
+                    seat_id:seat_id
+                }
+            });
+        }
+        //判断是不是支付宝
+        if (ua.match(/AlipayClient/i) == 'alipayclient') {
+            next({
+                name:'alipayOrder',
+                query:{
+                    merchant_id:1,
+                    table:1,
+                    seat:1
+                }
+            });
+        }
+    } else if(to.name === 'dish' || to.name === 'order') {
         if (! sessionStorage.getItem('token') || sessionStorage.getItem('token') == null) {
             // next({path:'/login'});
             Vue.component('App', require('../components/Main.vue'));
@@ -156,6 +181,10 @@ router.beforeEach((to, from, next) => {
             Vue.component('App', require('../components/Main.vue'));
             next();
         }
+    } else {
+        next({
+            name:'h5Auth'
+        });
     }
 });
 
