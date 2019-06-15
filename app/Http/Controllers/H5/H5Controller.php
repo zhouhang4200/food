@@ -27,15 +27,15 @@ class H5Controller extends Controller
 //            die;Header("Location: http://www.baidu.com");
             // 获取网站query后缀
             $query = $request->getQueryString();
-            myLog('start', ['query' => $query, 'cookie' => Cookie::get('open_id'), 'vue' => $vue]);
+            myLog('start', ['query' => $query, 'cookie' => session('open_id'), 'vue' => $vue]);
 //            dd($request->getQueryString());
 //            dd(parse_url($request->fullUrl()));
             // 判断当前路由是不是下单选菜页面
             if ($vue == 'order') {
                 if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { //判断是不是微信
-                    myLog('second-wechat', ['query' => $query, 'cookie' => Cookie::get('open_id'), 'vue' => $vue]);
-                    if (! Cookie::get('open_id')) { // 不存在openid
-                        myLog('three-no-openid', ['query' => $query, 'cookie' => Cookie::get('open_id'), 'vue' => $vue]);
+                    myLog('second-wechat', ['query' => $query, 'cookie' => session('open_id'), 'vue' => $vue]);
+                    if (! session('open_id')) { // 不存在openid
+                        myLog('three-no-openid', ['query' => $query, 'cookie' => session('open_id'), 'vue' => $vue]);
 //                        $code = $request->input('code', ''); // 获取微信授权的code
 //
 //                        if ($code) {
@@ -73,14 +73,14 @@ class H5Controller extends Controller
                             exit();
 //                        }
                     } else { // 存在oepnid 则让通行
-                        myLog('three-have-openid', ['query' => $query, 'cookie' => Cookie::get('open_id'), 'vue' => $vue]);
+                        myLog('three-have-openid', ['query' => $query, 'cookie' => session('open_id'), 'vue' => $vue]);
                         return view('vue');
                     }
                 } elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient') !== false) { // 支付宝
-                    myLog('second-alipay', ['query' => $query, 'cookie' => Cookie::get('open_id'), 'vue' => $vue]);
+                    myLog('second-alipay', ['query' => $query, 'cookie' => session('open_id'), 'vue' => $vue]);
                     return view('vue');
                 } else { // 都不是
-                    myLog('second-none', ['query' => $query, 'cookie' => Cookie::get('open_id'), 'vue' => $vue]);
+                    myLog('second-none', ['query' => $query, 'cookie' => session('open_id'), 'vue' => $vue]);
                     return view('vue');
                 }
             }
