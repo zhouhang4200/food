@@ -45170,8 +45170,8 @@ router.beforeEach(function (to, from, next) {
                 name: 'alipayOrder',
                 query: {
                     merchant_id: 1,
-                    table: 1,
-                    seat: 1
+                    table_id: 1,
+                    seat_id: 1
                 }
             });
         } else {
@@ -45184,8 +45184,7 @@ router.beforeEach(function (to, from, next) {
                 query: {
                     merchant_id: _merchant_id,
                     table_id: _table_id,
-                    seat_id: _seat_id,
-                    open_id: open_id
+                    seat_id: _seat_id
                 }
             });
         }
@@ -45199,9 +45198,7 @@ router.beforeEach(function (to, from, next) {
             next();
         }
     } else {
-        next({
-            name: 'h5Auth'
-        });
+        next();
     }
 });
 

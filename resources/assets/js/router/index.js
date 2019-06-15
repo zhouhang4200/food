@@ -125,8 +125,8 @@ router.beforeEach((to, from, next) => {
                 name:'alipayOrder',
                 query:{
                     merchant_id:1,
-                    table:1,
-                    seat:1
+                    table_id:1,
+                    seat_id:1
                 }
             });
         } else {
@@ -140,7 +140,6 @@ router.beforeEach((to, from, next) => {
                     merchant_id:merchant_id,
                     table_id:table_id,
                     seat_id:seat_id,
-                    open_id:open_id
                 }
             });
         }
@@ -155,9 +154,7 @@ router.beforeEach((to, from, next) => {
             next();
         }
     } else {
-        next({
-            name:'h5Auth'
-        });
+        next();
     }
 });
 
