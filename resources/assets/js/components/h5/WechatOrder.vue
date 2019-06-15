@@ -221,6 +221,7 @@
                     params.amount = this.totalAmount;
                     params.detail = this.customerDishDetail;
                     params.open_id = this.$route.query.open_id;
+                    params.query = this.$route.query;
                     console.log(params, this.$route.query);
                     this.$api.h5Pay({params}).then(res => {
                     // this.$api.h5Pay({amount:this.totalAmount, detail:this.customerDishDetail, open_id:this.$route.query.open_id}).then(res => {
