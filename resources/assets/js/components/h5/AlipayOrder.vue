@@ -114,28 +114,6 @@
             this.dishes();
         },
         methods: {
-            getUrlKey(name){//获取url 参数
-                return decodeURIComponent((new RegExp('[?|&]'+name+'='+'([^&;]+?)(&|#|;|$)').exec(location.href)||[,""])[1].replace(/\+/g,'%20'))||null;
-            },
-            getCodeApi(state) {//获取code
-                let urlNow=encodeURIComponent(window.location.href);
-                let scope='snsapi_base';    //snsapi_userinfo   //静默授权 用户无感知
-                let appid='wx5e0fd315aff830a4';
-                let url=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
-                window.location.replace(url);
-            },
-            getOpenIdApi(code) {
-                this.$api.getopenId({code:code}).then(res => {
-                    console.log(123122312);
-                    if (res.status === 1) {
-                        console.log('pay_success');
-                    } else if (res.status === 3) {
-                        // Toast.fail(res.message);
-                    } else {
-                        // Toast.fail(res.message);
-                    }
-                });
-            },
             sub(dish) {
                 let dishId = dish.id;
                 let id='number'+ dishId;
@@ -219,6 +197,7 @@
                     let params = this.$route.params;
                     params.amount = this.totalAmount;
                     params.detail = this.customerDishDetail;
+                    params.open_id = this.$route.query.open_id;
 
                     this.$api.h5Pay(params).then(res => {
                         if (res.status === 1) {

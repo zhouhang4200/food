@@ -208,30 +208,6 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
     },
 
     methods: {
-        getUrlKey: function getUrlKey(name) {
-            //获取url 参数
-            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null;
-        },
-        getCodeApi: function getCodeApi(state) {
-            //获取code
-            var urlNow = encodeURIComponent(window.location.href);
-            var scope = 'snsapi_base'; //snsapi_userinfo   //静默授权 用户无感知
-            var appid = 'wx5e0fd315aff830a4';
-            var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + urlNow + '&response_type=code&scope=' + scope + '&state=' + state + '#wechat_redirect';
-            window.location.replace(url);
-        },
-        getOpenIdApi: function getOpenIdApi(code) {
-            this.$api.getopenId({ code: code }).then(function (res) {
-                console.log(123122312);
-                if (res.status === 1) {
-                    console.log('pay_success');
-                } else if (res.status === 3) {
-                    // Toast.fail(res.message);
-                } else {
-                        // Toast.fail(res.message);
-                    }
-            });
-        },
         sub: function sub(dish) {
             var dishId = dish.id;
             var id = 'number' + dishId;
@@ -315,6 +291,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                 var params = this.$route.params;
                 params.amount = this.totalAmount;
                 params.detail = this.customerDishDetail;
+                params.open_id = this.$route.query.open_id;
 
                 this.$api.h5Pay(params).then(function (res) {
                     if (res.status === 1) {

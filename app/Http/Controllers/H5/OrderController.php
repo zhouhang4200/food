@@ -78,6 +78,8 @@ class OrderController extends Controller
 
             // 商户号
             $merchant_id = $request->input('merchant_id');
+            // open_id
+            $open_id = $request->input('open_id');
 
             foreach ($details as $detail) {
                 $detail['table_id'] = $table_id;
@@ -106,7 +108,7 @@ class OrderController extends Controller
                     'total_fee' => $order->amount,              // 订单金额，**单位：分**
                     'body' => '点餐订单支付',                   // 订单描述
                     'spbill_create_ip' => $request->getClientIp(),       // 支付人的 IP
-                    'openid' => session('open_id') ?: '',
+                    'openid' => $open_id,
                 ]);
 
 //                return response()->json(['status' => 1, 'message' => 'success', ['channel' => 2, 'trade_no' => $order->trade_no, 'par' => $payPar->getContent()]]);
