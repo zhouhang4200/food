@@ -81,6 +81,8 @@ class OrderController extends Controller
             // open_id
             $open_id = $request->input('open_id');
 
+            myLog('pay', ['open_id' => $open_id]);
+
             foreach ($details as $detail) {
                 $detail['table_id'] = $table_id;
                 $detail['seat_id'] = $seat_id;
@@ -105,7 +107,7 @@ class OrderController extends Controller
             if ($channel == 1) { # 微信支付
                 $payPar = Pay::wechat(config('pay.wechat'))->mp([
                     'out_trade_no' => $order->trade_no,           // 订单号
-                    'total_fee' => $order->amount,              // 订单金额，**单位：分**
+                    'total_fee' => $order->amount*100,              // 订单金额，**单位：分**
                     'body' => '点餐订单支付',                   // 订单描述
                     'spbill_create_ip' => $request->getClientIp(),       // 支付人的 IP
                     'openid' => $open_id,
