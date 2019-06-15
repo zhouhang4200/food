@@ -59,8 +59,9 @@ class H5Controller extends Controller
                     myLog('second-none', ['query' => $query, 'vue' => $vue]);
                     return view('vue');
                 }
+            } else {
+                return view('vue');
             }
-
         } catch (\Exception $e) {
             myLog('error_data', ['data' => $e->getMessage()]);
         }
