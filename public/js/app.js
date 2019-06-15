@@ -45217,6 +45217,8 @@ router.beforeEach(function (to, from, next) {
                 }
             });
         }
+
+        next();
     } else if (to.name === 'dish' || to.name === 'order') {
         if (!sessionStorage.getItem('token') || sessionStorage.getItem('token') == null) {
             // next({path:'/login'});
