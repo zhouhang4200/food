@@ -24,7 +24,7 @@
             };
         },
         created() {
-            this.getCode();
+            // this.getCode();
         },
         computed: {},
         mounted() {

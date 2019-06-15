@@ -120,7 +120,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
         return {};
     },
     created: function created() {
-        this.getCode();
+        // this.getCode();
     },
 
     computed: {},

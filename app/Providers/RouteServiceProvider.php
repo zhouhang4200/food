@@ -17,6 +17,7 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespace = 'App\Http\Controllers';
     protected $apiNamespace = 'App\Http\Controllers\Api';
     protected $h5Namespace = 'App\Http\Controllers\H5';
+    protected $authNamespace = 'App\Http\Controllers\Auth';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -40,6 +41,7 @@ class RouteServiceProvider extends ServiceProvider
         // H5端
         if(request()->getHost() == config('app.h5_domain')) {
             $this->mapH5Routes();
+            $this->mapAuthRoutes();
         } else {
             $this->mapApiRoutes();
 
@@ -89,5 +91,20 @@ class RouteServiceProvider extends ServiceProvider
         Route::prefix('h5')
             ->namespace($this->h5Namespace)
             ->group(base_path('routes/h5.php'));
+    }
+
+    /**
+     * 微信和支付宝各种授权认证跳转页面
+     *
+     * Define the "auth" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAuthRoutes()
+    {
+        Route::namespace($this->authNamespace)
+            ->group(base_path('routes/auth.php'));
     }
 }
