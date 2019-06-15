@@ -45189,7 +45189,7 @@ router.beforeEach(function (to, from, next) {
         //         seat_id:seat_id
         //     }
         // });
-    } else if (to.path === '/h5/order') {
+    } else if (to.name === 'h5Order') {
         next();
     } else {
         if (!sessionStorage.getItem('token') || sessionStorage.getItem('token') == null) {

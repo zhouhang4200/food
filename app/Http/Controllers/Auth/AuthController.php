@@ -34,11 +34,9 @@ class AuthController extends Controller
                 myLog('wechat_openid_response', ['openid' => $result]);
 
                 if (isset($result['openid']) && $result['openid']) {
-                    myLog('callback_third', ['code' => $code, 'original_url' => $original_url, 'openid' => $result['openid']]);
-
                     cookie('open_id', $result['openid'], 5);
 
-                    myLog('wechat_openid', ['openid' => $result['openid'], 'cookie' => Cookie::get('open_id')]);
+                    myLog('callback_third', ['code' => $code, 'original_url' => $original_url, 'openid' => $result['openid'], 'cookie' => Cookie::get('open_id')]);
 
                     Header("Location: $original_url");
                 } else {
