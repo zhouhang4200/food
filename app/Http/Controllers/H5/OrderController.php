@@ -146,7 +146,7 @@ class OrderController extends Controller
 
             return response()->json(['status' => 1, 'data' => $order]);
         } catch (\Exception $e) {
-            myLog('h5_pay', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+            myLog('h5_pay', ['message' => '【'. $e->getLine().$e->getFile().'】'.'【'.$e->getMessage().'】']);
             return response()->json(['status' => 0, 'data' => '']);
 
         }
