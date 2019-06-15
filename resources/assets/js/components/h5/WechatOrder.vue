@@ -217,17 +217,16 @@
             onSubmit() {
                 console.log(this.totalAmount);
                 if (this.totalAmount > 0) {
-                    let params = this.$route.params;
-                    params.amount = this.totalAmount;
-                    params.detail = this.customerDishDetail;
-                    params.open_id = this.$route.query.open_id;
-                    params.merchant_id = this.$route.query.merchant_id;
-                    params.seat_id = this.$route.query.seat_id;
-                    params.table_id = this.$route.query.table_id;
-                    params.query = this.$route.query;
+                    let amount = this.totalAmount;
+                    let detail = this.customerDishDetail;
+                    let open_id = this.$route.query.open_id;
+                    let merchant_id = this.$route.query.merchant_id;
+                    let seat_id = this.$route.query.seat_id;
+                    let table_id = this.$route.query.table_id;
+                    let query = this.$route.query;
                     console.log(params, this.$route.query);
-                    this.$api.h5Pay({params}).then(res => {
-                    // this.$api.h5Pay({amount:this.totalAmount, detail:this.customerDishDetail, open_id:this.$route.query.open_id}).then(res => {
+                    // this.$api.h5Pay({params}).then(res => {
+                    this.$api.h5Pay({amount:amount, detail:detail, open_id:open_id, merchant_id:merchant_id, seat_id:seat_id, table_id:table_id, query:query}).then(res => {
                         if (res.status === 1) {
                             console.log('pay_success');
                         } else if (res.status === 3) {

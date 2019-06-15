@@ -313,17 +313,16 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
         onSubmit: function onSubmit() {
             console.log(this.totalAmount);
             if (this.totalAmount > 0) {
-                var params = this.$route.params;
-                params.amount = this.totalAmount;
-                params.detail = this.customerDishDetail;
-                params.open_id = this.$route.query.open_id;
-                params.merchant_id = this.$route.query.merchant_id;
-                params.seat_id = this.$route.query.seat_id;
-                params.table_id = this.$route.query.table_id;
-                params.query = this.$route.query;
+                var amount = this.totalAmount;
+                var detail = this.customerDishDetail;
+                var open_id = this.$route.query.open_id;
+                var merchant_id = this.$route.query.merchant_id;
+                var seat_id = this.$route.query.seat_id;
+                var table_id = this.$route.query.table_id;
+                var query = this.$route.query;
                 console.log(params, this.$route.query);
-                this.$api.h5Pay({ params: params }).then(function (res) {
-                    // this.$api.h5Pay({amount:this.totalAmount, detail:this.customerDishDetail, open_id:this.$route.query.open_id}).then(res => {
+                // this.$api.h5Pay({params}).then(res => {
+                this.$api.h5Pay({ amount: amount, detail: detail, open_id: open_id, merchant_id: merchant_id, seat_id: seat_id, table_id: table_id, query: query }).then(function (res) {
                     if (res.status === 1) {
                         console.log('pay_success');
                     } else if (res.status === 3) {
