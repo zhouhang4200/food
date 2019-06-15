@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\H5;
 
-use EasyWeChat\Work\Application;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Cookie;
-use mysql_xdevapi\Exception;
 
 class H5Controller extends Controller
 {
@@ -18,7 +15,7 @@ class H5Controller extends Controller
      * @param Request $request
      * @param $vue
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception
      */
     function index(Request $request, $vue)
     {
@@ -30,6 +27,7 @@ class H5Controller extends Controller
 //            die;Header("Location: http://www.baidu.com");
             // 获取网站query后缀
             $query = $request->getQueryString();
+            myLog('start', ['query' => $query, 'cookie' => Cookie::get('open_id'), 'vue' => $vue]);
 //            dd($request->getQueryString());
 //            dd(parse_url($request->fullUrl()));
             // 判断当前路由是不是下单选菜页面
