@@ -183,27 +183,10 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             customerDishDetail: []
         };
     },
-    created: function created() {
-        // let code=getUrlKey("code");
-        // if(code){
-        //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-        //     this.getOpenIdApi(code);
-        // }else{
-        //     this.getCodeApi("123");
-        // }
-    },
+    created: function created() {},
 
     computed: {},
     mounted: function mounted() {
-        // let code=this.getUrlKey("code");
-        // if(code){
-        //     console.log(code);
-        //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-        //     this.getOpenIdApi(code);
-        // }else{
-        //     console.log('code');
-        //     this.getCodeApi("123");
-        // }
         this.dishes();
     },
 
@@ -321,7 +304,6 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                 var table_id = this.$route.query.table_id;
                 var query = this.$route.query;
 
-                // this.$api.h5Pay({params}).then(res => {
                 this.$api.h5Pay({ amount: amount, detail: detail, open_id: open_id, merchant_id: merchant_id, seat_id: seat_id, table_id: table_id, query: query }).then(function (res) {
                     if (res.status === 1) {
                         console.log('pay_success');

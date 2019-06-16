@@ -9,16 +9,22 @@ use Illuminate\Support\Facades\Cookie;
 
 class AuthController extends Controller
 {
+    /**
+     * 获取微信code回调地址
+     *
+     * @param Request $request
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function wechatCodeCallback(Request $request)
     {
         try {
-            $code = $request->input('code');
+            $code = $request->input('code'); // 第二次会带上code
 
-            $original_url = urldecode($request->input('original_url'));
+            $original_url = urldecode($request->input('original_url')); // 要跳转的点菜地址
 
             myLog('callback_first', ['code' => $code, 'original_url' => $original_url]);
 
-            if ($code) {
+            if ($code) {  // 存在 code  则去找 openid
                 myLog('callback_second', ['code' => $code, 'original_url' => $original_url]);
                 $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.config('pay.wechat.app_id').'&secret='.config('pay.wechat.secret').'&code='.$code.'&grant_type=authorization_code';
 
@@ -32,23 +38,20 @@ class AuthController extends Controller
 
                 $result = json_decode($result, true);
 
-                myLog('wechat_openid_response', ['openid' => $result]);
-
                 if (isset($result['openid']) && $result['openid']) {
                     $original_url = $original_url."&open_id=".$result['openid'];
 
                     myLog('callback_third', ['code' => $code, 'original_url' => $original_url, 'openid' => $result['openid']]);
 
-                    Header("Location: $original_url");
+                    Header("Location: $original_url"); // 拿到opendi拼到地址后面，跳转到点菜页面
                 } else {
-                    myLog('wechat_openid_no_openid', ['data' => 'openid获取失败']);
+                    myLog('callback_no_openid', ['data' => 'openid获取失败']);
                 }
-                return response()->json(['status' => 1, 'data' => $code]);
             }
 
             myLog('callback_no_code', ['code' => $code, 'original_url' => $original_url]);
         } catch (\Exception $e) {
-            myLog('wechat_code_error', ['data' => $e->getMessage()]);
+            myLog('callback_error', ['data' => $e->getMessage()]);
         }
     }
 }
