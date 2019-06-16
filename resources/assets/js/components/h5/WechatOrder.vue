@@ -228,7 +228,7 @@
                                                 //可以进行查看订单，等操作
                                             } else {
                                                 // alert('支付失败0！');
-                                                alert(res.err_code+res.err_desc+res.err_msg);
+                                                alert('支付失败0！'+res.err_code+res.err_desc+res.err_msg);
                                             }
                                             //alert(res.err_code+res.err_desc+res.err_msg);
                                         }
@@ -242,7 +242,7 @@
                                                 alert('支付成功')
                                                 //可以进行查看订单，等操作
                                             } else {
-                                                alert('支付失败1！');
+                                                alert('支付失败1！'+res.err_code+res.err_desc+res.err_msg);
                                             }
                                             //alert(res.err_code+res.err_desc+res.err_msg);
                                         }
@@ -255,7 +255,7 @@
                                                 alert('支付成功')
                                                 //可以进行查看订单，等操作
                                             } else {
-                                                alert('支付失败2！');
+                                                alert('支付失败2！'+res.err_code+res.err_desc+res.err_msg);
                                             }
                                             //alert(res.err_code+res.err_desc+res.err_msg);
                                         }
