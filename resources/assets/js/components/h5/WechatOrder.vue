@@ -210,13 +210,71 @@
                     let query = this.$route.query;
                     let jsApiParameters = '';
                     this.$api.h5Pay({amount:amount, detail:detail, open_id:open_id, merchant_id:merchant_id, seat_id:seat_id, table_id:table_id, query:query}).then(res => {
-                        this.$message({
-                            type: 'info',
-                            message: res.jsApiParameters
-                        });
+                        // this.$message({
+                        //     type: 'info',
+                        //     message: res.jsApiParameters
+                        // });
                         if (res.status === 1) {
                             jsApiParameters = JSON.parse(res.jsApiParameters);
-                            this.callPay();
+
+                            if (typeof WeixinJSBridge == "undefined"){
+                                if( document.addEventListener ){
+                                    document.addEventListener('WeixinJSBridgeReady', WeixinJSBridge.invoke(
+                                        'getBrandWCPayRequest',jsApiParameters,
+                                        function(res){
+                                            //WeixinJSBridge.log(res.err_msg);
+                                            if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                                alert('支付成功')
+                                                //可以进行查看订单，等操作
+                                            } else {
+                                                alert('支付失败！');
+                                            }
+                                            //alert(res.err_code+res.err_desc+res.err_msg);
+                                        }
+                                    ), false);
+                                } else if (document.attachEvent){
+                                    document.attachEvent('WeixinJSBridgeReady', WeixinJSBridge.invoke(
+                                        'getBrandWCPayRequest',jsApiParameters,
+                                        function(res){
+                                            //WeixinJSBridge.log(res.err_msg);
+                                            if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                                alert('支付成功')
+                                                //可以进行查看订单，等操作
+                                            } else {
+                                                alert('支付失败！');
+                                            }
+                                            //alert(res.err_code+res.err_desc+res.err_msg);
+                                        }
+                                    ));
+                                    document.attachEvent('onWeixinJSBridgeReady', WeixinJSBridge.invoke(
+                                        'getBrandWCPayRequest',jsApiParameters,
+                                        function(res){
+                                            //WeixinJSBridge.log(res.err_msg);
+                                            if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                                alert('支付成功')
+                                                //可以进行查看订单，等操作
+                                            } else {
+                                                alert('支付失败！');
+                                            }
+                                            //alert(res.err_code+res.err_desc+res.err_msg);
+                                        }
+                                    ));
+                                }
+                            }else{
+                                WeixinJSBridge.invoke(
+                                    'getBrandWCPayRequest',jsApiParameters,
+                                    function(res){
+                                        //WeixinJSBridge.log(res.err_msg);
+                                        if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                            alert('支付成功')
+                                            //可以进行查看订单，等操作
+                                        } else {
+                                            alert('支付失败！');
+                                        }
+                                        //alert(res.err_code+res.err_desc+res.err_msg);
+                                    }
+                                );
+                            }
                         } else {
                             alert('网络错误，请稍后再试！');
                         }
@@ -224,18 +282,7 @@
                 }
                 // console.log(this.$route.params);
             },
-            callPay() {
-                if (typeof WeixinJSBridge == "undefined"){
-                    if( document.addEventListener ){
-                        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
-                    }else if (document.attachEvent){
-                        document.attachEvent('WeixinJSBridgeReady', jsApiCall);
-                        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
-                    }
-                }else{
-                    jsApiCall();
-                }
-            },
+
             dishes() {
                 let merchant_id = this.$route.query.merchant_id;
                 // console.log(merchant_id);
@@ -300,6 +347,19 @@
                 //alert(res.err_code+res.err_desc+res.err_msg);
             }
         );
+    }
+
+    function callPay() {
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall();
+        }
     }
 </script>
 
