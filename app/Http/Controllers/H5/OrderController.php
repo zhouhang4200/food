@@ -116,6 +116,7 @@ class OrderController extends Controller
                 $app = Factory::payment($config);
                 $jssdk = $app->jssdk;
 
+                myLog('wechat_pay_one', ['jssdk' => $jssdk, 'config' => $config]);
                 // 微信以分为单位，前台传过来的数据也是以分为单位
                 try {
                     $result = $app->order->unify([
@@ -128,6 +129,8 @@ class OrderController extends Controller
                         'trade_type' => 'JSAPI',
                         'openid' => $open_id,
                     ]);
+
+                    myLog('wechat_pay_two', ['result' => $result]);
                 } catch (InvalidConfigException $e) {
                     myLog('wechat_pay_InvalidConfigException', ['data' => $e->getLine().$e->getMessage()]);
 
@@ -155,7 +158,8 @@ class OrderController extends Controller
 
             return response()->json(['status' => 1, 'data' => $order]);
         } catch (\Exception $e) {
-            myLog('h5_pay', ['message' => '【'. $e->getLine().$e->getFile().'】'.'【'.$e->getMessage().'】']);
+            myLog('pay_error', ['message' => '【'. $e->getLine().$e->getFile().'】'.'【'.$e->getMessage().'】']);
+
             return response()->json(['status' => 0, 'data' => '']);
 
         }
