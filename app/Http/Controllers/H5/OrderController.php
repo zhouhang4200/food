@@ -251,8 +251,6 @@ class OrderController extends Controller
      */
     public function wechatNotify(Request $request)
     {
-        myLog('wechat_notify_one', ['data' => $request->all()]);
-
         // 判断是否支付成功
         $config = config('wechat.pay_config');
         $app    = Factory::payment($config);
@@ -266,7 +264,7 @@ class OrderController extends Controller
             ]);
 
             $response = $app->handlePaidNotify(function ($message, $fail) {
-                myLog('wechat_notify_message', ['data' => $message]); // 写入日志
+                myLog('wechat_notify_data', ['data' => $message]); // 写入日志
 
                 $orderSn = $message['out_trade_no'];
 
@@ -274,12 +272,11 @@ class OrderController extends Controller
 
                 //开启事务并上锁
                 DB::beginTransaction();
-//                if ($order->amount != 1) {
-//                    //订单不是待付款 或者金额不对直接结束//todo价格*100
-//                    DB::rollBack();
-//
-//                    return true;
-//                }
+                if ($order->amount != array_get($message, 'total_fee')) {
+                    DB::rollBack();
+
+                    return true;
+                }
                 // 用户是否支付成功
                 if ($message['return_code'] === 'SUCCESS' && array_get($message, 'result_code') === 'SUCCESS') {
                     // 写入外部订单号和点的详细菜单写入表
