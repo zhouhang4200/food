@@ -208,18 +208,29 @@
                     let seat_id = this.$route.query.seat_id;
                     let table_id = this.$route.query.table_id;
                     let query = this.$route.query;
-
+                    let jsApiParameters = '';
                     this.$api.h5Pay({amount:amount, detail:detail, open_id:open_id, merchant_id:merchant_id, seat_id:seat_id, table_id:table_id, query:query}).then(res => {
                         if (res.status === 1) {
-                            console.log('pay_success');
-                        } else if (res.status === 3) {
-                            // Toast.fail(res.message);
+                            jsApiParameters = JSON.parse(res.jsApiParameters);
+                            this.callPay();
                         } else {
-                            // Toast.fail(res.message);
+                            alert('网络错误，请稍后再试！');
                         }
                     });
                 }
                 // console.log(this.$route.params);
+            },
+            callPay() {
+                if (typeof WeixinJSBridge == "undefined"){
+                    if( document.addEventListener ){
+                        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+                    }else if (document.attachEvent){
+                        document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+                    }
+                }else{
+                    jsApiCall();
+                }
             },
             dishes() {
                 let merchant_id = this.$route.query.merchant_id;
@@ -268,6 +279,23 @@
                 });
             }
         }
+    }
+
+    function jsApiCall()
+    {
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest',jsApiParameters,
+            function(res){
+                //WeixinJSBridge.log(res.err_msg);
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                    alert('支付成功')
+                    //可以进行查看订单，等操作
+                } else {
+                    alert('支付失败！');
+                }
+                //alert(res.err_code+res.err_desc+res.err_msg);
+            }
+        );
     }
 </script>
 

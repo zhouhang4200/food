@@ -6,7 +6,8 @@ use App\Models\CustomerDishDetail;
 use App\Models\Dish;
 use App\Models\Order;
 use Carbon\Carbon;
-use Illuminate\Foundation\Application;
+use EasyWeChat\Factory;
+use EasyWeChat\Kernel\Exceptions\InvalidConfigException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -96,22 +97,50 @@ class OrderController extends Controller
                 'channel' => $channel,
                 'buyer_id' => '',
                 'buyer_open_id' => '',
-                'amount' => $amount, // 单位元
-                'original_amount' => $amount,
+                'amount' => $amount*100, // 单位元
+                'original_amount' => $amount*100,
                 'detail' => json_encode($details),
             ]);
 
             // 支付
             if ($channel == 1) { # 微信支付
-                Pay::wechat(config('pay.wechat'))->mp([
-                    'out_trade_no' => $order->trade_no,           // 订单号
-                    'total_fee' => $order->amount,              // 订单金额，**单位：分** 传过来的就是分
-                    'body' => '点餐订单支付',                   // 订单描述
-//                    'spbill_create_ip' => '192.168.1.1',       // 支付人的 IP
-                    'openid' => $open_id,
-                ]);
+//                Pay::wechat(config('pay.wechat'))->mp([
+//                    'out_trade_no' => $order->trade_no,           // 订单号
+//                    'total_fee' => $order->amount,              // 订单金额，**单位：分** 传过来的就是分
+//                    'body' => '点餐订单支付',                   // 订单描述
+////                    'spbill_create_ip' => '192.168.1.1',       // 支付人的 IP
+//                    'openid' => $open_id,
+//                ]);
 
-//                return response()->ajax(1, 'success', ['channel' => 1, 'trade_no' => $order->trade_no, 'par' => $payPar]);
+                $config = config('wechat.pay_config');
+                $app = Factory::payment($config);
+                $jssdk = $app->jssdk;
+
+                // 微信以分为单位，前台传过来的数据也是以分为单位
+                try {
+                    $result = $app->order->unify([
+                        'body' => '桌号：'.$table_id.'座位号：'.$seat_id.'扫码点餐,'.'总计：'.$amount.'分',
+                        'out_trade_no' => $trade_no,
+                        'total_fee' => $amount,
+                        'attach' => $order->id,
+                        'spbill_create_ip' => '',
+                        'notify_url' => url('/h5/wechat/notify'),
+                        'trade_type' => 'JSAPI',
+                        'openid' => $open_id,
+                    ]);
+                } catch (InvalidConfigException $e) {
+                    myLog('wechat_pay_InvalidConfigException', ['data' => $e->getLine().$e->getMessage()]);
+
+                    return response()->json(['status' => 0, 'jsApiParameters' => '']);
+                }
+
+                // 预支付订单号,生成js需要的信息
+                $prepayId = $result['prepay_id'];
+                $jsApiParameters = $jssdk->bridgeConfig($prepayId);
+
+                myLog('wechat_pay_jsApiParameters', ['jsApiParameters' => $jsApiParameters, 'result' => $result]);
+
+                return response()->json(['status' => 1, 'jsApiParameters' => $jsApiParameters]);
             } elseif ($channel == 2) { # 支付宝支付
                 $payPar = Pay::alipay(config('pay.ali'))->app([
                     'out_trade_no' => $order->trade_no,
@@ -210,7 +239,7 @@ class OrderController extends Controller
     }
     public function wechatNotify()
     {
-
+        myLog('wechat_notify_one', ['data' => 'start']);
     }
     public function wechatReturn()
     {

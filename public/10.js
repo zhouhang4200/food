@@ -294,6 +294,8 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             // console.log(Number(dish.amount), this.totalAmount, dish.amount);
         },
         onSubmit: function onSubmit() {
+            var _this = this;
+
             console.log(this.totalAmount);
             if (this.totalAmount > 0) {
                 var amount = this.totalAmount;
@@ -303,27 +305,38 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                 var seat_id = this.$route.query.seat_id;
                 var table_id = this.$route.query.table_id;
                 var query = this.$route.query;
-
+                var _jsApiParameters = '';
                 this.$api.h5Pay({ amount: amount, detail: detail, open_id: open_id, merchant_id: merchant_id, seat_id: seat_id, table_id: table_id, query: query }).then(function (res) {
                     if (res.status === 1) {
-                        console.log('pay_success');
-                    } else if (res.status === 3) {
-                        // Toast.fail(res.message);
+                        _jsApiParameters = JSON.parse(res.jsApiParameters);
+                        _this.callPay();
                     } else {
-                            // Toast.fail(res.message);
-                        }
+                        alert('网络错误，请稍后再试！');
+                    }
                 });
             }
             // console.log(this.$route.params);
         },
+        callPay: function callPay() {
+            if (typeof WeixinJSBridge == "undefined") {
+                if (document.addEventListener) {
+                    document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+                } else if (document.attachEvent) {
+                    document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                    document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+                }
+            } else {
+                jsApiCall();
+            }
+        },
         dishes: function dishes() {
-            var _this = this;
+            var _this2 = this;
 
             var merchant_id = this.$route.query.merchant_id;
             // console.log(merchant_id);
             this.$api.h5DishList({ merchant_id: merchant_id }).then(function (res) {
                 if (res.status === 1) {
-                    _this.dishData = res.data;
+                    _this2.dishData = res.data;
                 } else if (res.status === 3) {
                     __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
                     // this.$router.push({name: 'login', query: {}});
@@ -348,16 +361,16 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
 
         // 表单提交
         onSubmitForm: function onSubmitForm() {
-            var _this2 = this;
+            var _this3 = this;
 
             this.$validator.validateAll().then(function (result) {
                 if (result) {
-                    _this2.$api.FinanceWithdrawApply(_this2.form).then(function (res) {
+                    _this3.$api.FinanceWithdrawApply(_this3.form).then(function (res) {
                         if (res.status === 1) {
                             __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].success(res.message);
                         } else if (res.status === 3) {
                             __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
-                            _this2.$router.push({ name: 'login', query: {} });
+                            _this3.$router.push({ name: 'login', query: {} });
                         } else {
                             __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
                         }
@@ -369,6 +382,19 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
         }
     }
 });
+
+function jsApiCall() {
+    WeixinJSBridge.invoke('getBrandWCPayRequest', jsApiParameters, function (res) {
+        //WeixinJSBridge.log(res.err_msg);
+        if (res.err_msg == "get_brand_wcpay_request:ok") {
+            alert('支付成功');
+            //可以进行查看订单，等操作
+        } else {
+            alert('支付失败！');
+        }
+        //alert(res.err_code+res.err_desc+res.err_msg);
+    });
+}
 
 /***/ }),
 
