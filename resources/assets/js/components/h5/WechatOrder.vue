@@ -270,7 +270,7 @@
                                             alert('支付成功')
                                             //可以进行查看订单，等操作
                                         } else {
-                                            alert('支付失败3！');
+                                            alert('支付失败3！'+res.err_code+res.err_desc+res.err_msg);
                                         }
                                         //alert(res.err_code+res.err_desc+res.err_msg);
                                     }
