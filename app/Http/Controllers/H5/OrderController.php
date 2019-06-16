@@ -101,6 +101,8 @@ class OrderController extends Controller
                 'amount'          => $amount, // 单位分
                 'original_amount' => $amount,
                 'detail'          => json_encode($details),
+                'pay_status' => 0,
+                'pay_time' => '',
             ]);
 
             // 支付
