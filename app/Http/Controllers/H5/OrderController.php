@@ -118,24 +118,18 @@ class OrderController extends Controller
 
                 myLog('wechat_pay_one', ['jssdk' => $jssdk, 'config' => $config]);
                 // 微信以分为单位，前台传过来的数据也是以分为单位
-                try {
-                    $result = $app->order->unify([
-                        'body' => '桌号：'.$table_id.'座位号：'.$seat_id.'扫码点餐,'.'总计：'.$amount.'分',
-                        'out_trade_no' => $trade_no,
-                        'total_fee' => $amount,
-                        'attach' => $order->id,
-                        'spbill_create_ip' => '',
-                        'notify_url' => url('/h5/wechat/notify'),
-                        'trade_type' => 'JSAPI',
-                        'openid' => $open_id,
-                    ]);
+                $result = $app->order->unify([
+                    'body' => '桌号：'.$table_id.'座位号：'.$seat_id.'扫码点餐,'.'总计：'.$amount.'分',
+                    'out_trade_no' => $trade_no,
+                    'total_fee' => $amount,
+                    'attach' => $order->id,
+                    'spbill_create_ip' => '',
+                    'notify_url' => url('/h5/wechat/notify'),
+                    'trade_type' => 'JSAPI',
+                    'openid' => $open_id,
+                ]);
 
-                    myLog('wechat_pay_two', ['result' => $result]);
-                } catch (InvalidConfigException $e) {
-                    myLog('wechat_pay_InvalidConfigException', ['data' => $e->getLine().$e->getMessage()]);
-
-                    return response()->json(['status' => 0, 'jsApiParameters' => '']);
-                }
+                myLog('wechat_pay_two', ['result' => $result]);
 
                 // 预支付订单号,生成js需要的信息
                 $prepayId = $result['prepay_id'];
@@ -157,6 +151,10 @@ class OrderController extends Controller
 //            return response()->json(['status' => $payPar]);
 
             return response()->json(['status' => 1, 'data' => $order]);
+        } catch (InvalidConfigException $e) {
+            myLog('wechat_pay_InvalidConfigException', ['data' => $e->getLine().$e->getMessage()]);
+
+            return response()->json(['status' => 0, 'jsApiParameters' => '']);
         } catch (\Exception $e) {
             myLog('pay_error', ['message' => '【'. $e->getLine().$e->getFile().'】'.'【'.$e->getMessage().'】']);
 

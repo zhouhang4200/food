@@ -77,6 +77,19 @@ return [
         ],
     ],
 
+    'pay_config' => [
+        // 必要配置
+        'app_id' => 'wx5e0fd315aff830a4',
+        'mch_id' => '1537249771',
+        'secret' => '31ae38caf6074540fc8ce5ea65630e18',
+        'key'    => '2E6E50E2BBFFF4D97E3C16AD8D37A79C',   // API 密钥
+        // 如需使用敏感接口（如退款、发送红包等）需要配置 API 证书路径(登录商户平台下载 API 证书)
+        'cert_path' => '../cert/apiclient_cert.pem', // XXX: 绝对路径！！！！
+        'key_path'  => '../cert/apiclient_key.pem',      // XXX: 绝对路径！！！！
+        //'notify_url' => 'http://'.$_SERVER['HTTP_HOST'].'/api/WeChatNotify',     // 默认的订单回调地址，你也可以在下单时单独设置来想覆盖它
+        //其他参数
+    ],
+
     /*
      * 开放平台第三方平台
      */
@@ -104,18 +117,18 @@ return [
     /*
      * 微信支付
      */
-    // 'payment' => [
-    //     'default' => [
-    //         'sandbox'            => env('WECHAT_PAYMENT_SANDBOX', false),
-    //         'app_id'             => env('WECHAT_PAYMENT_APPID', ''),
-    //         'mch_id'             => env('WECHAT_PAYMENT_MCH_ID', 'your-mch-id'),
-    //         'key'                => env('WECHAT_PAYMENT_KEY', 'key-for-signature'),
-    //         'cert_path'          => env('WECHAT_PAYMENT_CERT_PATH', 'path/to/cert/apiclient_cert.pem'),    // XXX: 绝对路径！！！！
-    //         'key_path'           => env('WECHAT_PAYMENT_KEY_PATH', 'path/to/cert/apiclient_key.pem'),      // XXX: 绝对路径！！！！
-    //         'notify_url'         => 'http://example.com/payments/wechat-notify',                           // 默认支付结果通知地址
-    //     ],
-    //     // ...
-    // ],
+     'payment' => [
+         'default' => [
+             'sandbox'            => env('WECHAT_PAYMENT_SANDBOX', false),
+             'app_id'             => env('WECHAT_PAYMENT_APPID', ''),
+             'mch_id'             => env('WECHAT_PAYMENT_MCH_ID', 'your-mch-id'),
+             'key'                => env('WECHAT_PAYMENT_KEY', 'key-for-signature'),
+             'cert_path'          => env('WECHAT_PAYMENT_CERT_PATH', 'path/to/cert/apiclient_cert.pem'),    // XXX: 绝对路径！！！！
+             'key_path'           => env('WECHAT_PAYMENT_KEY_PATH', 'path/to/cert/apiclient_key.pem'),      // XXX: 绝对路径！！！！
+             'notify_url'         => 'http://example.com/payments/wechat-notify',                           // 默认支付结果通知地址
+         ],
+         // ...
+     ],
 
     /*
      * 企业微信
