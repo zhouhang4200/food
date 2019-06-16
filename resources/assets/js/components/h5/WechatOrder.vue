@@ -210,6 +210,7 @@
                     let query = this.$route.query;
                     let jsApiParameters = '';
                     this.$api.h5Pay({amount:amount, detail:detail, open_id:open_id, merchant_id:merchant_id, seat_id:seat_id, table_id:table_id, query:query}).then(res => {
+                        alert(res.status);
                         if (res.status === 1) {
                             jsApiParameters = JSON.parse(res.jsApiParameters);
                             this.callPay();

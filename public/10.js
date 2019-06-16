@@ -307,6 +307,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                 var query = this.$route.query;
                 var _jsApiParameters = '';
                 this.$api.h5Pay({ amount: amount, detail: detail, open_id: open_id, merchant_id: merchant_id, seat_id: seat_id, table_id: table_id, query: query }).then(function (res) {
+                    alert(res.status);
                     if (res.status === 1) {
                         _jsApiParameters = JSON.parse(res.jsApiParameters);
                         _this.callPay();
