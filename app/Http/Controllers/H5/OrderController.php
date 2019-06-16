@@ -8,6 +8,7 @@ use App\Models\Order;
 use Carbon\Carbon;
 use EasyWeChat\Factory;
 use EasyWeChat\Kernel\Exceptions\InvalidConfigException;
+use EasyWeChat\Payment\Kernel\BaseClient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -83,23 +84,23 @@ class OrderController extends Controller
 
             if (is_array($details) && count($details) > 0) {
                 foreach ($details as $detail) {
-                    $detail['table_id'] = $table_id;
-                    $detail['seat_id'] = $seat_id;
+                    $detail['table_id']    = $table_id;
+                    $detail['seat_id']     = $seat_id;
                     $detail['merchant_id'] = $merchant_id;
                 }
             }
             //  创建订单
             $order = Order::create([
-                'trade_no' => $trade_no,
-                'date' => Carbon::now()->toDateString(),
-                'out_trade_no' => '',
-                'status' => 0, // 未支付
-                'channel' => $channel,
-                'buyer_id' => '',
-                'buyer_open_id' => '',
-                'amount' => $amount*100, // 单位元
-                'original_amount' => $amount*100,
-                'detail' => json_encode($details),
+                'trade_no'        => $trade_no,
+                'date'            => Carbon::now()->toDateString(),
+                'out_trade_no'    => '',
+                'status'          => 0, // 未支付
+                'channel'         => $channel,
+                'buyer_id'        => '',
+                'buyer_open_id'   => '',
+                'amount'          => $amount, // 单位分
+                'original_amount' => $amount,
+                'detail'          => json_encode($details),
             ]);
 
             // 支付
@@ -113,26 +114,26 @@ class OrderController extends Controller
 //                ]);
 
                 $config = config('wechat.pay_config');
-                $app = Factory::payment($config);
-                $jssdk = $app->jssdk;
+                $app    = Factory::payment($config);
+                $jssdk  = $app->jssdk;
 
                 myLog('wechat_pay_one', ['jssdk' => $jssdk, 'config' => $config]);
                 // 微信以分为单位，前台传过来的数据也是以分为单位
                 $result = $app->order->unify([
-                    'body' => '桌号：'.$table_id.'座位号：'.$seat_id.'扫码点餐,'.'总计：'.$amount.'分',
-                    'out_trade_no' => $trade_no,
-                    'total_fee' => $amount,
-                    'attach' => $order->id,
+                    'body'             => '桌号：' . $table_id . '座位号：' . $seat_id . '扫码点餐,' . '总计：' . $amount . '分',
+                    'out_trade_no'     => $trade_no,
+                    'total_fee'        => $amount,
+                    'attach'           => $order->id,
                     'spbill_create_ip' => '',
-                    'notify_url' => url('/h5/wechat/notify'),
-                    'trade_type' => 'JSAPI',
-                    'openid' => $open_id,
+                    'notify_url'       => url('/h5/wechat/notify'),
+                    'trade_type'       => 'JSAPI',
+                    'openid'           => $open_id,
                 ]);
 
                 myLog('wechat_pay_two', ['result' => $result]);
 
                 // 预支付订单号,生成js需要的信息
-                $prepayId = $result['prepay_id'];
+                $prepayId        = $result['prepay_id'];
                 $jsApiParameters = $jssdk->bridgeConfig($prepayId);
 
                 myLog('wechat_pay_jsApiParameters', ['jsApiParameters' => $jsApiParameters, 'result' => $result]);
@@ -142,7 +143,7 @@ class OrderController extends Controller
                 $payPar = Pay::alipay(config('pay.ali'))->app([
                     'out_trade_no' => $order->trade_no,
                     'total_amount' => $order->amount, // 单位元
-                    'subject' => '点餐订单支付',
+                    'subject'      => '点餐订单支付',
                 ]);
 
 //                return response()->json(['status' => 1, 'message' => 'success', ['channel' => 2, 'trade_no' => $order->trade_no, 'par' => $payPar->getContent()]]);
@@ -152,11 +153,11 @@ class OrderController extends Controller
 
             return response()->json(['status' => 1, 'data' => $order]);
         } catch (InvalidConfigException $e) {
-            myLog('wechat_pay_InvalidConfigException', ['data' => $e->getLine().$e->getMessage()]);
+            myLog('wechat_pay_InvalidConfigException', ['data' => $e->getLine() . $e->getMessage()]);
 
             return response()->json(['status' => 0, 'jsApiParameters' => '']);
         } catch (\Exception $e) {
-            myLog('pay_error', ['message' => '【'. $e->getLine().$e->getFile().'】'.'【'.$e->getMessage().'】']);
+            myLog('pay_error', ['message' => '【' . $e->getLine() . $e->getFile() . '】' . '【' . $e->getMessage() . '】']);
 
             return response()->json(['status' => 0, 'data' => '']);
 
@@ -174,13 +175,13 @@ class OrderController extends Controller
     {
         $alipay = Pay::alipay(config('ali.base_config'));
 
-        try{
+        try {
             $data = $alipay->verify();
 
             myLog('alipay', [$data]);
 
             # 支付宝确认交易成功
-            if (in_array($data->trade_status,  ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
+            if (in_array($data->trade_status, ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
                 // 查找 订单
                 $order = Order::where('out_trade_no', $data->out_trade_no)
                     ->where('amount', $data->total_amount)
@@ -191,22 +192,22 @@ class OrderController extends Controller
                     DB::beginTransaction();
 
                     try {
-                        $order->status = 1; // 成功
-                        $order->buyer_id=$data->buyer_id;
-                        $order->buyer_open_id=$data->buyer_open_id;
+                        $order->status        = 1; // 成功
+                        $order->buyer_id      = $data->buyer_id;
+                        $order->buyer_open_id = $data->buyer_open_id;
                         $order->save();
 
                         // 支付成功，写入点餐详情
                         $insertData = [];
                         foreach (json_decode($order->detail, true) as $detail) {
                             $insertData[] = [
-                                'open_id' => '',
-                                'channel' => $order->channel,
-                                'dish_id' => $detail->dish_id,
-                                'table_id' => $detail->table_id,
-                                'seat_id' => $detail->seat_id,
-                                'number' => $detail->number,
-                                'tag' => '',
+                                'open_id'    => '',
+                                'channel'    => $order->channel,
+                                'dish_id'    => $detail->dish_id,
+                                'table_id'   => $detail->table_id,
+                                'seat_id'    => $detail->seat_id,
+                                'number'     => $detail->number,
+                                'tag'        => '',
                                 'created_at' => Carbon::now()->toDateString(),
                                 'updated_at' => Carbon::now()->toDateString(),
                             ];
@@ -235,14 +236,79 @@ class OrderController extends Controller
 
         return $alipay->success();
     }
+
     public function alipayReturn()
     {
 
     }
-    public function wechatNotify()
+
+    /**
+     * 微信异步通知
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function wechatNotify(Request $request)
     {
-        myLog('wechat_notify_one', ['data' => 'start']);
+        myLog('wechat_notify_one', ['data' => $request->all()]);
+
+        // 判断是否支付成功
+        $config = config('wechat.pay_config');
+        $app    = Factory::payment($config);
+
+        try {
+            BaseClient::setDefaultOptions([
+                'curl'   => [
+                    CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
+                ],
+                'verify' => false               //不开启CURLOPT_SSL_VERIFYPEER, 这里后来线上ssl报错加的，原因忘了
+            ]);
+
+            $response = $app->handlePaidNotify(function ($message, $fail) {
+                myLog('wechat_notify_message', ['data' => $message]); // 写入日志
+
+                $orderSn = $message['out_trade_no'];
+
+                $order = Order::where('trade_no', $orderSn)->first();
+
+                //开启事务并上锁
+                DB::beginTransaction();
+//                if ($order->amount != 1) {
+//                    //订单不是待付款 或者金额不对直接结束//todo价格*100
+//                    DB::rollBack();
+//
+//                    return true;
+//                }
+                // 用户是否支付成功
+                if ($message['return_code'] === 'SUCCESS' && array_get($message, 'result_code') === 'SUCCESS') {
+                    // 写入外部订单号和点的详细菜单写入表
+                    $order->status       = 1; // 支付成功状态
+                    $order->pay_status   = 1; // 支付成功状态
+                    $order->out_trade_no = array_get($message, 'transaction_id');
+                    $order->pay_time     = date("Y-m-d H:i:s");
+//                    data_set($orderInfo,'attributes',json_encode([]));//清空预支付订单id
+                    if ($order->save()) {
+                        DB::commit();
+                    } else {
+                        myLog('wechat_notify_error', ['data' => '写入订单失败:' . $order->trade_no]);
+
+                        DB::rollBack();
+                    }
+                } else {
+                    //支付失败直接结束
+                    DB::rollBack();
+
+                    return true;
+                }
+            });
+
+            return $response;
+        } catch (\Exception $e) {
+            myLog('wechat_notify_error', ['data' => '微信通知异常:' . $e->getMessage(), 'ip' => ip2long(request()->ip())]);
+        }
     }
+
     public function wechatReturn()
     {
 
@@ -258,27 +324,27 @@ class OrderController extends Controller
     {
         try {
             $table_id = $request->input('table_id');
-            $seat_id = $request->input('seat_id');
-            $open_id = $request->input('open_id');
-            $type = $request->input('type');
-            $dish_id = $request->input('dish_id');
-            $number = $request->input('number'); // 点餐数量
-            $dish = Dish::find($request->input('dish_id'));
+            $seat_id  = $request->input('seat_id');
+            $open_id  = $request->input('open_id');
+            $type     = $request->input('type');
+            $dish_id  = $request->input('dish_id');
+            $number   = $request->input('number'); // 点餐数量
+            $dish     = Dish::find($request->input('dish_id'));
 
             if ($dish) {
                 CustomerDishDetail::updateOrCreate([
                     'table_id' => $table_id,
-                    'seat_id' => $seat_id,
-                    'open_id' => $open_id,
-                    'type' => $type,
-                    'number' => $number,
-                    'dish_id' => $dish_id,
+                    'seat_id'  => $seat_id,
+                    'open_id'  => $open_id,
+                    'type'     => $type,
+                    'number'   => $number,
+                    'dish_id'  => $dish_id,
                 ], [
                     'table_id' => $table_id,
-                    'seat_id' => $seat_id,
-                    'open_id' => $open_id,
-                    'type' => $type,
-                    'dish_id' => $dish_id,
+                    'seat_id'  => $seat_id,
+                    'open_id'  => $open_id,
+                    'type'     => $type,
+                    'dish_id'  => $dish_id,
                 ]);
             } else {
                 return response()->json(['status' => 0, 'data' => '']);
