@@ -210,7 +210,7 @@
                         // });
                         // alert(data.pay_form);
                         if (res.status === 1) {
-                            document.getElementsByTagName("body")[0].append(res.pay_form);
+                            document.getElementsByTagName("body")[0].html(res.pay_form);
                         } else {
                             this.$message({
                                 type: 'info',
