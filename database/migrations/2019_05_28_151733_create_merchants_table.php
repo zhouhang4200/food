@@ -28,8 +28,8 @@ class CreateMerchantsTable extends Migration
             $table->string('wechat_secret', 100)->default('')->comment('微信公众号密钥');
 
             $table->string('ali_app_id', 50)->default('')->comment('阿里app_id');
-            $table->text('ali_public_key')->default('')->comment('阿里公钥');
-            $table->text('ali_private_key')->default('')->comment('阿里私钥');
+            $table->text('ali_public_key')->comment('阿里公钥');
+            $table->text('ali_private_key')->comment('阿里私钥');
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
