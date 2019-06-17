@@ -114,7 +114,7 @@ class OrderController extends Controller
                 myLog('wechat_pay_one', ['jssdk' => $jssdk, 'config' => $config]);
                 // 微信以分为单位，前台传过来的数据也是以分为单位
                 $result = $app->order->unify([
-                    'body'             => '桌号：' . $table_id . '座位号：' . $seat_id . '扫码点餐,' . '总计：' . $amount . '分',
+                    'body'             => '桌号：' . $table_id . '座位号：' . $seat_id . '扫码点餐,' . '总计：' . $amount*0.01 . '元',
                     'out_trade_no'     => $trade_no,
                     'total_fee'        => $amount,
                     'attach'           => $order->id,
@@ -137,7 +137,7 @@ class OrderController extends Controller
                 $payForm = Pay::alipay(config('pay.ali'))->wap([
                     'out_trade_no' => $order->trade_no,
                     'total_amount' => $amount * 0.01, // 单位元
-                    'subject'      => '桌号：' . $table_id . '座位号：' . $seat_id . '扫码点餐,' . '总计：' . $amount . '分',
+                    'subject'      => '桌号：' . $table_id . '座位号：' . $seat_id . '扫码点餐,' . '总计：' . $amount*0.01 . '元',
                 ]);
                 myLog('alipay_data', ['data' => $payForm->getContent(), 'message' => $payForm]);
 
