@@ -223,6 +223,8 @@ class OrderController extends Controller
                                         'seat_id'        => $detail['seat_id'],
                                         'merchant_id'    => $detail['merchant_id'],
                                         'number'         => $detail['number'],
+                                        'created_at' => date("Y-m-d H:i:s"),
+                                        'updated_at' => date("Y-m-d H:i:s"),
                                     ];
                                 }
                             }
@@ -325,6 +327,8 @@ class OrderController extends Controller
                                             'seat_id'        => $detail['seat_id'],
                                             'merchant_id'    => $detail['merchant_id'],
                                             'number'         => $detail['number'],
+                                            'created_at' => date("Y-m-d H:i:s"),
+                                            'updated_at' => date("Y-m-d H:i:s"),
                                         ];
                                     }
                                 }
@@ -356,8 +360,6 @@ class OrderController extends Controller
                     return true;
                 }
             });
-
-            echo "SUCCESS";
 
             return $response;
         } catch (\Exception $e) {
