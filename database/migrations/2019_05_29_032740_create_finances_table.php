@@ -15,9 +15,13 @@ class CreateFinancesTable extends Migration
     {
         Schema::create('finances', function (Blueprint $table) {
             $table->increments('id');
+            $table->date('date');
+            $table->string('order_trade_no')->comment('关联订单号');
             $table->integer('merchant_id')->comment('商户id');
-            $table->integer('amount')->comment('支付金额');
-            $table->tinyInteger('type')->comment('支付的金额类型:年费  罚款');
+            $table->tinyInteger('type')->comment('流水类型：');
+            $table->integer('sub_type')->comment('子流水类型：');
+            $table->decimal('amount', 10, 2)->comment('支付金额');
+            $table->string('comment', 200)->default('')->comment('备注');
             $table->timestamps();
         });
     }

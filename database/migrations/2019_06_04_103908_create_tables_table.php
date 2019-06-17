@@ -15,6 +15,7 @@ class CreateTablesTable extends Migration
     {
         Schema::create('tables', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('merchant_id');
             $table->string('name')->default('')->comment('桌子名称');
             $table->timestamps();
         });

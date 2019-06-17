@@ -23,7 +23,9 @@ class Merchant extends User
      * @var array
      */
     protected $fillable = [
-        'phone', 'name', 'pid', 'status', 'date', 'password'
+        'phone', 'name', 'pid', 'status', 'date',
+        'password', 'wechat_app_id', 'wechat_mch_id', 'wechat_key', 'wechat_secret',
+        'ali_app_id', 'ali_public_key', 'ali_private_key'
     ];
 
     /**

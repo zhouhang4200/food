@@ -17,7 +17,7 @@ use Yansongda\Pay\Pay;
 class OrderController extends Controller
 {
     /**
-     * 菜肴列表
+     * h5菜肴列表
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -35,7 +35,7 @@ class OrderController extends Controller
     }
 
     /**
-     * 支付
+     * h5支付
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -45,36 +45,33 @@ class OrderController extends Controller
     {
         try {
             // 支付渠道
-            $channel = 0;
+            $channel      = 0;
+            $channel_name = '';
 
             //判断是不是微信
             if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {
-                $channel = 1;
+                $channel      = 1;
+                $channel_name = 'wechat';
             }
 
             //判断是不是支付宝
             if (strpos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient') !== false) {
-                $channel = 2;
+                $channel      = 2;
+                $channel_name = 'alipay';
             }
 
             // 菜肴id
             $dish_id = $request->input('dish_id');
-
             // 生成订单号
             $trade_no = generateOrderNo();
-
             // 实付金额
-            $amount = $request->input('amount'); // 单位分
-
+            $amount = $request->input('amount'); // 目前带过来的是以分为单位
             // 获取点餐详情
             $details = $request->input('detail');
-
             // 桌号
             $table_id = $request->input('table_id');
-
             // 座位号
             $seat_id = $request->input('seat_id');
-
             // 商户号
             $merchant_id = $request->input('merchant_id');
             // open_id
@@ -91,14 +88,14 @@ class OrderController extends Controller
                 }
             }
 
-            myLog('pay', ['amount' => $amount, 'details' => $detailData, 'table_id' => $table_id, 'seat_id' => $seat_id, 'merchant_id' => $merchant_id, 'open_id' => $open_id]);
+            myLog('order_data', ['amount' => $amount, 'details' => $detailData, 'table_id' => $table_id, 'seat_id' => $seat_id, 'merchant_id' => $merchant_id, 'open_id' => $open_id]);
 
             //  创建订单
             $order = Order::create([
                 'trade_no'        => $trade_no,
                 'date'            => Carbon::now()->toDateString(),
                 'out_trade_no'    => '',
-                'status'          => 0, // 未支付
+                'status'          => 1, // 订单创建成功为1
                 'channel'         => $channel,
                 'buyer_id'        => '',
                 'buyer_open_id'   => '',
@@ -107,6 +104,12 @@ class OrderController extends Controller
                 'detail'          => json_encode($detailData),
                 'pay_status'      => 0,
                 'pay_time'        => null,
+                'channel_name'    => $channel_name,
+                'merchant_id'     => $merchant_id,
+                'table_id'        => $table_id,
+                'seat_id'         => $seat_id,
+                'comment'         => '',
+                'pay_info'        => '',
             ]);
 
             // 支付
@@ -128,7 +131,7 @@ class OrderController extends Controller
                     'openid'           => $open_id,
                 ]);
 
-                myLog('wechat_pay_two', ['result' => $result]);
+                myLog('wechat_pay_result', ['result' => $result]);
 
                 // 预支付订单号,生成js需要的信息
                 $prepayId        = $result['prepay_id'];
@@ -141,9 +144,9 @@ class OrderController extends Controller
                 $payForm = Pay::alipay(config('pay.ali'))->wap([
                     'out_trade_no' => $order->trade_no,
                     'total_amount' => $amount * 0.01, // 单位元
-                    'subject'      => '桌号：' . $table_id . ',座位号：' . $seat_id . ',扫码点餐,' . '总计：' . $amount * 0.01 . '元',
+                    'subject'      => '桌号:' . $table_id . ',座位号:' . $seat_id . ',扫码点餐,' . '总计:' . $amount * 0.01 . '元',
                 ]);
-                myLog('alipay_data', ['data' => $payForm->getContent(), 'message' => $payForm]);
+                myLog('alipay_result', ['result' => $payForm->getContent()]);
 
                 return response()->json(['status' => 1, 'pay_form' => $payForm->getContent()]);
             }
@@ -157,7 +160,6 @@ class OrderController extends Controller
             myLog('pay_error', ['message' => '【' . $e->getLine() . $e->getFile() . '】' . '【' . $e->getMessage() . '】']);
 
             return response()->json(['status' => 0, 'data' => '']);
-
         }
     }
 
@@ -194,28 +196,24 @@ class OrderController extends Controller
 
                     try {
                         // 写入外部订单号和点的详细菜单写入表
-                        $order->status        = 1; // 支付成功状态
                         $order->pay_status    = 1; // 支付成功状态
                         $order->out_trade_no  = $data->trade_no;
                         $order->pay_time      = date("Y-m-d H:i:s");
                         $order->buyer_id      = $data->buyer_id;
                         $order->buyer_open_id = $data->app_id;
+                        $order->pay_info      = $data;
 
                         if ($order->save()) {
                             // 支付成功，写入点餐详情
                             $insertData = [];
                             foreach (json_decode($order->detail, true) as $detail) {
                                 $insertData[] = [
-                                    'open_id'     => $data->app_id,
-                                    'channel'     => $order->channel,
-                                    'dish_id'     => $detail['dish_id'],
-                                    'table_id'    => $detail['table_id'],
-                                    'seat_id'     => $detail['seat_id'],
-                                    'merchant_id' => $detail['merchant_id'],
-                                    'number'      => $detail['number'],
-                                    'tag'         => '',
-                                    'created_at'  => Carbon::now()->toDateString(),
-                                    'updated_at'  => Carbon::now()->toDateString(),
+                                    'order_trade_no' => $order->trade_no,
+                                    'dish_id'        => $detail['dish_id'],
+                                    'table_id'       => $detail['table_id'],
+                                    'seat_id'        => $detail['seat_id'],
+                                    'merchant_id'    => $detail['merchant_id'],
+                                    'number'         => $detail['number'],
                                 ];
                             }
 
@@ -281,26 +279,24 @@ class OrderController extends Controller
                 // 用户是否支付成功
                 if ($message['return_code'] === 'SUCCESS' && array_get($message, 'result_code') === 'SUCCESS') {
                     // 写入外部订单号和点的详细菜单写入表
-                    $order->status       = 1; // 支付成功状态
-                    $order->pay_status   = 1; // 支付成功状态
-                    $order->out_trade_no = array_get($message, 'transaction_id');
-                    $order->pay_time     = date("Y-m-d H:i:s");
-//                    data_set($orderInfo,'attributes',json_encode([]));//清空预支付订单id
+                    $order->status        = 1; // 支付成功状态
+                    $order->pay_status    = 1; // 支付成功状态
+                    $order->out_trade_no  = array_get($message, 'transaction_id');
+                    $order->pay_time      = date("Y-m-d H:i:s");
+                    $order->pay_info      = json_encode($message);
+                    $order->buyer_open_id = $message['openid'];
+
                     if ($order->save()) {
                         // 支付成功，写入点餐详情
                         $insertData = [];
                         foreach (json_decode($order->detail, true) as $detail) {
                             $insertData[] = [
-                                'open_id'     => array_get($message, 'openid'),
-                                'channel'     => $order->channel,
-                                'dish_id'     => $detail['dish_id'],
-                                'table_id'    => $detail['table_id'],
-                                'seat_id'     => $detail['seat_id'],
-                                'merchant_id' => $detail['merchant_id'],
-                                'number'      => $detail['number'],
-                                'tag'         => '',
-                                'created_at'  => Carbon::now()->toDateString(),
-                                'updated_at'  => Carbon::now()->toDateString(),
+                                'order_trade_no' => $order->trade_no,
+                                'dish_id'        => $detail['dish_id'],
+                                'table_id'       => $detail['table_id'],
+                                'seat_id'        => $detail['seat_id'],
+                                'merchant_id'    => $detail['merchant_id'],
+                                'number'         => $detail['number'],
                             ];
                         }
 

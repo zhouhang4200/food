@@ -15,6 +15,7 @@ class CreateSeatsTable extends Migration
     {
         Schema::create('seats', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('merchant_id');
             $table->string('name')->default('')->comment('座位号名称');
             $table->timestamps();
         });

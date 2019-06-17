@@ -15,14 +15,12 @@ class CreateCustomerDishDetailsTable extends Migration
     {
         Schema::create('customer_dish_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('open_id')->comment('客户的微信open_id或支付宝open_id');
-            $table->tinyInteger('channel')->default(0)->comment('用什么方式扫的桌位二维码，微信：1,支付宝：2，');
+            $table->string('order_trade_no')->comment('关联订单号');
             $table->integer('merchant_id');
-            $table->integer('dish_id');
             $table->integer('table_id');
             $table->integer('seat_id');
+            $table->integer('dish_id');
             $table->integer('number');
-            $table->string('tag')->default('1')->comment('口味标记：1不辣2微辣3辣');
             $table->timestamps();
         });
     }

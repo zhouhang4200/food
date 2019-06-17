@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CustomerDishDetail extends Model
 {
-    public $fillable = ['open_id', 'type', 'merchant_id', 'dish_id', 'table_id', 'seat_id', 'number', 'tag'];
+    protected $fillable = ['order_trade_no', 'merchant_id', 'dish_id', 'table_id', 'seat_id', 'number'];
 
     public function dish()
     {

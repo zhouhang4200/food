@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dish extends Model
 {
-    public $fillable = [
+    protected $fillable = [
         'name', 'amount', 'original_amount', 'rate', 'logo',
         'material', 'category_id', 'merchant_id', 'tag', 'intro'
     ];
