@@ -306,9 +306,10 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                     // });
                     // alert(data.pay_form);
                     if (res.status === 1) {
-                        document.getElementsByTagName("body")[0].push(res.pay_form);
+                        // this.html = res.pay_form;
+                        var form = res.pay_form;
                         var div = document.createElement('div');
-                        div.innerHTML = res.pay_form;
+                        div.innerHTML = form;
                         document.body.appendChild(div);
                         document.forms[0].submit();
                     } else {
