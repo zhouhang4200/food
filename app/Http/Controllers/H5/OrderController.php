@@ -141,7 +141,7 @@ class OrderController extends Controller
                 ]);
                 myLog('alipay_data', ['data' => $payForm->getContent()]);
 
-                return response()->json(['status' => 1, 'pay_form' => $payForm]);
+                return response()->json(['status' => 1, 'pay_form' => $payForm->getContent()]);
             }
 
             return response()->json(['status' => 1, 'data' => $order]);
