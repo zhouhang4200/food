@@ -195,7 +195,7 @@ class OrderController extends Controller
                         $order->out_trade_no  = $data->trade_no;
                         $order->pay_time      = date("Y-m-d H:i:s");
                         $order->buyer_id      = $data->buyer_id;
-                        $order->buyer_open_id = $data->open_id;
+                        $order->buyer_open_id = $data->app_id;
 
                         if ($order->save()) {
                             // 支付成功，写入点餐详情
