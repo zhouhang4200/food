@@ -287,20 +287,26 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             // console.log(Number(dish.amount), this.totalAmount, dish.amount);
         },
         onSubmit: function onSubmit() {
+            console.log(this.totalAmount);
             if (this.totalAmount > 0) {
-                var params = this.$route.params;
-                params.amount = this.totalAmount;
-                params.detail = this.customerDishDetail;
-                params.open_id = this.$route.query.open_id;
-
-                this.$api.h5Pay(params).then(function (res) {
+                var amount = this.totalAmount;
+                var detail = this.customerDishDetail;
+                var open_id = this.$route.query.open_id;
+                var merchant_id = this.$route.query.merchant_id;
+                var seat_id = this.$route.query.seat_id;
+                var table_id = this.$route.query.table_id;
+                var query = this.$route.query;
+                var jsApiParameters = '';
+                this.$api.h5Pay({ amount: amount, detail: detail, open_id: open_id, merchant_id: merchant_id, seat_id: seat_id, table_id: table_id, query: query }).then(function (res) {
+                    // this.$message({
+                    //     type: 'info',
+                    //     message: res.jsApiParameters
+                    // });
                     if (res.status === 1) {
-                        console.log('pay_success');
-                    } else if (res.status === 3) {
-                        // Toast.fail(res.message);
+                        $("body").append(data.pay_form);
                     } else {
-                            // Toast.fail(res.message);
-                        }
+                        alert('网络错误，请稍后再试！');
+                    }
                 });
             }
             // console.log(this.$route.params);

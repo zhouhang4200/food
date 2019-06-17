@@ -64,7 +64,7 @@ class OrderController extends Controller
             $trade_no = generateOrderNo();
 
             // 实付金额
-            $amount = $request->input('amount');
+            $amount = $request->input('amount'); // 单位分
 
             // 获取点餐详情
             $details = $request->input('detail');
@@ -98,8 +98,8 @@ class OrderController extends Controller
                 'channel'         => $channel,
                 'buyer_id'        => '',
                 'buyer_open_id'   => '',
-                'amount'          => $amount, // 单位分
-                'original_amount' => $amount,
+                'amount'          => $amount*0.01, // 单位元
+                'original_amount' => $amount*0.01,
                 'detail'          => json_encode($details),
                 'pay_status' => 0,
                 'pay_time' => null,
@@ -107,14 +107,6 @@ class OrderController extends Controller
 
             // 支付
             if ($channel == 1) { # 微信支付
-//                Pay::wechat(config('pay.wechat'))->mp([
-//                    'out_trade_no' => $order->trade_no,           // 订单号
-//                    'total_fee' => $order->amount,              // 订单金额，**单位：分** 传过来的就是分
-//                    'body' => '点餐订单支付',                   // 订单描述
-////                    'spbill_create_ip' => '192.168.1.1',       // 支付人的 IP
-//                    'openid' => $open_id,
-//                ]);
-
                 $config = config('wechat.pay_config');
                 $app    = Factory::payment($config);
                 $jssdk  = $app->jssdk;
@@ -142,16 +134,14 @@ class OrderController extends Controller
 
                 return response()->json(['status' => 1, 'jsApiParameters' => $jsApiParameters]);
             } elseif ($channel == 2) { # 支付宝支付
-                $payPar = Pay::alipay(config('pay.ali'))->app([
+                $payForm = Pay::alipay(config('pay.ali'))->wap([
                     'out_trade_no' => $order->trade_no,
-                    'total_amount' => $order->amount, // 单位元
+                    'total_amount' => $amount*0.01, // 单位元
                     'subject'      => '点餐订单支付',
                 ]);
 
-//                return response()->json(['status' => 1, 'message' => 'success', ['channel' => 2, 'trade_no' => $order->trade_no, 'par' => $payPar->getContent()]]);
+                return response()->json(['status' => 1, 'pay_form' => $payForm]);
             }
-//                return response()->json(['status' => config('ali.base_config')]);
-//            return response()->json(['status' => $payPar]);
 
             return response()->json(['status' => 1, 'data' => $order]);
         } catch (InvalidConfigException $e) {
@@ -169,9 +159,8 @@ class OrderController extends Controller
     /**
      * 支付宝通知
      *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Yansongda\Pay\Exceptions\InvalidConfigException
-     * @throws \Yansongda\Pay\Exceptions\InvalidSignException
+     * @return bool|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function alipayNotify()
     {
@@ -180,69 +169,74 @@ class OrderController extends Controller
         try {
             $data = $alipay->verify();
 
-            myLog('alipay', [$data]);
+            myLog('alipay_notify_data', ['data' => $data]);
 
             # 支付宝确认交易成功
             if (in_array($data->trade_status, ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
                 // 查找 订单
                 $order = Order::where('out_trade_no', $data->out_trade_no)
-                    ->where('amount', $data->total_amount)
                     ->first();
+
+                if ($order->amount != $data->total_amount) {
+                    myLog('alipay_notify_error', ['data' => '支付宝返回金额与订单交易金额不符']);
+
+                    return true;
+                }
 
                 # 查到充值订单
                 if ($order) {
                     DB::beginTransaction();
 
                     try {
-                        $order->status        = 1; // 成功
-                        $order->buyer_id      = $data->buyer_id;
-                        $order->buyer_open_id = $data->buyer_open_id;
-                        $order->save();
+                        // 写入外部订单号和点的详细菜单写入表
+                        $order->status       = 1; // 支付成功状态
+                        $order->pay_status   = 1; // 支付成功状态
+                        $order->out_trade_no = $data->trade_no;
+                        $order->pay_time     = date("Y-m-d H:i:s");
 
-                        // 支付成功，写入点餐详情
-                        $insertData = [];
-                        foreach (json_decode($order->detail, true) as $detail) {
-                            $insertData[] = [
-                                'open_id'    => '',
-                                'channel'    => $order->channel,
-                                'dish_id'    => $detail->dish_id,
-                                'table_id'   => $detail->table_id,
-                                'seat_id'    => $detail->seat_id,
-                                'number'     => $detail->number,
-                                'tag'        => '',
-                                'created_at' => Carbon::now()->toDateString(),
-                                'updated_at' => Carbon::now()->toDateString(),
-                            ];
+                        if ($order->save()) {
+                            // 支付成功，写入点餐详情
+                            $insertData = [];
+                            foreach (json_decode($order->detail, true) as $detail) {
+                                $insertData[] = [
+                                    'open_id'    => '',
+                                    'channel'    => $order->channel,
+                                    'dish_id'    => $detail->dish_id,
+                                    'table_id'   => $detail->table_id,
+                                    'seat_id'    => $detail->seat_id,
+                                    'number'     => $detail->number,
+                                    'tag'        => '',
+                                    'created_at' => Carbon::now()->toDateString(),
+                                    'updated_at' => Carbon::now()->toDateString(),
+                                ];
+                            }
+
+                            DB::table('customer_dish_details')->insert($insertData);
+
+                            DB::commit();
+                        } else {
+                            myLog('alipay_notify_error', ['data' => '写入订单失败:' . $order->trade_no]);
+
+                            DB::rollBack();
                         }
-
-                        DB::table('customer_dish_details')->insert($insertData);
-
-                        // 下单
-
                     } catch (\Exception $exception) {
-                        myLog('alipayNotify', [$exception->getLine(), $exception->getMessage()]);
+                        myLog('alipay_notify_error', ['data' => $exception->getLine(). $exception->getMessage()]);
                         DB::rollback();
                     }
 
                     DB::commit();
 
                     # 发送通知
-                    event((new NotificationEvent('channelPcPayResult', [
-                        'message' => '充值成功',
-                    ])));
                 }
             }
-        } catch (Exception $e) {
-            \Log::debug('Alipay notify Error', [$e->getMessage()]);
+        } catch (\Exception $e) {
+            myLog('alipay_notify_error', ['data' => $exception->getLine(). $exception->getMessage()]);
+
         }
 
         return $alipay->success();
     }
 
-    public function alipayReturn()
-    {
-
-    }
 
     /**
      * 微信异步通知
@@ -274,7 +268,7 @@ class OrderController extends Controller
 
                 //开启事务并上锁
                 DB::beginTransaction();
-                if ($order->amount != array_get($message, 'total_fee')) {
+                if ($order->amount*100 != array_get($message, 'total_fee')) {
                     DB::rollBack();
 
                     return true;
@@ -306,11 +300,6 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             myLog('wechat_notify_error', ['data' => '微信通知异常:' . $e->getMessage(), 'ip' => ip2long(request()->ip())]);
         }
-    }
-
-    public function wechatReturn()
-    {
-
     }
 
     /**
