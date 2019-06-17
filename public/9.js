@@ -317,6 +317,11 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                             message: '网络错误，请稍后再试'
                         });
                     }
+                }).catch(function (error) {
+                    _this.$message({
+                        type: 'info',
+                        message: error
+                    });
                 });
             }
             // console.log(this.$route.params);

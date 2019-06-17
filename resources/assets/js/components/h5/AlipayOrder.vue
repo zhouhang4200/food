@@ -221,6 +221,11 @@
                                 message: '网络错误，请稍后再试'
                             });
                         }
+                    }).catch(error => {
+                        this.$message({
+                            type: 'info',
+                            message: error
+                        });
                     });
                 }
                 // console.log(this.$route.params);
