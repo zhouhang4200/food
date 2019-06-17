@@ -25,7 +25,7 @@ class CreateOrdersTable extends Migration
             $table->integer('seat_id')->comment('座位号');
             $table->timestamp('pay_time')->nullable()->comment('订单支付时间');
             $table->tinyInteger('channel')->default(0)->comment('支付渠道：1微信 2支付宝');
-            $table->tinyInteger('channel_name')->default('')->comment('支付渠道名:alipay, wechat');
+            $table->string('channel_name')->default('')->comment('支付渠道名:alipay, wechat');
             $table->string('buyer_id')->default('')->comment('支付人id');
             $table->string('buyer_open_id')->default('')->comment('支付人open_id或app_id');
             $table->decimal('amount', 10, 2)->comment('实际支付金额');
