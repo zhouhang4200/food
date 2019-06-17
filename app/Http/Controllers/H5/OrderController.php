@@ -291,7 +291,7 @@ class OrderController extends Controller
                         $insertData = [];
                         foreach (json_decode($order->detail, true) as $detail) {
                             $insertData[] = [
-                                'open_id'     => array_get($message, 'open_id'),
+                                'open_id'     => array_get($message, 'openid'),
                                 'channel'     => $order->channel,
                                 'dish_id'     => $detail['dish_id'],
                                 'table_id'    => $detail['table_id'],
