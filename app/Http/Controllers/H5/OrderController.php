@@ -137,7 +137,7 @@ class OrderController extends Controller
                 $payForm = Pay::alipay(config('pay.ali'))->wap([
                     'out_trade_no' => $order->trade_no,
                     'total_amount' => $amount * 0.01, // 单位元
-                    'subject'      => '点餐订单支付',
+                    'subject'      => '桌号：' . $table_id . '座位号：' . $seat_id . '扫码点餐,' . '总计：' . $amount . '分',
                 ]);
                 myLog('alipay_data', ['data' => $payForm->getContent(), 'message' => $payForm]);
 
@@ -195,7 +195,7 @@ class OrderController extends Controller
                         $order->out_trade_no  = $data->trade_no;
                         $order->pay_time      = date("Y-m-d H:i:s");
                         $order->buyer_id      = $data->buyer_id;
-                        $order->buyer_open_id = $data->app_id;
+                        $order->buyer_open_id = $data->fund_bill_list['app_id'];
 
                         if ($order->save()) {
                             // 支付成功，写入点餐详情
