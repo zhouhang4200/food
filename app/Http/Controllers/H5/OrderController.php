@@ -220,8 +220,8 @@ class OrderController extends Controller
 
                             DB::rollBack();
                         }
-                    } catch (\Exception $exception) {
-                        myLog('alipay_notify_error', ['data' => $exception->getLine(). $exception->getMessage()]);
+                    } catch (\Exception $e) {
+                        myLog('alipay_notify_error', ['data' => $e->getLine(). $e->getMessage()]);
                         DB::rollback();
                     }
 
@@ -231,13 +231,17 @@ class OrderController extends Controller
                 }
             }
         } catch (\Exception $e) {
-            myLog('alipay_notify_error', ['data' => $exception->getLine(). $exception->getMessage()]);
+            myLog('alipay_notify_error', ['data' => $e->getLine(). $e->getMessage()]);
 
         }
 
         return $alipay->success();
     }
 
+    public function alipayReturn(Request $request)
+    {
+        return view('welcome');
+    }
 
     /**
      * 微信异步通知
