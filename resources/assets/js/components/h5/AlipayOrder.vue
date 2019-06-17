@@ -204,13 +204,13 @@
                     let query = this.$route.query;
                     let jsApiParameters = '';
                     this.$api.h5Pay({amount:amount, detail:detail, open_id:open_id, merchant_id:merchant_id, seat_id:seat_id, table_id:table_id, query:query}).then(res => {
-                        // this.$message({
-                        //     type: 'info',
-                        //     message: res.jsApiParameters
-                        // });
-                        alert(data.pay_form);
+                        this.$message({
+                            type: 'info',
+                            message: res.pay_form
+                        });
+                        // alert(data.pay_form);
                         if (res.status === 1) {
-                            $("body").append(data.pay_form);
+                            document.getElementByTagName("body")[0].innerHTML.append(data.pay_form);
                         } else {
                             alert('网络错误，请稍后再试！');
                         }
