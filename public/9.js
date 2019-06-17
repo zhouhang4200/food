@@ -306,7 +306,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                     // });
                     // alert(data.pay_form);
                     if (res.status === 1) {
-                        document.getElementsByTagName("body")[0].append(res.pay_form.form_text);
+                        document.getElementsByTagName("body")[0].append(res.pay_form);
                     } else {
                         _this.$message({
                             type: 'info',
