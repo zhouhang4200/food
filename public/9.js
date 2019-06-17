@@ -306,7 +306,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                     });
                     // alert(data.pay_form);
                     if (res.status === 1) {
-                        document.getElementByTagName("body")[0].innerHTML.append(data.pay_form);
+                        document.getElementByTagName("body")[0].innerHTML.append(res.pay_form);
                     } else {
                         alert('网络错误，请稍后再试！');
                     }
