@@ -53,20 +53,39 @@ const router = new Router({
             component: resolve => void(require(['../components/h5/Order'], resolve)),
         },
         {
+            name: "客户管理",
+            icon: "el-icon-goods",
+            path: '/customer/',
+            redirect: '/customer/list',
+            component: App,
+            // canReuse: false,
+            meta: {title: '客户管理'},
+            menu: true,
+            children: [
+                {
+                    name: "customerList",
+                    menu: true,
+                    path: "list",
+                    meta: {title: '统计信息'},
+                    component: resolve => void (require(['../components/customer/List'], resolve)),
+                }
+            ]
+        },
+        {
             name: "dish",
             icon: "el-icon-goods",
             path: '/dish/',
             redirect: '/dish/list',
             component: App,
             // canReuse: false,
-            meta: {title: '菜肴管理'},
+            meta: {title: '商品管理'},
             menu: true,
             children: [
                 {
                     name: "dishList",
                     menu: true,
                     path: "list",
-                    meta: {title: '菜肴信息'},
+                    meta: {title: '商品信息'},
                     component: resolve => void (require(['../components/dish/List'], resolve)),
                 }
             ]
@@ -87,6 +106,63 @@ const router = new Router({
                     path: "list",
                     meta: {title: '订单信息'},
                     component: resolve => void (require(['../components/order/List'], resolve)),
+                }
+            ]
+        },
+        {
+            name: "finance",
+            icon: "el-icon-goods",
+            path: '/finance/',
+            redirect: '/finance/list',
+            component: App,
+            // canReuse: false,
+            meta: {title: '财务管理'},
+            menu: true,
+            children: [
+                {
+                    name: "financeList",
+                    menu: true,
+                    path: "list",
+                    meta: {title: '财务信息'},
+                    component: resolve => void (require(['../components/finance/List'], resolve)),
+                }
+            ]
+        },
+        {
+            name: "store",
+            icon: "el-icon-goods",
+            path: '/store/',
+            redirect: '/store/list',
+            component: App,
+            // canReuse: false,
+            meta: {title: '门店管理'},
+            menu: true,
+            children: [
+                {
+                    name: "storeList",
+                    menu: true,
+                    path: "list",
+                    meta: {title: '门店信息'},
+                    component: resolve => void (require(['../components/store/List'], resolve)),
+                }
+            ]
+        },
+        {
+            name: "static",
+            icon: "el-icon-goods",
+            path: '/static/',
+            redirect: '/static/list',
+            component: App,
+            // canReuse: false,
+            meta: {title: '汇总管理'},
+            menu: true,
+            children: [
+                {
+                    name: "staticList",
+                    menu: true,
+                    path: "list",
+                    meta: {title: '汇总信息'},
+                    component: resolve => void (require(['../components/static/List'], resolve)),
                 }
             ]
         }

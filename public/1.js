@@ -1,18 +1,18 @@
 webpackJsonp([1],{
 
-/***/ 338:
+/***/ 142:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(350)
+  __webpack_require__(341)
 }
 var normalizeComponent = __webpack_require__(81)
 /* script */
-var __vue_script__ = __webpack_require__(352)
+var __vue_script__ = __webpack_require__(343)
 /* template */
-var __vue_template__ = __webpack_require__(353)
+var __vue_template__ = __webpack_require__(344)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -29,7 +29,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/h5/Order.vue"
+Component.options.__file = "resources/assets/js/components/auth/Login.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -38,9 +38,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0cd46a83", Component.options)
+    hotAPI.createRecord("data-v-dca5370e", Component.options)
   } else {
-    hotAPI.reload("data-v-0cd46a83", Component.options)
+    hotAPI.reload("data-v-dca5370e", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -52,23 +52,23 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 350:
+/***/ 341:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(351);
+var content = __webpack_require__(342);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(140)("7e4f3efa", content, false, {});
+var update = __webpack_require__(140)("5f5e204b", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cd46a83\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./Order.vue", function() {
-     var newContent = require("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cd46a83\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./Order.vue");
+   module.hot.accept("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-dca5370e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_less-loader@4.1.0@less-loader/dist/cjs.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./Login.vue", function() {
+     var newContent = require("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-dca5370e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_less-loader@4.1.0@less-loader/dist/cjs.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./Login.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -79,7 +79,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 351:
+/***/ 342:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(34)(false);
@@ -87,21 +87,18 @@ exports = module.exports = __webpack_require__(34)(false);
 
 
 // module
-exports.push([module.i, "\n.imageStyle img {\n    width: 100%;\n    height: 100%;\n    display: block;\n}\n.van-card__thumb {\n    width: 100px;\n    height: 70px;\n    margin-right: 10px;\n    /* -webkit-box-align: center; */\n    /* -webkit-align-items: center; */\n    /* align-items: center; */\n    /* -webkit-box-pack: center; */\n    -webkit-justify-content: center;\n    /* justify-content: center; */\n    /* -webkit-box-flex: 0; */\n    -webkit-flex: none;\n    /* flex: none; */\n    /* margin-top: 20px; */\n}\n.van-button--warning {\n    color: #fff;\n    background-color: #409eff;\n    border: 1px solid #409eff;\n}\n.van-card {\n    position: relative;\n    color: #323233;\n    padding: 10px 15px;\n    font-size: 14px;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    background-color: #fafafa;\n}\n.van-card__content, .van-card__header {\n    height: 44px;\n}\n.van-card__title {\n    line-height: 16px;\n    max-height: 32px;\n    font-weight: 500;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    display: -webkit-box;\n    -webkit-line-clamp: 2;\n    -webkit-box-orient: vertical;\n    padding-top: 5px;\n}\n.van-card__bottom, .van-card__desc {\n    line-height: 20px;\n    margin-top: 4px;\n    font-size: 14px;\n}\n\n", ""]);
+exports.push([module.i, "\n.geetest_holder.geetest_mobile.geetest_ant .geetest_slider .geetest_slider_track .geetest_slider_tip.geetest_multi_slide {\n  word-wrap: break-word !important;\n  white-space: normal !important;\n  text-align: left !important;\n  font-size: 12px !important;\n  line-height: 40px !important;\n}\n.geetest_holder.geetest_mobile.geetest_ant .geetest_panel .geetest_copyright .geetest_logo {\n  width: 0 !important;\n}\n.geetest_holder.geetest_mobile.geetest_ant .geetest_panel .geetest_copyright .geetest_copyright_tip {\n  margin: 0 !important;\n}\n.login-register {\n  /*@keyframes move_wave {*/\n  /*0% {*/\n  /*transform: translateX(0) translateZ(0) scaleY(1)*/\n  /*}*/\n  /*50% {*/\n  /*transform: translateX(-25%) translateZ(0) scaleY(0.55)*/\n  /*}*/\n  /*100% {*/\n  /*transform: translateX(-50%) translateZ(0) scaleY(1)*/\n  /*}*/\n  /*}*/\n  /*.waveWrapper {*/\n  /*overflow: hidden;*/\n  /*position: absolute;*/\n  /*left: 0;*/\n  /*right: 0;*/\n  /*!*bottom: 0;*!*/\n  /*top: 0;*/\n  /*margin: auto;*/\n  /*width: 1000px;*/\n  /*height: 100px;*/\n  /*}*/\n  /*.waveWrapperInner {*/\n  /*position: absolute;*/\n  /*width: 100%;*/\n  /*overflow: hidden;*/\n  /*height: 100%;*/\n  /*bottom: -1px;*/\n  /*background-image: linear-gradient(to top, #fd6019 20%, #fd6019 80%);*/\n  /*}*/\n  /*.bgTop {*/\n  /*z-index: 15;*/\n  /*opacity: 0.5;*/\n  /*}*/\n  /*.bgMiddle {*/\n  /*z-index: 10;*/\n  /*opacity: 0.75;*/\n  /*}*/\n  /*.bgBottom {*/\n  /*z-index: 5;*/\n  /*}*/\n  /*.wave {*/\n  /*position: absolute;*/\n  /*left: 0;*/\n  /*width: 200%;*/\n  /*height: 100%;*/\n  /*background-repeat: repeat no-repeat;*/\n  /*background-position: 0 bottom;*/\n  /*transform-origin: center bottom;*/\n  /*}*/\n  /*.waveTop {*/\n  /*background-size: 50% 100px;*/\n  /*}*/\n  /*.waveAnimation .waveTop {*/\n  /*animation: move-wave 3s;*/\n  /*-webkit-animation: move-wave 3s;*/\n  /*-webkit-animation-delay: 1s;*/\n  /*animation-delay: 1s;*/\n  /*}*/\n  /*.waveMiddle {*/\n  /*background-size: 50% 120px;*/\n  /*}*/\n  /*.waveAnimation .waveMiddle {*/\n  /*animation: move_wave 10s linear infinite;*/\n  /*}*/\n  /*.waveBottom {*/\n  /*background-size: 50% 100px;*/\n  /*}*/\n  /*.waveAnimation .waveBottom {*/\n  /*animation: move_wave 15s linear infinite;*/\n  /*}*/\n}\n.login-register .el-input__inner {\n  border: none;\n  border-radius: 0;\n  border-bottom: 1px solid #f0f2f5;\n}\n.login-register .el-input__prefix .el-input__icon {\n  font-size: 26px;\n}\n.login-register .icon-youxiang {\n  font-size: 20px;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 352:
+/***/ 343:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vant__ = __webpack_require__(141);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 //
 //
 //
@@ -153,367 +150,548 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
-
-
-
-
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant__["a" /* GoodsAction */]).use(__WEBPACK_IMPORTED_MODULE_0_vant__["b" /* GoodsActionBigBtn */]).use(__WEBPACK_IMPORTED_MODULE_0_vant__["c" /* GoodsActionMiniBtn */]);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            form: {
-                account: '',
-                fee: ''
+    name: "Login",
+    computed: {
+        active: {
+            get: function get() {
+                return this.$route.path;
             },
-            accountOptions: [],
-            accountShow: false,
-            showNumber: false,
-            images: ["h5.keeper.test/images/banner1.jpg", "h5.keeper.test/images/banner2.jpg"],
-            imageURL: "",
-            hot: '热卖中',
-            price: '',
-            originPrice: '',
-            desc: '微辣',
-            title: '',
-            number: 0,
-            totalAmount: 0,
-            dishData: {},
-            customerDishDetail: []
-        };
+            set: function set() {}
+        }
     },
-    created: function created() {
-        // let code=getUrlKey("code");
-        // if(code){
-        //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-        //     this.getOpenIdApi(code);
-        // }else{
-        //     this.getCodeApi("123");
-        // }
-    },
+    data: function data() {
+        var _this = this;
 
-    computed: {},
-    mounted: function mounted() {
-        // let code=this.getUrlKey("code");
-        // if(code){
-        //     console.log(code);
-        //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-        //     this.getOpenIdApi(code);
-        // }else{
-        //     console.log('code');
-        //     this.getCodeApi("123");
-        // }
-        this.dishes();
+        var validateCaptcha = function validateCaptcha(rule, value, callback) {
+            if (value == '') {
+                callback(new Error('请点击按钮完成验证'));
+            } else {
+                callback();
+            }
+        };
+        var validatePass = function validatePass(rule, value, callback) {
+            if (value === '') {
+                callback(new Error('请再次输入密码'));
+            } else if (value !== _this.formRegister.password) {
+                callback(new Error('两次输入密码不一致!'));
+            } else {
+                callback();
+            }
+        };
+        return {
+            // active: '/login',
+            loginPasswordErrorMessage: '',
+            formLogin: {
+                phone: '',
+                password: ''
+                // username: '',
+                // geetest_challenge: '',
+                // geetest_seccode: '',
+                // geetest_validate: '',
+            },
+            formLoginRules: {
+                phone: [{ required: true, message: '请输入正确的手机号', trigger: 'blur' }],
+                password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+                // geetest_seccode: [
+                //     {validator: validateCaptcha, trigger: 'change'}
+                // ],
+            },
+            registerPassword: '',
+            formRegister: {
+                name: '',
+                email: '',
+                qq: '',
+                phone: '',
+                username: '',
+                password: '',
+                password_confirmation: '',
+                geetest_challenge: '',
+                geetest_seccode: '',
+                geetest_validate: ''
+            },
+            formRegisterErrorMessage: {
+                name: '',
+                email: '',
+                qq: '',
+                phone: '',
+                username: '',
+                password: '',
+                password_confirmation: '',
+                geetest_challenge: '',
+                geetest_seccode: '',
+                geetest_validate: ''
+            },
+            formRegisterRules: {
+                name: [{ required: true, message: '请输入', trigger: 'blur' }],
+                username: [{ required: true, message: '请输入账号呢称', trigger: 'blur' }],
+                // email: [
+                //     {required: true, message: '请输入您的邮箱', trigger: 'blur'},
+                //     {
+                //         validator:(rule,value,callback)=>{
+                //             if(value != ""){
+                //                 if((/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/).test(value) == false){
+                //                     callback(new Error("请输入正确的邮箱地址"));
+                //                 }else{
+                //                     callback();
+                //                 }
+                //             }else{
+                //                 callback();
+                //             }
+                //         },
+                //         trigger:'blur'
+                //     },
+                // ],
+                // qq: [
+                //     {required: true, message: '请输入QQ', trigger: 'blur'},
+                //     {
+                //         validator:(rule,value,callback)=>{
+                //             if((/^[0-9]{5,12}$/).test(value) == false){
+                //                 callback(new Error("请输入正确的QQ"));
+                //             }else{
+                //                 callback();
+                //             }
+                //         },
+                //         trigger:'blur'
+                //     },
+                // ],
+                phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }, {
+                    validator: function validator(rule, value, callback) {
+                        if (value != "") {
+                            if (/^1[34578]\d{9}$/.test(value) == false) {
+                                callback(new Error("请输入正确的手机号"));
+                            } else {
+                                callback();
+                            }
+                        } else {
+                            callback();
+                        }
+                    },
+                    trigger: 'blur'
+                }],
+                password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+                password_confirmation: [{ validator: validatePass, trigger: 'blur' }]
+                // geetest_seccode: [
+                //     {validator: validateCaptcha, trigger: 'change'}
+                // ],
+            }
+        };
     },
 
     methods: {
-        getUrlKey: function getUrlKey(name) {
-            //获取url 参数
-            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null;
-        },
-        getCodeApi: function getCodeApi(state) {
-            //获取code
-            var urlNow = encodeURIComponent(window.location.href);
-            var scope = 'snsapi_base'; //snsapi_userinfo   //静默授权 用户无感知
-            var appid = 'wx5e0fd315aff830a4';
-            var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + urlNow + '&response_type=code&scope=' + scope + '&state=' + state + '#wechat_redirect';
-            window.location.replace(url);
-        },
-        getOpenIdApi: function getOpenIdApi(code) {
-            this.$api.getopenId({ code: code }).then(function (res) {
-                console.log(123122312);
-                if (res.status === 1) {
-                    console.log('pay_success');
-                } else if (res.status === 3) {
-                    // Toast.fail(res.message);
-                } else {
-                        // Toast.fail(res.message);
-                    }
-            });
-        },
-        sub: function sub(dish) {
-            var dishId = dish.id;
-            var id = 'number' + dishId;
-            var numberObject = document.getElementById(id);
-            var numberValue = Number(numberObject.value);
-            var finalNumber = 0;
-
-            if (numberValue > 0) {
-                numberObject.setAttribute("style", "width: 40px; text-align: center;color: #f44");
-                finalNumber = numberValue - 1;
-                numberObject.value = finalNumber;
-
-                if (this.customerDishDetail.length > 0) {
-                    for (var i = 0; i < this.customerDishDetail.length; i++) {
-                        if (this.customerDishDetail[i].dish_id === dishId) {
-                            this.customerDishDetail[i].number = finalNumber;
-
-                            if (finalNumber < 1) {
-                                this.customerDishDetail.splice(i, 1);
-                            }
-
-                            // 总价减去次价格
-                            this.totalAmount -= Number(dish.amount) * 100;
-                        }
-                    }
-                }
-            }
-            if (finalNumber < 1) {
-                numberObject.setAttribute("style", "width: 40px; text-align: center;");
-            }
-
-            // if (this.totalAmount > 0) {
-            //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #f44;border: 1px solid #f44;")
-            // } else {
-            //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
-            // }
-
-            console.log(this.customerDishDetail);
-        },
-        add: function add(dish) {
-            var dishId = dish.id;
-            var id = 'number' + dishId;
-            var numberObject = document.getElementById(id);
-            var numberValue = Number(numberObject.value);
-            var finalNumber = 0;
-            numberObject.setAttribute("style", "width: 40px; text-align: center;color: #f44");
-
-            finalNumber = numberValue + 1;
-            numberObject.value = finalNumber;
-            // console.log(numberObject.value);
-            if (this.customerDishDetail.length > 0 && numberValue > 0) {
-                for (var i = 0; i < this.customerDishDetail.length; i++) {
-                    if (this.customerDishDetail[i].dish_id === dishId) {
-                        this.customerDishDetail[i].number = finalNumber;
-
-                        // 总价增加
-                        this.totalAmount += Number(dish.amount) * 100;
-                    }
-                }
-            } else {
-                var newJson = {};
-                newJson.dish_id = dishId;
-                newJson.number = finalNumber;
-                this.customerDishDetail.push(newJson);
-
-                // 总价增加
-                this.totalAmount += Number(dish.amount) * 100;
-            }
-
-            // if (this.totalAmount > 0) {
-            //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #f44;border: 1px solid #f44;")
-            // } else {
-            //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
-            // }
-
-            console.log(this.customerDishDetail);
-            // console.log(Number(dish.amount), this.totalAmount, dish.amount);
-        },
-        onSubmit: function onSubmit() {
-            if (this.totalAmount > 0) {
-                var params = this.$route.params;
-                params.amount = this.totalAmount;
-                params.detail = this.customerDishDetail;
-
-                this.$api.h5Pay(params).then(function (res) {
-                    if (res.status === 1) {
-                        console.log('pay_success');
-                    } else if (res.status === 3) {
-                        // Toast.fail(res.message);
-                    } else {
-                            // Toast.fail(res.message);
-                        }
-                });
-            }
-            // console.log(this.$route.params);
-        },
-        dishes: function dishes() {
-            var _this = this;
-
-            var merchant_id = this.$route.query.merchant_id;
-            // console.log(merchant_id);
-            this.$api.h5DishList({ merchant_id: merchant_id }).then(function (res) {
-                if (res.status === 1) {
-                    _this.dishData = res.data;
-                } else if (res.status === 3) {
-                    __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
-                    // this.$router.push({name: 'login', query: {}});
-                } else {
-                    __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
-                }
-            });
-        },
-        onConfirmAccount: function onConfirmAccount(value, index) {
-            this.form.account = value;
-            this.accountShow = false;
-        },
-        onInput: function onInput(key) {
-            this.form.fee += key;
-        },
-        onDelete: function onDelete() {
-            this.form.fee = '';
-        },
-        onClose: function onClose() {
-            this.showNumber = false;
+        // 初始化登录验证码
+        // initLoginCaptcha() {
+        //     let currentThis = this;
+        //     this.$api.captcha({}).then(res => {
+        //         window.initGeetest({
+        //             gt: res.gt,
+        //             challenge: res.challenge,
+        //             offline: !res.success,
+        //             new_captcha: true,
+        //             product: 'float',
+        //             area: '#form',
+        //             next_width: '100%',
+        //             bg_color: '#ffffff',
+        //             lang: 'zh-cn',
+        //             http: 'http://',
+        //             width: '100%',
+        //         }, function (captchaObj) {
+        //             captchaObj.appendTo("#captcha-login");
+        //             captchaObj.onReady(function () {
+        //             }).onSuccess(function () {
+        //                 currentThis.formLogin.geetest_challenge = document.getElementById('captcha-login').getElementsByTagName('input')['geetest_challenge'].value;
+        //                 currentThis.formLogin.geetest_seccode = document.getElementById('captcha-login').getElementsByTagName('input')['geetest_seccode'].value;
+        //                 currentThis.formLogin.geetest_validate = document.getElementById('captcha-login').getElementsByTagName('input')['geetest_validate'].value;
+        //                 currentThis.$refs['captchaLogin'].clearValidate();
+        //             }).onError(function () {
+        //
+        //             })
+        //         });
+        //     });
+        // },
+        // 初始化注册验证码
+        // initRegisterCaptcha() {
+        //     let currentThis = this;
+        //     this.$api.captcha({}).then(res => {
+        //         window.initGeetest({
+        //             gt: res.gt,
+        //             challenge: res.challenge,
+        //             offline: !res.success,
+        //             new_captcha: true,
+        //             product: 'float',
+        //             area: '#form',
+        //             next_width: '100%',
+        //             bg_color: 'black',
+        //             lang: 'zh-cn',
+        //             http: 'http://',
+        //             width: '100%',
+        //         }, function (captchaObj) {
+        //             captchaObj.appendTo("#captcha-register");
+        //             captchaObj.onReady(function () {
+        //             }).onSuccess(function () {
+        //                 currentThis.formRegister.geetest_challenge = document.getElementById('captcha-register').getElementsByTagName('input')['geetest_challenge'].value;
+        //                 currentThis.formRegister.geetest_seccode = document.getElementById('captcha-register').getElementsByTagName('input')['geetest_seccode'].value;
+        //                 currentThis.formRegister.geetest_validate = document.getElementById('captcha-register').getElementsByTagName('input')['geetest_validate'].value;
+        //                 currentThis.$refs['captchaRegister'].clearValidate();
+        //             }).onError(function () {
+        //             })
+        //         });
+        //     });
+        // },
+        handleTabClick: function handleTabClick(tab, event) {
+            sessionStorage.setItem('loginRegisterActive', tab.name);
+            this.$router.push(tab.name);
         },
 
-        // 表单提交
-        onSubmitForm: function onSubmitForm() {
+        // 提交登录表单
+        handleSubmitLoginForm: function handleSubmitLoginForm() {
             var _this2 = this;
 
-            this.$validator.validateAll().then(function (result) {
-                if (result) {
-                    _this2.$api.FinanceWithdrawApply(_this2.form).then(function (res) {
+            this.$refs.formLogin.validate(function (valid) {
+                if (valid) {
+                    _this2.loginPasswordErrorMessage = '';
+                    // this.formLogin.password = encrypt(this.formLogin.password);
+                    _this2.$api.login(_this2.formLogin).then(function (res) {
                         if (res.status === 1) {
-                            __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].success(res.message);
-                        } else if (res.status === 3) {
-                            __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
-                            _this2.$router.push({ name: 'login', query: {} });
+                            // sessionStorage.setItem('token', res.data.token);
+                            sessionStorage.setItem('success', 'success');
+                            // window.location.href = '/dish/list';
+                            _this2.$router.push({ name: 'dish', query: {} });
                         } else {
-                            __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
+                            _this2.loginPasswordErrorMessage = res.message;
+                            _this2.formLogin.password = '';
                         }
-                    }).catch(function (err) {
-                        __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail('表单数据异常!');
+                    }).catch(function (error) {
+                        _this2.formLogin.password = '';
+                    });
+                }
+            });
+        },
+
+        // 提交注册表单
+        handleSubmitRegisterForm: function handleSubmitRegisterForm() {
+            var _this3 = this;
+
+            this.$refs.formRegister.validate(function (valid) {
+                if (valid) {
+                    _this3.registerPassword = _this3.formRegister.password_confirmation;
+                    _this3.formRegister.password = encrypt(_this3.formRegister.password);
+                    _this3.formRegister.password_confirmation = encrypt(_this3.formRegister.password_confirmation);
+                    _this3.$api.register(_this3.formRegister).then(function (res) {
+                        if (res.status == 1) {
+                            sessionStorage.setItem('openMenu', '/v2/order/');
+                            _this3.$confirm('注册成功, 现在登录?', '提示', {
+                                confirmButtonText: '确定',
+                                cancelButtonText: '取消',
+                                type: 'warning'
+                            }).then(function () {
+                                _this3.$route.push('/login');
+                            }).catch(function () {});
+                        } else {
+                            // console.log(res.content);
+                            // this.formRegister.password = this.registerPassword;
+                            // this.formRegister.password_confirmation = this.registerPassword;
+
+                            // res.content.forEach(function (key, item) {
+                            //     console.log(key.email[0],item);
+                            //     // this.formRegisterErrorMessage.key = item[0];
+                            // });
+
+                            // this.loginPasswordErrorMessage = res.message;
+                            // this.formLogin.password = '';
+                        }
                     });
                 }
             });
         }
+    },
+    created: function created() {
+        // this.initLoginCaptcha();
+        // this.initRegisterCaptcha();
     }
 });
 
 /***/ }),
 
-/***/ 353:
+/***/ 344:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticStyle: { "margin-top": "20px" } }, [
-    _c(
-      "div",
-      { staticClass: "head" },
-      [
+  return _c(
+    "div",
+    {
+      staticClass: "login-register",
+      staticStyle: {
+        width: "950px",
+        margin: "100px auto 0 auto",
+        background: "#ffffff",
+        overflow: "hidden",
+        border: "1px solid #fff",
+        "border-radius": "10px"
+      }
+    },
+    [
+      _c("el-container", [
         _c(
-          "van-swipe",
-          {
-            staticClass: "imageStyle",
-            attrs: { autoplay: 3000, height: 150, "indicator-color": "white" }
-          },
+          "div",
+          { staticStyle: { width: "500px", padding: "50px 50px 0 50px" } },
           [
-            _c("van-swipe-item", [
-              _c("img", { attrs: { src: "/images/banner1.jpg" } })
-            ]),
-            _vm._v(" "),
-            _c("van-swipe-item", [
-              _c("img", { attrs: { src: "/images/banner2.jpg" } })
-            ]),
-            _vm._v(" "),
-            _c("van-swipe-item", [
-              _c("img", { attrs: { src: "/images/banner1.jpg" } })
-            ]),
-            _vm._v(" "),
-            _c("van-swipe-item", [
-              _c("img", { attrs: { src: "/images/banner2.jpg" } })
-            ])
-          ],
-          1
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "body" }, [
-      _c(
-        "div",
-        {
-          staticClass: "main",
-          staticStyle: {
-            position: "relative",
-            width: "100%",
-            float: "right",
-            "margin-bottom": "55px"
-          }
-        },
-        [
-          _vm._l(_vm.dishData, function(dish) {
-            return _c(
-              "van-swipe-cell",
+            _c(
+              "el-tabs",
               {
-                key: dish.id,
-                attrs: { "right-width": 10, "on-close": _vm.onClose }
+                attrs: { id: "form" },
+                on: { "tab-click": _vm.handleTabClick },
+                model: {
+                  value: _vm.active,
+                  callback: function($$v) {
+                    _vm.active = $$v
+                  },
+                  expression: "active"
+                }
               },
               [
                 _c(
-                  "van-cell-group",
+                  "el-tab-pane",
+                  { attrs: { label: "登录", name: "/login" } },
                   [
                     _c(
-                      "van-card",
+                      "el-form",
                       {
+                        ref: "formLogin",
+                        staticClass: "demo-ruleForm",
                         attrs: {
-                          price: dish.amount,
-                          title: dish.name,
-                          thumb: dish.logo,
-                          "origin-price": dish.original_amount
+                          model: _vm.formLogin,
+                          "status-icon": "",
+                          rules: _vm.formLoginRules
                         }
                       },
                       [
                         _c(
                           "div",
-                          { attrs: { slot: "footer" }, slot: "footer" },
+                          { staticStyle: { "margin-top": "30px" } },
                           [
-                            _c("div", { staticClass: "amount_container" }, [
-                              _c(
-                                "div",
-                                { staticClass: "amount_box" },
-                                [
-                                  _c(
-                                    "van-button",
-                                    {
-                                      attrs: { size: "mini" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.sub(dish)
-                                        }
-                                      }
+                            _c(
+                              "el-form-item",
+                              { attrs: { prop: "phone" } },
+                              [
+                                _c("el-input", {
+                                  attrs: {
+                                    placeholder: "请输入手机号",
+                                    "prefix-icon": "icon-user-o"
+                                  },
+                                  model: {
+                                    value: _vm.formLogin.phone,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.formLogin, "phone", $$v)
                                     },
-                                    [_vm._v("-")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    staticStyle: {
-                                      width: "40px",
-                                      "text-align": "center"
+                                    expression: "formLogin.phone"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-form-item",
+                              {
+                                attrs: {
+                                  error: _vm.loginPasswordErrorMessage,
+                                  prop: "password"
+                                }
+                              },
+                              [
+                                _c("el-input", {
+                                  attrs: {
+                                    type: "password",
+                                    placeholder: "请输入密码",
+                                    "prefix-icon": "icon-lock-o"
+                                  },
+                                  model: {
+                                    value: _vm.formLogin.password,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.formLogin, "password", $$v)
                                     },
-                                    attrs: {
-                                      type: "number",
-                                      value: "0",
-                                      id: "number" + dish.id,
-                                      maxlength: "2",
-                                      pattern: "[0-9]*",
-                                      readonly: "readonly"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "van-button",
-                                    {
-                                      attrs: { size: "mini" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.add(dish)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("+")]
-                                  )
-                                ],
-                                1
-                              )
-                            ])
-                          ]
+                                    expression: "formLogin.password"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-form-item",
+                              [
+                                _c(
+                                  "el-row",
+                                  { attrs: { gutter: 20 } },
+                                  [
+                                    _c(
+                                      "el-col",
+                                      { attrs: { span: 12 } },
+                                      [
+                                        _c(
+                                          "el-button",
+                                          {
+                                            staticStyle: { width: "100%" },
+                                            attrs: { type: "primary" },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.handleSubmitLoginForm(
+                                                  "form"
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                            确认\n                                        "
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
                         )
                       ]
                     )
@@ -523,25 +701,20 @@ var render = function() {
               ],
               1
             )
-          }),
-          _vm._v(" "),
-          _c("van-submit-bar", {
-            attrs: {
-              id: "pay",
-              price: _vm.totalAmount,
-              "button-text": "提交订单"
-            },
-            on: {
-              submit: function($event) {
-                return _vm.onSubmit()
-              }
-            }
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", [
+          _c("img", {
+            staticStyle: { height: "350px", display: "block" },
+            attrs: { src: __webpack_require__(345), alt: "" }
           })
-        ],
-        2
-      )
-    ])
-  ])
+        ])
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -549,9 +722,16 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-0cd46a83", module.exports)
+    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-dca5370e", module.exports)
   }
 }
+
+/***/ }),
+
+/***/ 345:
+/***/ (function(module, exports) {
+
+module.exports = "/images/a.jpg?1c1ea0504a9447afe153ce1e5a7c867b";
 
 /***/ })
 

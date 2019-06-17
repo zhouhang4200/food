@@ -45072,7 +45072,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
         path: "/h5/auth",
         meta: { title: '身份认证' },
         component: function component(resolve) {
-            return void __webpack_require__.e/* require */(11).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(337)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+            return void __webpack_require__.e/* require */(13).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(337)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
         }
     }, {
         name: "wechatOrder",
@@ -45080,7 +45080,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
         path: "/h5/wechat/order",
         meta: { title: 'h5订单' },
         component: function component(resolve) {
-            return void __webpack_require__.e/* require */(10).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(359)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+            return void __webpack_require__.e/* require */(11).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(359)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
         }
     }, {
         name: "alipayOrder",
@@ -45088,7 +45088,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
         path: "/h5/alipay/order",
         meta: { title: 'h5订单' },
         component: function component(resolve) {
-            return void __webpack_require__.e/* require */(9).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(364)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+            return void __webpack_require__.e/* require */(17).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(364)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
         }
     }, {
         name: "h5Order",
@@ -45096,8 +45096,26 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
         path: "/h5/order",
         meta: { title: 'h5订单' },
         component: function component(resolve) {
-            return void __webpack_require__.e/* require */(0).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(338)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+            return void __webpack_require__.e/* require */(12).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(338)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
         }
+    }, {
+        name: "客户管理",
+        icon: "el-icon-goods",
+        path: '/customer/',
+        redirect: '/customer/list',
+        component: App,
+        // canReuse: false,
+        meta: { title: '客户管理' },
+        menu: true,
+        children: [{
+            name: "customerList",
+            menu: true,
+            path: "list",
+            meta: { title: '统计信息' },
+            component: function component(resolve) {
+                return void __webpack_require__.e/* require */(0).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(383)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+            }
+        }]
     }, {
         name: "dish",
         icon: "el-icon-goods",
@@ -45105,15 +45123,15 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
         redirect: '/dish/list',
         component: App,
         // canReuse: false,
-        meta: { title: '菜肴管理' },
+        meta: { title: '商品管理' },
         menu: true,
         children: [{
             name: "dishList",
             menu: true,
             path: "list",
-            meta: { title: '菜肴信息' },
+            meta: { title: '商品信息' },
             component: function component(resolve) {
-                return void __webpack_require__.e/* require */(12).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(339)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+                return void __webpack_require__.e/* require */(20).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(339)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
             }
         }]
     }, {
@@ -45131,7 +45149,61 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
             path: "list",
             meta: { title: '订单信息' },
             component: function component(resolve) {
-                return void __webpack_require__.e/* require */(13).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(340)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+                return void __webpack_require__.e/* require */(10).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(340)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+            }
+        }]
+    }, {
+        name: "finance",
+        icon: "el-icon-goods",
+        path: '/finance/',
+        redirect: '/finance/list',
+        component: App,
+        // canReuse: false,
+        meta: { title: '财务管理' },
+        menu: true,
+        children: [{
+            name: "financeList",
+            menu: true,
+            path: "list",
+            meta: { title: '财务信息' },
+            component: function component(resolve) {
+                return void __webpack_require__.e/* require */(19).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(373)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+            }
+        }]
+    }, {
+        name: "store",
+        icon: "el-icon-goods",
+        path: '/store/',
+        redirect: '/store/list',
+        component: App,
+        // canReuse: false,
+        meta: { title: '门店管理' },
+        menu: true,
+        children: [{
+            name: "storeList",
+            menu: true,
+            path: "list",
+            meta: { title: '门店信息' },
+            component: function component(resolve) {
+                return void __webpack_require__.e/* require */(9).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(378)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+            }
+        }]
+    }, {
+        name: "static",
+        icon: "el-icon-goods",
+        path: '/static/',
+        redirect: '/static/list',
+        component: App,
+        // canReuse: false,
+        meta: { title: '汇总管理' },
+        menu: true,
+        children: [{
+            name: "staticList",
+            menu: true,
+            path: "list",
+            meta: { title: '汇总信息' },
+            component: function component(resolve) {
+                return void new Promise(function(resolve) { resolve(); }).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [!(function webpackMissingModule() { var e = new Error("Cannot find module \"../components/static/List\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
             }
         }]
     }]
