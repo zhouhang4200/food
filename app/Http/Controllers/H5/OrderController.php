@@ -98,11 +98,11 @@ class OrderController extends Controller
                 'channel'         => $channel,
                 'buyer_id'        => '',
                 'buyer_open_id'   => '',
-                'amount'          => $amount*0.01, // 单位元
-                'original_amount' => $amount*0.01,
+                'amount'          => $amount * 0.01, // 单位元
+                'original_amount' => $amount * 0.01,
                 'detail'          => json_encode($details),
-                'pay_status' => 0,
-                'pay_time' => null,
+                'pay_status'      => 0,
+                'pay_time'        => null,
             ]);
 
             // 支付
@@ -136,7 +136,7 @@ class OrderController extends Controller
             } elseif ($channel == 2) { # 支付宝支付
                 $payForm = Pay::alipay(config('pay.ali'))->wap([
                     'out_trade_no' => $order->trade_no,
-                    'total_amount' => $amount*0.01, // 单位元
+                    'total_amount' => $amount * 0.01, // 单位元
                     'subject'      => '点餐订单支付',
                 ]);
                 myLog('alipay_data', ['data' => $payForm->getContent(), 'message' => $payForm]);
@@ -175,7 +175,7 @@ class OrderController extends Controller
             # 支付宝确认交易成功
             if (in_array($data->trade_status, ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
                 // 查找 订单
-                $order = Order::where('out_trade_no', $data->out_trade_no)
+                $order = Order::where('trade_no', $data->out_trade_no)
                     ->first();
 
                 if ($order->amount != $data->total_amount) {
@@ -190,10 +190,12 @@ class OrderController extends Controller
 
                     try {
                         // 写入外部订单号和点的详细菜单写入表
-                        $order->status       = 1; // 支付成功状态
-                        $order->pay_status   = 1; // 支付成功状态
-                        $order->out_trade_no = $data->trade_no;
-                        $order->pay_time     = date("Y-m-d H:i:s");
+                        $order->status        = 1; // 支付成功状态
+                        $order->pay_status    = 1; // 支付成功状态
+                        $order->out_trade_no  = $data->trade_no;
+                        $order->pay_time      = date("Y-m-d H:i:s");
+                        $order->buyer_id      = $data->buyer_id;
+                        $order->buyer_open_id = $data->open_id;
 
                         if ($order->save()) {
                             // 支付成功，写入点餐详情
@@ -221,7 +223,7 @@ class OrderController extends Controller
                             DB::rollBack();
                         }
                     } catch (\Exception $e) {
-                        myLog('alipay_notify_error', ['data' => $e->getLine(). $e->getMessage()]);
+                        myLog('alipay_notify_error', ['data' => $e->getLine() . $e->getMessage()]);
                         DB::rollback();
                     }
 
@@ -232,7 +234,7 @@ class OrderController extends Controller
             }
             return $alipay->success();
         } catch (\Exception $e) {
-            myLog('alipay_notify_error', ['data' => $e->getLine(). $e->getMessage()]);
+            myLog('alipay_notify_error', ['data' => $e->getLine() . $e->getMessage()]);
         }
     }
 
@@ -266,7 +268,7 @@ class OrderController extends Controller
 
                 //开启事务并上锁
                 DB::beginTransaction();
-                if ($order->amount*100 != array_get($message, 'total_fee')) {
+                if ($order->amount * 100 != array_get($message, 'total_fee')) {
                     DB::rollBack();
 
                     return true;
