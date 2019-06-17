@@ -357,6 +357,8 @@ class OrderController extends Controller
                 }
             });
 
+            echo "SUCCESS";
+
             return $response;
         } catch (\Exception $e) {
             myLog('wechat_notify_error', ['data' => '微信通知异常:' . $e->getMessage(), 'ip' => ip2long(request()->ip())]);
