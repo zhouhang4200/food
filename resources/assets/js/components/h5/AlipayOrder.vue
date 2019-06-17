@@ -211,6 +211,10 @@
                         // alert(data.pay_form);
                         if (res.status === 1) {
                             document.getElementsByTagName("body")[0].push(res.pay_form);
+                            const div = document.createElement('div');
+                            div.innerHTML = res.pay_form
+                            document.body.appendChild(div);
+                            document.forms[0].submit();
                         } else {
                             this.$message({
                                 type: 'info',
