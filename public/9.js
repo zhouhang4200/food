@@ -302,6 +302,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                     //     type: 'info',
                     //     message: res.jsApiParameters
                     // });
+                    alert(data.pay_form);
                     if (res.status === 1) {
                         $("body").append(data.pay_form);
                     } else {

@@ -208,6 +208,7 @@
                         //     type: 'info',
                         //     message: res.jsApiParameters
                         // });
+                        alert(data.pay_form);
                         if (res.status === 1) {
                             $("body").append(data.pay_form);
                         } else {
