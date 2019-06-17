@@ -83,8 +83,8 @@ class OrderController extends Controller
             $detailData = [];
             if (is_array($details) && count($details) > 0) {
                 foreach ($details as $k => $detail) {
-                    $detailData[$k]['dish_id']    = $detail['dish_id'];
-                    $detailData[$k]['number']    = $detail['number'];
+                    $detailData[$k]['dish_id']     = $detail['dish_id'];
+                    $detailData[$k]['number']      = $detail['number'];
                     $detailData[$k]['table_id']    = $table_id;
                     $detailData[$k]['seat_id']     = $seat_id;
                     $detailData[$k]['merchant_id'] = $merchant_id;
@@ -118,7 +118,7 @@ class OrderController extends Controller
                 myLog('wechat_pay_one', ['jssdk' => $jssdk, 'config' => $config]);
                 // 微信以分为单位，前台传过来的数据也是以分为单位
                 $result = $app->order->unify([
-                    'body'             => '桌号：' . $table_id . ',座位号：' . $seat_id . ',扫码点餐,' . '总计：' . $amount*0.01 . '元',
+                    'body'             => '桌号：' . $table_id . ',座位号：' . $seat_id . ',扫码点餐,' . '总计：' . $amount * 0.01 . '元',
                     'out_trade_no'     => $trade_no,
                     'total_fee'        => $amount,
                     'attach'           => $order->id,
@@ -141,7 +141,7 @@ class OrderController extends Controller
                 $payForm = Pay::alipay(config('pay.ali'))->wap([
                     'out_trade_no' => $order->trade_no,
                     'total_amount' => $amount * 0.01, // 单位元
-                    'subject'      => '桌号：' . $table_id . ',座位号：' . $seat_id . ',扫码点餐,' . '总计：' . $amount*0.01 . '元',
+                    'subject'      => '桌号：' . $table_id . ',座位号：' . $seat_id . ',扫码点餐,' . '总计：' . $amount * 0.01 . '元',
                 ]);
                 myLog('alipay_data', ['data' => $payForm->getContent(), 'message' => $payForm]);
 
@@ -206,15 +206,16 @@ class OrderController extends Controller
                             $insertData = [];
                             foreach (json_decode($order->detail, true) as $detail) {
                                 $insertData[] = [
-                                    'open_id'    => '',
-                                    'channel'    => $order->channel,
-                                    'dish_id'    => $detail['dish_id'],
-                                    'table_id'   => $detail['table_id'],
-                                    'seat_id'    => $detail['seat_id'],
-                                    'number'     => $detail['number'],
-                                    'tag'        => '',
-                                    'created_at' => Carbon::now()->toDateString(),
-                                    'updated_at' => Carbon::now()->toDateString(),
+                                    'open_id'     => $data->app_id,
+                                    'channel'     => $order->channel,
+                                    'dish_id'     => $detail['dish_id'],
+                                    'table_id'    => $detail['table_id'],
+                                    'seat_id'     => $detail['seat_id'],
+                                    'merchant_id' => $detail['merchant_id'],
+                                    'number'      => $detail['number'],
+                                    'tag'         => '',
+                                    'created_at'  => Carbon::now()->toDateString(),
+                                    'updated_at'  => Carbon::now()->toDateString(),
                                 ];
                             }
 
@@ -286,6 +287,25 @@ class OrderController extends Controller
                     $order->pay_time     = date("Y-m-d H:i:s");
 //                    data_set($orderInfo,'attributes',json_encode([]));//清空预支付订单id
                     if ($order->save()) {
+                        // 支付成功，写入点餐详情
+                        $insertData = [];
+                        foreach (json_decode($order->detail, true) as $detail) {
+                            $insertData[] = [
+                                'open_id'     => array_get($message, 'open_id'),
+                                'channel'     => $order->channel,
+                                'dish_id'     => $detail['dish_id'],
+                                'table_id'    => $detail['table_id'],
+                                'seat_id'     => $detail['seat_id'],
+                                'merchant_id' => $detail['merchant_id'],
+                                'number'      => $detail['number'],
+                                'tag'         => '',
+                                'created_at'  => Carbon::now()->toDateString(),
+                                'updated_at'  => Carbon::now()->toDateString(),
+                            ];
+                        }
+
+                        DB::table('customer_dish_details')->insert($insertData);
+
                         DB::commit();
                     } else {
                         myLog('wechat_notify_error', ['data' => '写入订单失败:' . $order->trade_no]);
