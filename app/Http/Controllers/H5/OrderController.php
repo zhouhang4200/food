@@ -165,9 +165,9 @@ class OrderController extends Controller
      */
     public function alipayNotify()
     {
-        $alipay = Pay::alipay(config('config.pay.ali'));
-
         try {
+            $alipay = Pay::alipay(config('config.pay.ali'));
+
             $data = $alipay->verify();
 
             myLog('alipay_notify_data', ['data' => $data]);
@@ -240,6 +240,8 @@ class OrderController extends Controller
 
     public function alipayReturn(Request $request)
     {
+        myLog('alipay_return', ['data' => 'success']);
+
         return view('welcome');
     }
 
