@@ -22,4 +22,9 @@ class CustomerDishDetail extends Model
     {
         return $this->belongsTo(Seat::class);
     }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'trade_no', 'order_trade_no');
+    }
 }

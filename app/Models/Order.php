@@ -12,4 +12,9 @@ class Order extends Model
         'pay_status', 'pay_time', 'merchant_id', 'table_id', 'seat_id',
         'comment', 'channel_name', 'pay_info'
     ];
+
+    public function merchant()
+    {
+        return $this->belongsTo(Merchant::class);
+    }
 }

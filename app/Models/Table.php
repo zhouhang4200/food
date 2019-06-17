@@ -9,4 +9,9 @@ class Table extends Model
     protected $fillable = [
         'merchant_id', 'name'
     ];
+
+    public function merchant()
+    {
+        return $this->belongsTo(Merchant::class);
+    }
 }
