@@ -300,15 +300,18 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                 var query = this.$route.query;
                 var jsApiParameters = '';
                 this.$api.h5Pay({ amount: amount, detail: detail, open_id: open_id, merchant_id: merchant_id, seat_id: seat_id, table_id: table_id, query: query }).then(function (res) {
-                    _this.$message({
-                        type: 'info',
-                        message: res.pay_form
-                    });
+                    // this.$message({
+                    //     type: 'info',
+                    //     message: res.pay_form
+                    // });
                     // alert(data.pay_form);
                     if (res.status === 1) {
                         document.getElementByTagName("body")[0].innerHTML.append(res.pay_form);
                     } else {
-                        alert('网络错误，请稍后再试！');
+                        _this.$message({
+                            type: 'info',
+                            message: '网络错误，请稍后再试'
+                        });
                     }
                 });
             }
