@@ -139,6 +139,7 @@ class OrderController extends Controller
                     'total_amount' => $amount*0.01, // 单位元
                     'subject'      => '点餐订单支付',
                 ]);
+                myLog('alipay_data', ['data' => $payForm]);
 
                 return response()->json(['status' => 1, 'pay_form' => $payForm]);
             }
