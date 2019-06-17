@@ -165,7 +165,7 @@ class OrderController extends Controller
      */
     public function alipayNotify()
     {
-        $alipay = Pay::alipay(config('ali.base_config'));
+        $alipay = Pay::alipay(config('config.pay.ali'));
 
         try {
             $data = $alipay->verify();
