@@ -206,11 +206,11 @@
                     this.$api.h5Pay({amount:amount, detail:detail, open_id:open_id, merchant_id:merchant_id, seat_id:seat_id, table_id:table_id, query:query}).then(res => {
                         // this.$message({
                         //     type: 'info',
-                        //     message: document.getElementsByTagName('body')[0].innerHTML.append(res.pay_form)
+                        //     message: document.getElementsByTagName('body')[0].append(res.pay_form)
                         // });
                         // alert(data.pay_form);
                         if (res.status === 1) {
-                            document.getElementsByTagName("body")[0].innerHTML.append(res.pay_form);
+                            document.getElementsByTagName("body")[0].append(res.pay_form);
                         } else {
                             this.$message({
                                 type: 'info',
