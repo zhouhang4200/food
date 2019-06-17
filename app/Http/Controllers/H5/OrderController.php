@@ -166,7 +166,7 @@ class OrderController extends Controller
     public function alipayNotify()
     {
         try {
-            $alipay = Pay::alipay(config('config.pay.ali'));
+            $alipay = Pay::alipay(config('pay.ali'));
 
             $data = $alipay->verify();
 
@@ -230,12 +230,10 @@ class OrderController extends Controller
                     # 发送通知
                 }
             }
+            return $alipay->success();
         } catch (\Exception $e) {
             myLog('alipay_notify_error', ['data' => $e->getLine(). $e->getMessage()]);
-
         }
-
-        return $alipay->success();
     }
 
     public function alipayReturn(Request $request)
