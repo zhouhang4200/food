@@ -204,30 +204,7 @@ class OrderController extends Controller
 
                         if ($order->save()) {
                             // 支付成功，写入点餐详情
-                            $insertData = [];
-                            foreach (json_decode($order->detail, true) as $detail) {
-                                $customerDishDetail = CustomerDishDetail::where('order_trade_no', $order->trade_no)
-                                    ->where('dish_id', $detail['dish_id'])
-                                    ->where('table_id', $detail['table_id'])
-                                    ->where('seat_id', $detail['seat_id'])
-                                    ->where('merchant_id', $detail['merchant_id'])
-                                    ->where('number', $detail['number'])
-                                    ->first();
-                                if ($customerDishDetail) {
-                                    continue;
-                                } else {
-                                    $insertData[] = [
-                                        'order_trade_no' => $order->trade_no,
-                                        'dish_id'        => $detail['dish_id'],
-                                        'table_id'       => $detail['table_id'],
-                                        'seat_id'        => $detail['seat_id'],
-                                        'merchant_id'    => $detail['merchant_id'],
-                                        'number'         => $detail['number'],
-                                        'created_at' => date("Y-m-d H:i:s"),
-                                        'updated_at' => date("Y-m-d H:i:s"),
-                                    ];
-                                }
-                            }
+                            $insertData = $this->getCustomerDishDetail($order);
 
                             DB::table('customer_dish_details')->insert($insertData);
 
@@ -308,30 +285,7 @@ class OrderController extends Controller
 
                             if ($order->save()) {
                                 // 支付成功，写入点餐详情
-                                $insertData = [];
-                                foreach (json_decode($order->detail, true) as $detail) {
-                                    $customerDishDetail = CustomerDishDetail::where('order_trade_no', $order->trade_no)
-                                        ->where('dish_id', $detail['dish_id'])
-                                        ->where('table_id', $detail['table_id'])
-                                        ->where('seat_id', $detail['seat_id'])
-                                        ->where('merchant_id', $detail['merchant_id'])
-                                        ->where('number', $detail['number'])
-                                        ->first();
-                                    if ($customerDishDetail) {
-                                        continue;
-                                    } else {
-                                        $insertData[] = [
-                                            'order_trade_no' => $order->trade_no,
-                                            'dish_id'        => $detail['dish_id'],
-                                            'table_id'       => $detail['table_id'],
-                                            'seat_id'        => $detail['seat_id'],
-                                            'merchant_id'    => $detail['merchant_id'],
-                                            'number'         => $detail['number'],
-                                            'created_at' => date("Y-m-d H:i:s"),
-                                            'updated_at' => date("Y-m-d H:i:s"),
-                                        ];
-                                    }
-                                }
+                                $insertData = $this->getCustomerDishDetail($order);
 
                                 DB::table('customer_dish_details')->insert($insertData);
                             } else {
@@ -370,41 +324,36 @@ class OrderController extends Controller
     /**
      * 客户点餐将点餐信息写到数据库
      *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param $order
+     * @return array
      */
-    public function customerDishDetail(Request $request)
+    public function getCustomerDishDetail($order)
     {
-        try {
-            $table_id = $request->input('table_id');
-            $seat_id  = $request->input('seat_id');
-            $open_id  = $request->input('open_id');
-            $type     = $request->input('type');
-            $dish_id  = $request->input('dish_id');
-            $number   = $request->input('number'); // 点餐数量
-            $dish     = Dish::find($request->input('dish_id'));
-
-            if ($dish) {
-                CustomerDishDetail::updateOrCreate([
-                    'table_id' => $table_id,
-                    'seat_id'  => $seat_id,
-                    'open_id'  => $open_id,
-                    'type'     => $type,
-                    'number'   => $number,
-                    'dish_id'  => $dish_id,
-                ], [
-                    'table_id' => $table_id,
-                    'seat_id'  => $seat_id,
-                    'open_id'  => $open_id,
-                    'type'     => $type,
-                    'dish_id'  => $dish_id,
-                ]);
+        $insertData = [];
+        foreach (json_decode($order->detail, true) as $detail) {
+            $customerDishDetail = CustomerDishDetail::where('order_trade_no', $order->trade_no)
+                ->where('dish_id', $detail['dish_id'])
+                ->where('table_id', $detail['table_id'])
+                ->where('seat_id', $detail['seat_id'])
+                ->where('merchant_id', $detail['merchant_id'])
+                ->where('number', $detail['number'])
+                ->first();
+            if ($customerDishDetail) {
+                continue;
             } else {
-                return response()->json(['status' => 0, 'data' => '']);
+                $insertData[] = [
+                    'order_trade_no' => $order->trade_no,
+                    'dish_id'        => $detail['dish_id'],
+                    'table_id'       => $detail['table_id'],
+                    'seat_id'        => $detail['seat_id'],
+                    'merchant_id'    => $detail['merchant_id'],
+                    'number'         => $detail['number'],
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s"),
+                ];
             }
-            return response()->json(['status' => 1, 'data' => 'success']);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 0, 'data' => '']);
         }
+
+        return $insertData;
     }
 }
