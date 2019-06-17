@@ -80,8 +80,6 @@ class OrderController extends Controller
             // open_id
             $open_id = $request->input('open_id');
 
-            myLog('pay', ['amount' => $amount, 'details' => $details, 'table_id' => $table_id, 'seat_id' => $seat_id, 'merchant_id' => $merchant_id, 'open_id' => $open_id]);
-
             if (is_array($details) && count($details) > 0) {
                 foreach ($details as $detail) {
                     $detail['table_id']    = $table_id;
@@ -89,6 +87,9 @@ class OrderController extends Controller
                     $detail['merchant_id'] = $merchant_id;
                 }
             }
+
+            myLog('pay', ['amount' => $amount, 'details' => $details, 'table_id' => $table_id, 'seat_id' => $seat_id, 'merchant_id' => $merchant_id, 'open_id' => $open_id]);
+
             //  创建订单
             $order = Order::create([
                 'trade_no'        => $trade_no,
@@ -204,10 +205,10 @@ class OrderController extends Controller
                                 $insertData[] = [
                                     'open_id'    => '',
                                     'channel'    => $order->channel,
-                                    'dish_id'    => $detail->dish_id,
-                                    'table_id'   => $detail->table_id,
-                                    'seat_id'    => $detail->seat_id,
-                                    'number'     => $detail->number,
+                                    'dish_id'    => $detail['dish_id'],
+                                    'table_id'   => $detail['table_id'],
+                                    'seat_id'    => $detail['seat_id'],
+                                    'number'     => $detail['number'],
                                     'tag'        => '',
                                     'created_at' => Carbon::now()->toDateString(),
                                     'updated_at' => Carbon::now()->toDateString(),
