@@ -184,17 +184,16 @@ class OrderController extends Controller
                 $order = Order::where('trade_no', $data->out_trade_no)
                     ->first();
 
-                if ($order->amount != $data->total_amount) {
-                    myLog('alipay_notify_error', ['data' => '支付宝返回金额与订单交易金额不符']);
-
-                    return true;
-                }
-
                 # 查到充值订单
                 if ($order) {
                     DB::beginTransaction();
-
                     try {
+                        if ($order->amount != $data->total_amount) {
+                            myLog('alipay_notify_error', ['data' => '支付宝返回金额与订单交易金额不符']);
+                            DB::rollback();
+                            return true;
+                        }
+
                         // 写入外部订单号和点的详细菜单写入表
                         $order->pay_status    = 1; // 支付成功状态
                         $order->out_trade_no  = $data->trade_no;
@@ -207,14 +206,25 @@ class OrderController extends Controller
                             // 支付成功，写入点餐详情
                             $insertData = [];
                             foreach (json_decode($order->detail, true) as $detail) {
-                                $insertData[] = [
-                                    'order_trade_no' => $order->trade_no,
-                                    'dish_id'        => $detail['dish_id'],
-                                    'table_id'       => $detail['table_id'],
-                                    'seat_id'        => $detail['seat_id'],
-                                    'merchant_id'    => $detail['merchant_id'],
-                                    'number'         => $detail['number'],
-                                ];
+                                $customerDishDetail = CustomerDishDetail::where('order_trade_no', $order->trade_no)
+                                    ->where('dish_id', $detail['dish_id'])
+                                    ->where('table_id', $detail['table_id'])
+                                    ->where('seat_id', $detail['seat_id'])
+                                    ->where('merchant_id', $detail['merchant_id'])
+                                    ->where('number', $detail['number'])
+                                    ->first();
+                                if ($customerDishDetail) {
+                                    continue;
+                                } else {
+                                    $insertData[] = [
+                                        'order_trade_no' => $order->trade_no,
+                                        'dish_id'        => $detail['dish_id'],
+                                        'table_id'       => $detail['table_id'],
+                                        'seat_id'        => $detail['seat_id'],
+                                        'merchant_id'    => $detail['merchant_id'],
+                                        'number'         => $detail['number'],
+                                    ];
+                                }
                             }
 
                             DB::table('customer_dish_details')->insert($insertData);
@@ -222,22 +232,28 @@ class OrderController extends Controller
                             DB::commit();
                         } else {
                             myLog('alipay_notify_error', ['data' => '写入订单失败:' . $order->trade_no]);
-
                             DB::rollBack();
+                            return true;
                         }
                     } catch (\Exception $e) {
                         myLog('alipay_notify_error', ['data' => $e->getLine() . $e->getMessage()]);
                         DB::rollback();
+                        return true;
                     }
 
                     DB::commit();
 
                     # 发送通知
+                } else {
+                    return true;
                 }
+            } else {
+                return true;
             }
             return $alipay->success();
         } catch (\Exception $e) {
             myLog('alipay_notify_error', ['data' => $e->getLine() . $e->getMessage()]);
+            return true;
         }
     }
 
@@ -250,16 +266,16 @@ class OrderController extends Controller
      */
     public function wechatNotify(Request $request)
     {
-        // 判断是否支付成功
-        $config = config('wechat.pay_config');
-        $app    = Factory::payment($config);
-
         try {
+            // 判断是否支付成功
+            $config = config('wechat.pay_config');
+            $app    = Factory::payment($config);
+
             BaseClient::setDefaultOptions([
                 'curl'   => [
                     CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
                 ],
-                'verify' => false               //不开启CURLOPT_SSL_VERIFYPEER, 这里后来线上ssl报错加的，原因忘了
+                'verify' => false  //不开启CURLOPT_SSL_VERIFYPEER, 这里后来线上ssl报错加的，原因忘了
             ]);
 
             $response = $app->handlePaidNotify(function ($message, $fail) {
@@ -269,49 +285,74 @@ class OrderController extends Controller
 
                 $order = Order::where('trade_no', $orderSn)->first();
 
-                //开启事务并上锁
-                DB::beginTransaction();
-                if ($order->amount * 100 != array_get($message, 'total_fee')) {
-                    DB::rollBack();
-
-                    return true;
-                }
-                // 用户是否支付成功
-                if ($message['return_code'] === 'SUCCESS' && array_get($message, 'result_code') === 'SUCCESS') {
-                    // 写入外部订单号和点的详细菜单写入表
-                    $order->status        = 1; // 支付成功状态
-                    $order->pay_status    = 1; // 支付成功状态
-                    $order->out_trade_no  = array_get($message, 'transaction_id');
-                    $order->pay_time      = date("Y-m-d H:i:s");
-                    $order->pay_info      = json_encode($message);
-                    $order->buyer_open_id = $message['openid'];
-
-                    if ($order->save()) {
-                        // 支付成功，写入点餐详情
-                        $insertData = [];
-                        foreach (json_decode($order->detail, true) as $detail) {
-                            $insertData[] = [
-                                'order_trade_no' => $order->trade_no,
-                                'dish_id'        => $detail['dish_id'],
-                                'table_id'       => $detail['table_id'],
-                                'seat_id'        => $detail['seat_id'],
-                                'merchant_id'    => $detail['merchant_id'],
-                                'number'         => $detail['number'],
-                            ];
+                if ($order) {
+                    //开启事务并上锁
+                    DB::beginTransaction();
+                    try {
+                        if ($order->amount * 100 != array_get($message, 'total_fee')) {
+                            DB::rollBack();
+                            return true;
                         }
 
-                        DB::table('customer_dish_details')->insert($insertData);
+                        // 用户是否支付成功
+                        if ($message['return_code'] === 'SUCCESS' && array_get($message, 'result_code') === 'SUCCESS') {
+                            // 写入外部订单号和点的详细菜单写入表
+                            $order->status        = 1; // 支付成功状态
+                            $order->pay_status    = 1; // 支付成功状态
+                            $order->out_trade_no  = array_get($message, 'transaction_id');
+                            $order->pay_time      = date("Y-m-d H:i:s");
+                            $order->pay_info      = json_encode($message);
+                            $order->buyer_open_id = $message['openid'];
 
-                        DB::commit();
-                    } else {
-                        myLog('wechat_notify_error', ['data' => '写入订单失败:' . $order->trade_no]);
+                            if ($order->save()) {
+                                // 支付成功，写入点餐详情
+                                $insertData = [];
+                                foreach (json_decode($order->detail, true) as $detail) {
+                                    $customerDishDetail = CustomerDishDetail::where('order_trade_no', $order->trade_no)
+                                        ->where('dish_id', $detail['dish_id'])
+                                        ->where('table_id', $detail['table_id'])
+                                        ->where('seat_id', $detail['seat_id'])
+                                        ->where('merchant_id', $detail['merchant_id'])
+                                        ->where('number', $detail['number'])
+                                        ->first();
+                                    if ($customerDishDetail) {
+                                        continue;
+                                    } else {
+                                        $insertData[] = [
+                                            'order_trade_no' => $order->trade_no,
+                                            'dish_id'        => $detail['dish_id'],
+                                            'table_id'       => $detail['table_id'],
+                                            'seat_id'        => $detail['seat_id'],
+                                            'merchant_id'    => $detail['merchant_id'],
+                                            'number'         => $detail['number'],
+                                        ];
+                                    }
+                                }
 
+                                DB::table('customer_dish_details')->insert($insertData);
+                            } else {
+                                myLog('wechat_notify_error', ['data' => '写入订单失败:' . $order->trade_no]);
+
+                                DB::rollBack();
+
+                                return ture;
+                            }
+                        } else {
+                            //支付失败直接结束
+                            DB::rollBack();
+
+                            return true;
+                        }
+                    } catch (\Exception $e) {
+                        myLog('wechat_notify_error', ['data' => '微信通知异常:' . $e->getMessage(), 'ip' => ip2long(request()->ip())]);
+
+                        //支付失败直接结束
                         DB::rollBack();
-                    }
-                } else {
-                    //支付失败直接结束
-                    DB::rollBack();
 
+                        return true;
+                    }
+                    DB::commit();
+                } else {
                     return true;
                 }
             });
