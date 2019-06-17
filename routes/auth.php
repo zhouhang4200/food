@@ -18,4 +18,5 @@
 
 Route::prefix('auth')->group(function () {
     Route::get('/wechat/code/callback', 'AuthController@wechatCodeCallback');
+    Route::get('/alipay/return', 'AuthController@alipayReturn'); // 支付宝的同步回调
 });

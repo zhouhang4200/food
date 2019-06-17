@@ -236,13 +236,6 @@ class OrderController extends Controller
         }
     }
 
-    public function alipayReturn(Request $request)
-    {
-        myLog('alipay_return', ['data' => 'success']);
-
-        return view('welcome');
-    }
-
     /**
      * 微信异步通知
      *

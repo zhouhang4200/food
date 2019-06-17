@@ -54,4 +54,11 @@ class AuthController extends Controller
             myLog('callback_error', ['data' => $e->getMessage()]);
         }
     }
+
+    public function alipayReturn()
+    {
+        myLog('alipay_return', ['data' => 'success']);
+
+        return view('welcome');
+    }
 }
