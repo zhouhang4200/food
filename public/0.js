@@ -255,36 +255,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -300,7 +270,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             AccountBlackListName: {},
             searchParams: {
                 name: '',
-                category_id: '',
+                table_id: '',
+                seat_id: '',
+                date: '',
+                status: '',
                 page: 1
             },
             TotalPage: 0,
@@ -322,7 +295,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 original_amount: '',
                 intro: '暂无'
             },
-            categories: {},
+            statuses: {},
             tagList: []
         };
     },
@@ -399,41 +372,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
 
-        // 修改
-        submitFormUpdate: function submitFormUpdate(formName) {
-            var _this3 = this;
-
-            this.$refs[formName].validate(function (valid) {
-                if (valid) {
-                    _this3.$api.dishUpdate(_this3.form).then(function (res) {
-                        _this3.$message({
-                            showClose: true,
-                            type: res.status === 1 ? 'success' : 'error',
-                            message: res.message
-                        });
-                        _this3.handleTableData();
-                    }).catch(function (err) {
-                        _this3.$message({
-                            type: 'error',
-                            message: '操作失败'
-                        });
-                    });
-                } else {
-                    return false;
-                }
-            });
-        },
-
         // 加载数据
         handleTableData: function handleTableData() {
-            var _this4 = this;
+            var _this3 = this;
 
-            this.$api.dishList(this.searchParams).then(function (res) {
-                _this4.tableData = res.data.data;
-                _this4.TotalPage = res.data.total;
-                _this4.loading = false;
+            this.$api.customerDishDetailList(this.searchParams).then(function (res) {
+                _this3.tableData = res.data.data;
+                _this3.TotalPage = res.data.total;
+                _this3.loading = false;
             }).catch(function (err) {
-                _this4.$alert('获取数据失败, 请重试!', '提示', {
+                _this3.$alert('获取数据失败, 请重试!', '提示', {
                     confirmButtonText: '确定',
                     callback: function callback(action) {}
                 });
@@ -458,58 +406,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.handleTableData();
         },
 
-        // 删除
-        dishDelete: function dishDelete(id) {
-            var _this5 = this;
-
-            this.$confirm('您确定要删除吗？', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(function () {
-                _this5.$api.dishDelete({ id: id }).then(function (res) {
-                    _this5.$message({
-                        showClose: true,
-                        type: res.status === 1 ? 'success' : 'error',
-                        message: res.message
-                    });
-                    _this5.handleTableData();
-                }).catch(function (err) {
-                    _this5.$message({
-                        type: 'error',
-                        message: '操作失败'
-                    });
-                });
-            });
-        },
-
         // 表格高度计算
         handleTableHeight: function handleTableHeight() {
             this.tableHeight = window.innerHeight - 318;
-        },
-
-        // 图片上传成功将地址回传给表单
-        handleAvatarSuccess: function handleAvatarSuccess(res, file) {
-            if (res) {
-                this.imageUrl = URL.createObjectURL(file.raw);
-                this.form.logo = res.path;
-            }
-        },
-
-        // 图片上传
-        beforeAvatarUpload: function beforeAvatarUpload(file) {
-            var isJPEG = file.type === 'image/jpeg';
-            // const isPng = file.type === 'image/png';
-            // const isJPG = file.type === 'image/jpg';
-            var isLt2M = file.size / 1024 / 1024 < 2;
-
-            if (!isJPEG) {
-                this.$message.error('上传头像图片只能是 JPG JPEG PNG格式!');
-            }
-            if (!isLt2M) {
-                this.$message.error('上传头像图片大小不能超过 2MB!');
-            }
-            return isJPEG && isLt2M;
         },
         tagChange: function tagChange(value) {
             var checkedCount = value.length;
@@ -560,28 +459,18 @@ var render = function() {
                 [
                   _c(
                     "el-form-item",
-                    { attrs: { label: "类目" } },
+                    { attrs: { label: "菜名" } },
                     [
-                      _c(
-                        "el-select",
-                        {
-                          attrs: { placeholder: "请选择" },
-                          model: {
-                            value: _vm.searchParams.category_id,
-                            callback: function($$v) {
-                              _vm.$set(_vm.searchParams, "category_id", $$v)
-                            },
-                            expression: "searchParams.category_id"
-                          }
-                        },
-                        _vm._l(_vm.categories, function(category) {
-                          return _c("el-option", {
-                            key: category.id,
-                            attrs: { label: category.name, value: category.id }
-                          })
-                        }),
-                        1
-                      )
+                      _c("el-input", {
+                        attrs: { id: "name" },
+                        model: {
+                          value: _vm.searchParams.name,
+                          callback: function($$v) {
+                            _vm.$set(_vm.searchParams, "name", $$v)
+                          },
+                          expression: "searchParams.name"
+                        }
+                      })
                     ],
                     1
                   )
@@ -595,7 +484,7 @@ var render = function() {
                 [
                   _c(
                     "el-form-item",
-                    { attrs: { label: "名称" } },
+                    { attrs: { label: "桌号" } },
                     [
                       _c("el-input", {
                         attrs: { id: "name" },
@@ -605,6 +494,100 @@ var render = function() {
                             _vm.$set(_vm.searchParams, "name", $$v)
                           },
                           expression: "searchParams.name"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-col",
+                { attrs: { span: 4 } },
+                [
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "座号" } },
+                    [
+                      _c("el-input", {
+                        attrs: { id: "name" },
+                        model: {
+                          value: _vm.searchParams.name,
+                          callback: function($$v) {
+                            _vm.$set(_vm.searchParams, "name", $$v)
+                          },
+                          expression: "searchParams.name"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-col",
+                { attrs: { span: 4 } },
+                [
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "状态" } },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          attrs: { placeholder: "请选择" },
+                          model: {
+                            value: _vm.searchParams.status,
+                            callback: function($$v) {
+                              _vm.$set(_vm.searchParams, "status", $$v)
+                            },
+                            expression: "searchParams.status"
+                          }
+                        },
+                        _vm._l(_vm.statuses, function(status) {
+                          return _c("el-option", {
+                            key: status.id,
+                            attrs: { label: status.name, value: status.id }
+                          })
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-col",
+                { attrs: { span: 5 } },
+                [
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "日期" } },
+                    [
+                      _c("el-date-picker", {
+                        attrs: {
+                          type: "daterange",
+                          align: "right",
+                          "unlink-panels": "",
+                          format: "yyyy-MM-dd",
+                          "value-format": "yyyy-MM-dd",
+                          "range-separator": "至",
+                          "start-placeholder": "开始日期",
+                          "end-placeholder": "结束日期"
+                        },
+                        model: {
+                          value: _vm.searchParams.date,
+                          callback: function($$v) {
+                            _vm.$set(_vm.searchParams, "date", $$v)
+                          },
+                          expression: "searchParams.date"
                         }
                       })
                     ],
@@ -788,273 +771,7 @@ var render = function() {
             return _vm.$set(_vm.searchParams, "page", $event)
           }
         }
-      }),
-      _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          attrs: { title: _vm.title, visible: _vm.dialogFormVisible },
-          on: {
-            "update:visible": function($event) {
-              _vm.dialogFormVisible = $event
-            }
-          }
-        },
-        [
-          _c(
-            "el-form",
-            {
-              ref: "form",
-              attrs: {
-                model: _vm.form,
-                rules: _vm.rules,
-                "label-width": "80px"
-              }
-            },
-            [
-              _c(
-                "el-form-item",
-                { attrs: { label: "菜肴名称", prop: "name" } },
-                [
-                  _c("el-input", {
-                    attrs: { autocomplete: "off" },
-                    model: {
-                      value: _vm.form.name,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "name", $$v)
-                      },
-                      expression: "form.name"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "所属类目", prop: "category_id" } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { placeholder: "请选择" },
-                      model: {
-                        value: _vm.form.category_id,
-                        callback: function($$v) {
-                          _vm.$set(_vm.form, "category_id", $$v)
-                        },
-                        expression: "form.category_id"
-                      }
-                    },
-                    _vm._l(_vm.categories, function(category) {
-                      return _c("el-option", {
-                        key: category.id,
-                        attrs: { label: category.name, value: category.id }
-                      })
-                    }),
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "口味标记", prop: "tag" } },
-                [
-                  _c(
-                    "el-checkbox-group",
-                    {
-                      attrs: { autocomplete: "off" },
-                      on: { change: _vm.tagChange },
-                      model: {
-                        value: _vm.tagList,
-                        callback: function($$v) {
-                          _vm.tagList = $$v
-                        },
-                        expression: "tagList"
-                      }
-                    },
-                    [
-                      _c("el-checkbox", { attrs: { label: "不辣" } }),
-                      _vm._v(" "),
-                      _c("el-checkbox", { attrs: { label: "微辣" } }),
-                      _vm._v(" "),
-                      _c("el-checkbox", { attrs: { label: "特辣" } })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "菜肴配料", prop: "material" } },
-                [
-                  _c("el-input", {
-                    attrs: { autocomplete: "off" },
-                    model: {
-                      value: _vm.form.material,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "material", $$v)
-                      },
-                      expression: "form.material"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "预览图片", prop: "logo" } },
-                [
-                  _c(
-                    "el-upload",
-                    {
-                      staticClass: "avatar-uploader",
-                      attrs: {
-                        action: "/upload/image",
-                        "show-file-list": false,
-                        accept: "image/jpeg,image/jpg,image/png",
-                        "on-success": _vm.handleAvatarSuccess,
-                        "before-upload": _vm.beforeAvatarUpload
-                      }
-                    },
-                    [
-                      _vm.imageUrl
-                        ? _c("img", {
-                            staticClass: "avatar",
-                            attrs: { src: _vm.imageUrl }
-                          })
-                        : _c("i", {
-                            staticClass: "el-icon-plus avatar-uploader-icon"
-                          })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("el-input", {
-                    attrs: { autocomplete: "off", type: "hidden" },
-                    model: {
-                      value: _vm.form.logo,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "logo", $$v)
-                      },
-                      expression: "form.logo"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "价格", prop: "amount" } },
-                [
-                  _c("el-input", {
-                    attrs: { autocomplete: "off" },
-                    model: {
-                      value: _vm.form.amount,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "amount", _vm._n($$v))
-                      },
-                      expression: "form.amount"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "原价", prop: "original_amount" } },
-                [
-                  _c("el-input", {
-                    attrs: { autocomplete: "off" },
-                    model: {
-                      value: _vm.form.original_amount,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "original_amount", _vm._n($$v))
-                      },
-                      expression: "form.original_amount"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "简介", prop: "intro" } },
-                [
-                  _c("el-input", {
-                    attrs: { autocomplete: "off" },
-                    model: {
-                      value: _vm.form.intro,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "intro", $$v)
-                      },
-                      expression: "form.intro"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                [
-                  _vm.isAdd
-                    ? _c(
-                        "el-button",
-                        {
-                          attrs: { type: "primary" },
-                          on: {
-                            click: function($event) {
-                              return _vm.submitFormAdd("form")
-                            }
-                          }
-                        },
-                        [_vm._v("确认")]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.isUpdate
-                    ? _c(
-                        "el-button",
-                        {
-                          attrs: { type: "primary" },
-                          on: {
-                            click: function($event) {
-                              return _vm.submitFormUpdate("form")
-                            }
-                          }
-                        },
-                        [_vm._v("确认修改")]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "el-button",
-                    {
-                      on: {
-                        click: function($event) {
-                          return _vm.dishCancel("form")
-                        }
-                      }
-                    },
-                    [_vm._v("取消")]
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
+      })
     ],
     1
   )

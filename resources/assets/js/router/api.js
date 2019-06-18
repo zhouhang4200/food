@@ -50,6 +50,25 @@ export default {
     // 菜单删除
     dishDelete(params) {
         return post('/dish/delete', params);
-    }
-
+    },
+    // 客户点餐列表
+    customerDishDetailList(params) {
+        return post('/customer/dish/detail/list', params);
+    },
+    // 客户点餐状态修改（上菜）
+    customerDishDetailServed(params) {
+        return post('/customer/dish/detail/served', params);
+    },
+    // 客户点餐上菜状态
+    customerDishDetailStatuses(params) {
+        return post('/customer/dish/detail/statuses', params);
+    },
+    // 财务流水列表
+    financeList(params) {
+        return post('/finance/list', params);
+    },
+    // 订单列表
+    orderList(params) {
+        return post('/order/list', params);
+    },
 }

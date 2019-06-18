@@ -38,12 +38,25 @@ Route::namespace('Vue')->group(function () {
         Route::post('/upload/image', 'ServiceController@uploadImage');
         // 获取所有的分类
         Route::post('/category', 'ServiceController@category');
-        // 菜单
+        // 后台菜品
         Route::prefix('dish')->group(function () {
             Route::post('list', 'DishController@list'); // 列表
             Route::post('add', 'DishController@add'); // 添加
             Route::post('update', 'DishController@update'); // 编辑
             Route::post('delete', 'DishController@delete'); // 删除
+        });
+        // 客户已点菜品
+        Route::prefix('customer/dish/detail/')->group(function () {
+            Route::post('list', 'CustomerDishDetailController@list'); // 列表
+            Route::post('served', 'CustomerDishDetailController@served'); // 已上菜
+        });
+        // 财务模块
+        Route::prefix('finance')->group(function () {
+            Route::post('list', 'FinanceController@list'); // 列表
+        });
+        // 订单模块
+        Route::prefix('order')->group(function () {
+            Route::post('list', 'OrderController@list'); // 列表
         });
     });
 });

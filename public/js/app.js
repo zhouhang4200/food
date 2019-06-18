@@ -45203,7 +45203,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
             path: "list",
             meta: { title: '汇总信息' },
             component: function component(resolve) {
-                return void new Promise(function(resolve) { resolve(); }).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [!(function webpackMissingModule() { var e = new Error("Cannot find module \"../components/static/List\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+                return void __webpack_require__.e/* require */(1).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(388)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
             }
         }]
     }]
@@ -63998,6 +63998,31 @@ module.exports = function (css) {
     // 菜单删除
     dishDelete: function dishDelete(params) {
         return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/dish/delete', params);
+    },
+
+    // 客户点餐列表
+    customerDishDetailList: function customerDishDetailList(params) {
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/customer/dish/detail/list', params);
+    },
+
+    // 客户点餐状态修改（上菜）
+    customerDishDetailServed: function customerDishDetailServed(params) {
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/customer/dish/detail/served', params);
+    },
+
+    // 客户点餐上菜状态
+    customerDishDetailStatuses: function customerDishDetailStatuses(params) {
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/customer/dish/detail/statuses', params);
+    },
+
+    // 财务流水列表
+    financeList: function financeList(params) {
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/finance/list', params);
+    },
+
+    // 订单列表
+    orderList: function orderList(params) {
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/order/list', params);
     }
 });
 

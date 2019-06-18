@@ -27,4 +27,30 @@ class CustomerDishDetail extends Model
     {
         return $this->belongsTo(Order::class, 'trade_no', 'order_trade_no');
     }
+
+    /**
+     * @param $query
+     * @param array $filters
+     * @return mixed
+     */
+    public static function scopeFilter($query, $filters = [])
+    {
+        if ($filters['name']) {
+            $dishIds = Dish::where('name', 'like', "%".$filters['name']."%")
+                ->where('merchant_id', $filters['merchant_id'])
+                ->pluck('id');
+
+            $query->whereIn('dish_id', $dishIds);
+        }
+
+        if ($filters['table_id']) {
+            $query->where('table_id', $filters['table_id']);
+        }
+
+        if ($filters['seat_id']) {
+            $query->where('seat_id', $filters['seat_id']);
+        }
+
+        return $query;
+    }
 }
