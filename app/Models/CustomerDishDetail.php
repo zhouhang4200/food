@@ -25,7 +25,7 @@ class CustomerDishDetail extends Model
 
     public function order()
     {
-        return $this->belongsTo(Order::class, 'trade_no', 'order_trade_no');
+        return $this->belongsTo(Order::class, 'order_trade_no', 'trade_no');
     }
 
     /**
