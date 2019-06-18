@@ -52,7 +52,7 @@ class CustomerDishDetail extends Model
         }
 
         if ($filters['status']) {
-            $query->where('seat_id', $filters['status']);
+            $query->where('status', $filters['status']);
         }
 
         if ($filters['date']) {
