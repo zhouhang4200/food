@@ -51,6 +51,14 @@ class CustomerDishDetail extends Model
             $query->where('seat_id', $filters['seat_id']);
         }
 
+        if ($filters['status']) {
+            $query->where('seat_id', $filters['status']);
+        }
+
+        if ($filters['date']) {
+            $query->whereBetween('date', $filters['date']);
+        }
+
         return $query;
     }
 }
