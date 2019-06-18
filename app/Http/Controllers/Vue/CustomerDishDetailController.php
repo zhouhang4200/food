@@ -29,7 +29,7 @@ class CustomerDishDetailController extends Controller
                 ->with('dish')
                 ->with('order')
                 ->orderBy('status', 'asc')
-                ->orderBy('created_at', 'desc')
+                ->orderBy('created_at', 'asc')
 //                ->orderBy(DB::raw("status asc,created_at desc"))
                 ->paginate(10);
 
