@@ -94,6 +94,11 @@
                     width="">
             </el-table-column>
             <el-table-column
+                    label="点菜时间"
+                    prop="created_at"
+                    width="">
+            </el-table-column>
+            <el-table-column
                     label="状态"
                     prop="status"
                     width="200">
