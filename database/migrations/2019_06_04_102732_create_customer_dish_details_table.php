@@ -15,6 +15,8 @@ class CreateCustomerDishDetailsTable extends Migration
     {
         Schema::create('customer_dish_details', function (Blueprint $table) {
             $table->increments('id');
+            $table->date('date');
+            $table->tinyInteger('status')->default(0)->comment('是否上菜：0未上菜，1已上菜');
             $table->string('order_trade_no')->comment('关联订单号');
             $table->integer('merchant_id');
             $table->integer('table_id');

@@ -343,13 +343,15 @@ class OrderController extends Controller
             } else {
                 $insertData[] = [
                     'order_trade_no' => $order->trade_no,
+                    'date'           => date("Y-m-d"),
+                    'status'         => 0,
                     'dish_id'        => $detail['dish_id'],
                     'table_id'       => $detail['table_id'],
                     'seat_id'        => $detail['seat_id'],
                     'merchant_id'    => $detail['merchant_id'],
                     'number'         => $detail['number'],
-                    'created_at' => date("Y-m-d H:i:s"),
-                    'updated_at' => date("Y-m-d H:i:s"),
+                    'created_at'     => date("Y-m-d H:i:s"),
+                    'updated_at'     => date("Y-m-d H:i:s"),
                 ];
             }
         }
