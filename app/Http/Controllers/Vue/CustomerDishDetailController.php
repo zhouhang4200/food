@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Vue;
 use App\Models\CustomerDishDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class CustomerDishDetailController extends Controller
 {
@@ -27,8 +28,7 @@ class CustomerDishDetailController extends Controller
                 ->filter($queryData)
                 ->with('dish')
                 ->with('order')
-                ->latest('status')
-                ->oldest('created_at')
+                ->orderBy(DB::raw("status asc,created_at desc"))
                 ->paginate(10);
 
             return response()->json(['status' => 1, 'data' => $data]);
