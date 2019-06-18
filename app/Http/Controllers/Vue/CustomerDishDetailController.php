@@ -54,11 +54,11 @@ class CustomerDishDetailController extends Controller
             $customerDishDetail->status = 1;
             $customerDishDetail->save();
 
-            return response()->json(['status' => 1, 'data' => $customerDishDetail]);
+            return response()->json(['status' => 1, 'data' => $customerDishDetail, 'message' => '操作成功!']);
         } catch (\Exception $e) {
             myLog('customer_dish_detail_served_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
 
-            return response()->json(['status' => 0, 'data' => '', 'message' => '操作成功!']);
+            return response()->json(['status' => 0, 'data' => '', 'message' => '操作失败!']);
         }
     }
 
