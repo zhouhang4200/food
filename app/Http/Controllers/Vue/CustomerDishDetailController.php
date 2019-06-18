@@ -27,6 +27,8 @@ class CustomerDishDetailController extends Controller
                 ->filter($queryData)
                 ->with('dish')
                 ->with('order')
+                ->latest('status')
+                ->oldest('created_at')
                 ->paginate(10);
 
             return response()->json(['status' => 1, 'data' => $data]);
