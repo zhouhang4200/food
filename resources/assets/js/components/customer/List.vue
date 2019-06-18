@@ -96,19 +96,18 @@
             <el-table-column
                     label="点菜时间"
                     prop="created_at"
-                    width="">
+                    width="200">
             </el-table-column>
             <el-table-column
                     label="状态"
-                    prop="status"
-                    width="200">
+                    prop="status">
                 <template slot-scope="scope">
                     {{ scope.row.status === 1 ? '已上菜' : '未上菜' }}
                 </template>
             </el-table-column>
             <el-table-column
                     label="操作"
-                    width="250">
+                    width="200">
                 <template slot-scope="scope">
                     <el-button
                             v-if="scope.row.status === 0"
