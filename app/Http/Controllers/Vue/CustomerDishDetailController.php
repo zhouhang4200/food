@@ -28,7 +28,9 @@ class CustomerDishDetailController extends Controller
                 ->filter($queryData)
                 ->with('dish')
                 ->with('order')
-                ->orderBy(DB::raw("status asc,created_at desc"))
+                ->orderBy('status', 'asc')
+                ->orderBy('created_at', 'desc')
+//                ->orderBy(DB::raw("status asc,created_at desc"))
                 ->paginate(10);
 
             return response()->json(['status' => 1, 'data' => $data]);
