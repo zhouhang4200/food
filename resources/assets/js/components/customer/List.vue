@@ -106,6 +106,7 @@
                     width="250">
                 <template slot-scope="scope">
                     <el-button
+                            v-if="scope.row.status === 0"
                             type="primary"
                             size="small"
                             @click="served(scope.row.id)">完成</el-button>

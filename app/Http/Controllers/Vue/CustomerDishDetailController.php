@@ -56,7 +56,7 @@ class CustomerDishDetailController extends Controller
         } catch (\Exception $e) {
             myLog('customer_dish_detail_served_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
 
-            return response()->json(['status' => 0, 'data' => '']);
+            return response()->json(['status' => 0, 'data' => '', 'message' => '操作成功!']);
         }
     }
 
