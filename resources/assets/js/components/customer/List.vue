@@ -216,8 +216,6 @@
                     this.tableData = res.data.data;
                     this.TotalPage = res.data.total;
                     this.loading=false;
-
-                    console.log(data.data);
                 }).catch(err => {
                     this.$alert('获取数据失败, 请重试!', '提示', {
                         confirmButtonText: '确定',
