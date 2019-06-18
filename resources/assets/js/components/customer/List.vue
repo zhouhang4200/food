@@ -189,7 +189,7 @@
                 });
             },
             // 上菜完成
-            served(data) {
+            served(id) {
                 this.$confirm('您确定要完成吗？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',

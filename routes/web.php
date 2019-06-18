@@ -49,6 +49,7 @@ Route::namespace('Vue')->group(function () {
         Route::prefix('customer/dish/detail/')->group(function () {
             Route::post('list', 'CustomerDishDetailController@list'); // 列表
             Route::post('served', 'CustomerDishDetailController@served'); // 已上菜
+            Route::post('statuses', 'CustomerDishDetailController@statuses'); // 状态
         });
         // 财务模块
         Route::prefix('finance')->group(function () {
