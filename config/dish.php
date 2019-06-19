@@ -14,7 +14,7 @@ return [
     ],
 
     // 订单支付渠道
-    'order_channels' => [
+    'order_channel' => [
         [
             'id' => 1,
             'name' => '微信'

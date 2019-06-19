@@ -61,7 +61,7 @@ export default {
     },
     // 客户点餐上菜状态
     customerDishDetailStatus(params) {
-        return post('/customer/dish/detail/statuses', params);
+        return post('/customer/dish/detail/status', params);
     },
     // 财务流水列表
     financeList(params) {

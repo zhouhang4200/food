@@ -649,13 +649,7 @@ var render = function() {
                   return [
                     _vm._v(
                       "\n                " +
-                        _vm._s(
-                          scope.row.channel === 1
-                            ? "已支付"
-                            : scope.row.channel === 0
-                            ? "未支付"
-                            : ""
-                        ) +
+                        _vm._s(scope.row.channel === 1 ? "已支付" : "待支付") +
                         "\n            "
                     )
                   ]

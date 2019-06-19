@@ -64012,7 +64012,7 @@ module.exports = function (css) {
 
     // 客户点餐上菜状态
     customerDishDetailStatus: function customerDishDetailStatus(params) {
-        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/customer/dish/detail/statuses', params);
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/customer/dish/detail/status', params);
     },
 
     // 财务流水列表

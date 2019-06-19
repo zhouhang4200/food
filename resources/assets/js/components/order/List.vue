@@ -97,7 +97,7 @@
                     label="支付状态"
                     width="200">
                 <template slot-scope="scope">
-                    {{ scope.row.channel === 1 ? '已支付' : (scope.row.channel === 0 ? '未支付' : '') }}
+                    {{ scope.row.channel === 1 ? '已支付' : '待支付' }}
                 </template>
             </el-table-column>
             <el-table-column
