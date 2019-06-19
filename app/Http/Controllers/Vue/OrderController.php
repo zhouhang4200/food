@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Vue;
 
+use App\Models\Dish;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -60,5 +61,46 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             return response()->json(['status' => 0, 'data' => '']);
         }
+    }
+
+    /**
+     * 订单详情
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show(Request $request)
+    {
+        try {
+            $order = Order::find($request->input('id'));
+
+            $data = [
+                'trade_no' => $order->trade_no,
+                'out_trade_no' => $order->out_trade_no,
+                'amount' => $order->amount,
+                'channel_name' => $order->channel == 1 ? '微信支付' : ($order->channel == 2 ? '支付宝支付' : ''),
+                'pay_status' => $order->status == 1 ? '已支付' : '待支付',
+                'created_at' => $order->created_at,
+                'comment' => $order->comment,
+                'dish_detail' => $this->dishDetail($order),
+            ];
+
+            return response()->json(['status' => 1, 'data' => $data]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 0, 'data' => '']);
+        }
+    }
+
+    public function dishDetail($order)
+    {
+        $detail = $order->detail;
+
+        $data = [];
+        foreach ($detail as $value) {
+            $dish = Dish::find($value->dish_id);
+            $data[$dish->name] = [$value->number];
+        }
+
+        return $data;
     }
 }

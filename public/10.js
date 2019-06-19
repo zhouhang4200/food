@@ -310,7 +310,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 pay_status: '',
                 page: 1
             },
-            form: {},
+            form: {
+                trade_no: '',
+                out_trade_no: '',
+                channel_name: '',
+                pay_status: '',
+                created_at: '',
+                dish_detail: '',
+                amount: '',
+                comment: ''
+            },
             showData: {},
             TotalPage: 0,
             channels: [],
@@ -432,7 +441,7 @@ var render = function() {
             [
               _c(
                 "el-col",
-                { attrs: { span: 3 } },
+                { attrs: { span: 4 } },
                 [
                   _c(
                     "el-form-item",
@@ -504,7 +513,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-col",
-                { attrs: { span: 5 } },
+                { attrs: { span: 6 } },
                 [
                   _c(
                     "el-form-item",
@@ -539,7 +548,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-col",
-                { attrs: { span: 5 } },
+                { attrs: { span: 6 } },
                 [
                   _c(
                     "el-form-item",
@@ -779,14 +788,7 @@ var render = function() {
         [
           _c(
             "el-form",
-            {
-              ref: "form",
-              attrs: {
-                model: _vm.form,
-                rules: _vm.rules,
-                "label-width": "80px"
-              }
-            },
+            { ref: "form", attrs: { model: _vm.form, "label-width": "80px" } },
             [
               _c(
                 "el-form-item",
@@ -916,16 +918,16 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "备注", prop: "content" } },
+                { attrs: { label: "备注", prop: "comment" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },
                     model: {
-                      value: _vm.form.content,
+                      value: _vm.form.comment,
                       callback: function($$v) {
-                        _vm.$set(_vm.form, "content", $$v)
+                        _vm.$set(_vm.form, "comment", $$v)
                       },
-                      expression: "form.content"
+                      expression: "form.comment"
                     }
                   })
                 ],

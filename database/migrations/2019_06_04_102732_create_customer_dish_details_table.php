@@ -23,6 +23,7 @@ class CreateCustomerDishDetailsTable extends Migration
             $table->integer('seat_id');
             $table->integer('dish_id');
             $table->integer('number');
+            $table->string('comment', 200)->default('')->comment('备注');
             $table->timestamps();
         });
     }

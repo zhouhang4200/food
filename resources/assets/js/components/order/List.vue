@@ -2,7 +2,7 @@
     <div class="main content amount-flow">
         <el-form :inline="true" :model="searchParams" class="search-form-inline" size="small">
             <el-row :gutter="12">
-                <el-col :span="3">
+                <el-col :span="4">
                     <el-form-item label="订单号">
                         <el-input v-model="searchParams.trade_no"></el-input>
                     </el-form-item>
@@ -17,7 +17,7 @@
                         <el-input v-model="searchParams.seat_id"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="5">
+                <el-col :span="6">
                     <el-form-item label="支付渠道">
                         <el-select v-model="searchParams.channel" placeholder="请选择">
                             <el-option
@@ -29,7 +29,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="5">
+                <el-col :span="6">
                     <el-form-item label="支付状态">
                         <el-select v-model="searchParams.pay_status" placeholder="请选择">
                             <el-option
@@ -136,7 +136,7 @@
                 :total="TotalPage">
         </el-pagination>
         <el-dialog title="订单详情" :visible.sync="showVisible">
-            <el-form :model="form" ref="form" :rules="rules" label-width="80px">
+            <el-form :model="form" ref="form" label-width="80px">
                 <el-form-item label="订单号" prop="trade_no">
                     <el-input v-model="form.trade_no" autocomplete="off"></el-input>
                 </el-form-item>
@@ -158,8 +158,8 @@
                 <el-form-item label="点菜详情" prop="dish_detail">
                     <el-input v-model.number="form.dish_detail" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="备注" prop="content">
-                    <el-input v-model="form.content" autocomplete="off"></el-input>
+                <el-form-item label="备注" prop="comment">
+                    <el-input v-model="form.comment" autocomplete="off"></el-input>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -209,7 +209,16 @@
                     pay_status:'',
                     page:1,
                 },
-                form:{},
+                form:{
+                    trade_no:'',
+                    out_trade_no:'',
+                    channel_name:'',
+                    pay_status:'',
+                    created_at:'',
+                    dish_detail:'',
+                    amount:'',
+                    comment:'',
+                },
                 showData:{},
                 TotalPage:0,
                 channels:[],

@@ -64033,6 +64033,11 @@ module.exports = function (css) {
     // 订单支付渠道
     orderChannel: function orderChannel(params) {
         return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/order/channel', params);
+    },
+
+    // 订单详情
+    orderShow: function orderShow(params) {
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/order/show', params);
     }
 });
 

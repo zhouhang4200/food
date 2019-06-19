@@ -60,6 +60,7 @@ Route::namespace('Vue')->group(function () {
             Route::post('list', 'OrderController@list'); // 列表
             Route::post('pay/status', 'OrderController@payStatus'); // 列表
             Route::post('channel', 'OrderController@channel'); // 列表
+            Route::post('show', 'OrderController@show'); // 列表
         });
     });
 });

@@ -79,4 +79,8 @@ export default {
     orderChannel(params) {
         return post('/order/channel', params);
     },
+    // 订单详情
+    orderShow(params) {
+        return post('/order/show', params);
+    },
 }
