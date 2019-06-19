@@ -670,7 +670,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "amount", label: "金额", width: "200" }
+            attrs: { prop: "amount", label: "金额(元）", width: "200" }
           }),
           _vm._v(" "),
           _c("el-table-column", {

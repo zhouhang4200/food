@@ -950,7 +950,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "价格", prop: "amount" } },
+                { attrs: { label: "价格（元）", prop: "amount" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },

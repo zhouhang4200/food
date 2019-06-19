@@ -78,11 +78,11 @@ class OrderController extends Controller
             $data = [
                 'trade_no' => $order->trade_no,
                 'out_trade_no' => $order->out_trade_no,
-                'amount' => $order->amount,
+                'amount' => $order->amount.'元',
                 'channel_name' => $order->channel == 1 ? '微信支付' : ($order->channel == 2 ? '支付宝支付' : ''),
                 'pay_status' => $order->status == 1 ? '已支付' : '待支付',
                 'created_at' => $order->created_at->toDateTimeString(),
-                'comment' => $order->comment,
+                'comment' => $order->comment ?: '暂无',
                 'dish_detail' => $this->dishDetail($order),
             ];
 

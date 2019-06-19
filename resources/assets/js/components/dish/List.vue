@@ -140,7 +140,7 @@
                     </el-upload>
                     <el-input v-model="form.logo" autocomplete="off" type="hidden"></el-input>
                 </el-form-item>
-                <el-form-item label="价格" prop="amount">
+                <el-form-item label="价格（元）" prop="amount">
                     <el-input v-model.number="form.amount" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="原价" prop="original_amount">
