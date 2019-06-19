@@ -106,6 +106,11 @@
                 </template>
             </el-table-column>
             <el-table-column
+                    label="备注"
+                    prop="comment"
+                    width="200">
+            </el-table-column>
+            <el-table-column
                     label="操作"
                     width="200">
                 <template slot-scope="scope">

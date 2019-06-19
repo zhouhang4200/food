@@ -68,6 +68,6 @@ class CustomerDishDetailController extends Controller
      */
     public function status(Request $request)
     {
-        return response()->json(['status' => 1, 'data' => config('dish.dish_status')]);
+        return response()->json(['status' => 1, 'data' => config('dish.customer.status')]);
     }
 }

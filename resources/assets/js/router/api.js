@@ -67,6 +67,10 @@ export default {
     financeList(params) {
         return post('/finance/list', params);
     },
+    // 财务子类型
+    financeSubType(params) {
+        return post('/finance/sub/type', params);
+    },
     // 订单列表
     orderList(params) {
         return post('/order/list', params);

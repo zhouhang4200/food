@@ -44,7 +44,7 @@ class OrderController extends Controller
     public function payStatus(Request $request)
     {
         try {
-            return response()->json(['status' => 1, 'data' => config('dish.order_pay_status')]);
+            return response()->json(['status' => 1, 'data' => config('dish.order.pay_status')]);
         } catch (\Exception $e) {
             return response()->json(['status' => 0, 'data' => '']);
         }
@@ -57,7 +57,7 @@ class OrderController extends Controller
     public function channel(Request $request)
     {
         try {
-            return response()->json(['status' => 1, 'data' => config('dish.order_channel')]);
+            return response()->json(['status' => 1, 'data' => config('dish.order.channel')]);
         } catch (\Exception $e) {
             return response()->json(['status' => 0, 'data' => '']);
         }

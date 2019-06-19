@@ -20,4 +20,26 @@ class Finance extends Model
     {
         return $this->belongsTo(Merchant::class);
     }
+
+    /**
+     * @param $query
+     * @param array $filters
+     * @return mixed
+     */
+    public static function scopeFilter($query, $filters = [])
+    {
+        if ($filters['trade_no']) {
+            $query->where('trade_no', 'like', '%'.$filters['trade_no'].'%');
+        }
+
+        if (isset($filters['sub_type'])) {
+            $query->where('sub_type', $filters['sub_type']);
+        }
+
+        if ($filters['date']) {
+            $query->whereBetween('date', $filters['date']);
+        }
+
+        return $query;
+    }
 }

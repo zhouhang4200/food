@@ -64020,6 +64020,11 @@ module.exports = function (css) {
         return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/finance/list', params);
     },
 
+    // 财务子类型
+    financeSubType: function financeSubType(params) {
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/finance/sub/type', params);
+    },
+
     // 订单列表
     orderList: function orderList(params) {
         return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/order/list', params);

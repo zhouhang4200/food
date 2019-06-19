@@ -42,7 +42,7 @@
                     width="200">
             </el-table-column>
             <el-table-column
-                    label="价格"
+                    label="价格(元)"
                     prop="amount"
                     width="">
             </el-table-column>
@@ -140,10 +140,10 @@
                     </el-upload>
                     <el-input v-model="form.logo" autocomplete="off" type="hidden"></el-input>
                 </el-form-item>
-                <el-form-item label="价格（元）" prop="amount">
+                <el-form-item label="价格(元)" prop="amount">
                     <el-input v-model.number="form.amount" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="原价" prop="original_amount">
+                <el-form-item label="原价(元)" prop="original_amount">
                     <el-input v-model.number="form.original_amount" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="简介" prop="intro">

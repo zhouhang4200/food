@@ -255,6 +255,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -645,6 +650,10 @@ var render = function() {
                 }
               }
             ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "备注", prop: "comment", width: "200" }
           }),
           _vm._v(" "),
           _c("el-table-column", {

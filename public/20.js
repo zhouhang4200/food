@@ -675,7 +675,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "价格", prop: "amount", width: "" }
+            attrs: { label: "价格(元)", prop: "amount", width: "" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -950,7 +950,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "价格（元）", prop: "amount" } },
+                { attrs: { label: "价格(元)", prop: "amount" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },
@@ -968,7 +968,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "原价", prop: "original_amount" } },
+                { attrs: { label: "原价(元)", prop: "original_amount" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },

@@ -54,6 +54,7 @@ Route::namespace('Vue')->group(function () {
         // 财务模块
         Route::prefix('finance')->group(function () {
             Route::post('list', 'FinanceController@list'); // 列表
+            Route::post('sub/type', 'FinanceController@subType'); // 子类型
         });
         // 订单模块
         Route::prefix('order')->group(function () {
