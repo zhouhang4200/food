@@ -45105,13 +45105,13 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
         redirect: '/customer/list',
         component: App,
         // canReuse: false,
-        meta: { title: '客户管理' },
+        meta: { title: '点菜信息' },
         menu: true,
         children: [{
             name: "customerList",
             menu: true,
             path: "list",
-            meta: { title: '统计信息' },
+            meta: { title: '点菜列表' },
             component: function component(resolve) {
                 return void __webpack_require__.e/* require */(0).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(383)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
             }
@@ -45123,13 +45123,13 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
         redirect: '/dish/list',
         component: App,
         // canReuse: false,
-        meta: { title: '商品管理' },
+        meta: { title: '菜品管理' },
         menu: true,
         children: [{
             name: "dishList",
             menu: true,
             path: "list",
-            meta: { title: '商品信息' },
+            meta: { title: '菜品列表' },
             component: function component(resolve) {
                 return void __webpack_require__.e/* require */(20).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(339)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
             }
@@ -45147,7 +45147,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
             name: "orderList",
             menu: true,
             path: "list",
-            meta: { title: '订单信息' },
+            meta: { title: '订单列表' },
             component: function component(resolve) {
                 return void __webpack_require__.e/* require */(10).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(340)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
             }
@@ -45165,7 +45165,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
             name: "financeList",
             menu: true,
             path: "list",
-            meta: { title: '财务信息' },
+            meta: { title: '财务列表' },
             component: function component(resolve) {
                 return void __webpack_require__.e/* require */(19).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(373)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
             }
@@ -64011,7 +64011,7 @@ module.exports = function (css) {
     },
 
     // 客户点餐上菜状态
-    customerDishDetailStatuses: function customerDishDetailStatuses(params) {
+    customerDishDetailStatus: function customerDishDetailStatus(params) {
         return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/customer/dish/detail/statuses', params);
     },
 
@@ -64023,6 +64023,16 @@ module.exports = function (css) {
     // 订单列表
     orderList: function orderList(params) {
         return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/order/list', params);
+    },
+
+    //订单支付状态
+    orderPayStatus: function orderPayStatus(params) {
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/order/pay/status', params);
+    },
+
+    // 订单支付渠道
+    orderChannel: function orderChannel(params) {
+        return Object(__WEBPACK_IMPORTED_MODULE_0__axios__["a" /* post */])('/order/channel', params);
     }
 });
 

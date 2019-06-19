@@ -259,15 +259,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            imageUrl: '',
             loading: true,
             tableHeight: 0,
-            isAdd: true,
-            isUpdate: false,
-            title: '添加',
             url: '',
             dialogFormVisible: false,
-            AccountBlackListName: {},
             searchParams: {
                 name: '',
                 table_id: '',
@@ -278,34 +273,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             TotalPage: 0,
             tableData: [],
-            rules: {
-                name: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
-                amount: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
-                original_amount: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
-                category_id: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
-                logo: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }]
-            },
-            form: {
-                name: '',
-                category_id: '',
-                tag: "",
-                material: '暂无',
-                logo: '',
-                amount: '',
-                original_amount: '',
-                intro: '暂无'
-            },
-            statuses: {},
-            tagList: []
+            statuses: {}
         };
+    },
+    created: function created() {
+        this.handleTableData();
+        this.handleTableHeight();
+        this.handleStatuses();
+        window.addEventListener('resize', this.handleTableHeight);
     },
 
     methods: {
-        handleCategory: function handleCategory() {
+        handleStatuses: function handleStatuses() {
             var _this = this;
 
-            this.$api.category().then(function (res) {
-                _this.categories = res.data;
+            this.$api.customerDishDetailStatus().then(function (res) {
+                _this.statuses = res.data;
             }).catch(function (err) {
                 _this.$message({
                     type: 'error',
@@ -314,61 +297,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
 
-        //新增按钮
-        dishAdd: function dishAdd() {
-            this.form = {};
-            this.isAdd = true;
-            this.isUpdate = false;
-            this.title = '添加';
-            this.dialogFormVisible = true;
-            this.tagList = [];
-            this.imageUrl = false;
-        },
-
-        // 编辑按钮
-        dishUpdate: function dishUpdate(row) {
-            this.handleTableData();
-            this.tagList = [];
-            this.isAdd = false;
-            this.isUpdate = true;
-            this.title = '修改';
-            this.imageUrl = row.logo;
-            this.dialogFormVisible = true;
-            this.form = JSON.parse(JSON.stringify(row));
-            if (row.tag) {
-                this.tagList = row.tag.split(',');
-            }
-        },
-
-        // 取消按钮
-        dishCancel: function dishCancel(formName) {
-            this.dialogFormVisible = false;
-            this.$refs[formName].clearValidate();
-        },
-
-        // 添加
-        submitFormAdd: function submitFormAdd(formName) {
+        // 上菜完成
+        served: function served(id) {
             var _this2 = this;
 
-            this.$refs[formName].validate(function (valid) {
-                if (valid) {
-                    _this2.$api.dishAdd(_this2.form).then(function (res) {
-                        _this2.$message({
-                            showClose: true,
-                            type: res.status === 1 ? 'success' : 'error',
-                            message: res.message
-                        });
-                        _this2.handleTableData();
-                    }).catch(function (err) {
-                        _this2.$message({
-                            type: 'error',
-                            message: '操作失败'
-                        });
+            this.$confirm('您确定要完成吗？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(function () {
+                _this2.$api.customerDishDetailServed({ id: id }).then(function (res) {
+                    _this2.$message({
+                        showClose: true,
+                        type: res.status === 1 ? 'success' : 'error',
+                        message: res.message
                     });
-                } else {
-                    return false;
-                }
-                _this2.$refs[formName].clearValidate();
+                    _this2.handleTableData();
+                }).catch(function (err) {
+                    _this2.$message({
+                        type: 'error',
+                        message: '操作失败'
+                    });
+                });
             });
         },
 
@@ -386,17 +336,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     callback: function callback(action) {}
                 });
             });
-        },
-        handleName: function handleName() {
-            // this.$api.AccountBlackListName(this.searchParams).then(res => {
-            //     this.AccountBlackListName = res;
-            // }).catch(err => {
-            //     this.$alert('获取数据失败, 请重试!', '提示', {
-            //         confirmButtonText: '确定',
-            //         callback: action => {
-            //         }
-            //     });
-            // });
         },
         handleSearch: function handleSearch() {
             this.handleTableData();
@@ -416,13 +355,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             console.log(value.join(','));
             this.form.tag = tag;
         }
-    },
-    created: function created() {
-        this.handleTableData();
-        this.handleName();
-        this.handleTableHeight();
-        this.handleCategory();
-        window.addEventListener('resize', this.handleTableHeight);
     },
     destroyed: function destroyed() {
         window.removeEventListener('resize', this.handleTableHeight);
@@ -455,7 +387,7 @@ var render = function() {
             [
               _c(
                 "el-col",
-                { attrs: { span: 4 } },
+                { attrs: { span: 3 } },
                 [
                   _c(
                     "el-form-item",
@@ -480,20 +412,19 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-col",
-                { attrs: { span: 4 } },
+                { attrs: { span: 3 } },
                 [
                   _c(
                     "el-form-item",
                     { attrs: { label: "桌号" } },
                     [
                       _c("el-input", {
-                        attrs: { id: "name" },
                         model: {
-                          value: _vm.searchParams.name,
+                          value: _vm.searchParams.table_id,
                           callback: function($$v) {
-                            _vm.$set(_vm.searchParams, "name", $$v)
+                            _vm.$set(_vm.searchParams, "table_id", $$v)
                           },
-                          expression: "searchParams.name"
+                          expression: "searchParams.table_id"
                         }
                       })
                     ],
@@ -505,20 +436,19 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-col",
-                { attrs: { span: 4 } },
+                { attrs: { span: 3 } },
                 [
                   _c(
                     "el-form-item",
                     { attrs: { label: "座号" } },
                     [
                       _c("el-input", {
-                        attrs: { id: "name" },
                         model: {
-                          value: _vm.searchParams.name,
+                          value: _vm.searchParams.seat_id,
                           callback: function($$v) {
-                            _vm.$set(_vm.searchParams, "name", $$v)
+                            _vm.$set(_vm.searchParams, "seat_id", $$v)
                           },
-                          expression: "searchParams.name"
+                          expression: "searchParams.seat_id"
                         }
                       })
                     ],
@@ -530,7 +460,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-col",
-                { attrs: { span: 4 } },
+                { attrs: { span: 3 } },
                 [
                   _c(
                     "el-form-item",
@@ -599,7 +529,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-col",
-                { attrs: { span: 4 } },
+                { attrs: { span: 3 } },
                 [
                   _c(
                     "el-form-item",
@@ -611,19 +541,6 @@ var render = function() {
                           on: { click: _vm.handleSearch }
                         },
                         [_vm._v("查询")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-button",
-                        {
-                          attrs: { type: "primary", size: "small" },
-                          on: {
-                            click: function($event) {
-                              return _vm.dishAdd()
-                            }
-                          }
-                        },
-                        [_vm._v("新增")]
                       )
                     ],
                     1
@@ -654,15 +571,15 @@ var render = function() {
         },
         [
           _c("el-table-column", {
-            attrs: { prop: "name", label: "菜肴名称", width: "200" }
+            attrs: { prop: "date", label: "日期", width: "200" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "价格", prop: "amount", width: "" }
+            attrs: { prop: "order_trade_no", label: "订单号", width: "200" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "所属类目", prop: "category_id", width: "200" },
+            attrs: { prop: "name", label: "菜名", width: "200" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -670,7 +587,7 @@ var render = function() {
                   return [
                     _vm._v(
                       "\n                " +
-                        _vm._s(scope.row.category.name) +
+                        _vm._s(scope.row.dish.name) +
                         "\n            "
                     )
                   ]
@@ -680,7 +597,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "预览图片", prop: "logo", width: "" },
+            attrs: { label: "菜图", prop: "logo", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -692,7 +609,7 @@ var render = function() {
                         height: "100%",
                         display: "block"
                       },
-                      attrs: { src: scope.row.logo }
+                      attrs: { src: scope.row.dish.logo }
                     })
                   ]
                 }
@@ -701,49 +618,56 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "口味标记", prop: "tag", width: "" }
+            attrs: { label: "桌号", prop: "table_id", width: "" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "菜肴配料", prop: "material", width: "" }
+            attrs: { label: "座号", prop: "table_id", width: "" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "简介", prop: "intro", width: "" }
+            attrs: { label: "点菜时间", prop: "created_at", width: "200" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "操作", width: "250" },
+            attrs: { label: "状态", prop: "status" },
             scopedSlots: _vm._u([
               {
                 key: "default",
                 fn: function(scope) {
                   return [
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { type: "primary", size: "small" },
-                        on: {
-                          click: function($event) {
-                            return _vm.dishUpdate(scope.row)
-                          }
-                        }
-                      },
-                      [_vm._v("编辑")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { type: "primary", size: "small" },
-                        on: {
-                          click: function($event) {
-                            return _vm.dishDelete(scope.row.id)
-                          }
-                        }
-                      },
-                      [_vm._v("删除")]
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(scope.row.status === 1 ? "已上菜" : "未上菜") +
+                        "\n            "
                     )
+                  ]
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "操作", width: "200" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    scope.row.status === 0
+                      ? _c(
+                          "el-button",
+                          {
+                            attrs: { type: "primary", size: "small" },
+                            on: {
+                              click: function($event) {
+                                return _vm.served(scope.row.id)
+                              }
+                            }
+                          },
+                          [_vm._v("完成")]
+                        )
+                      : _vm._e()
                   ]
                 }
               }

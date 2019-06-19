@@ -59,14 +59,14 @@ const router = new Router({
             redirect: '/customer/list',
             component: App,
             // canReuse: false,
-            meta: {title: '客户管理'},
+            meta: {title: '点菜信息'},
             menu: true,
             children: [
                 {
                     name: "customerList",
                     menu: true,
                     path: "list",
-                    meta: {title: '统计信息'},
+                    meta: {title: '点菜列表'},
                     component: resolve => void (require(['../components/customer/List'], resolve)),
                 }
             ]
@@ -78,14 +78,14 @@ const router = new Router({
             redirect: '/dish/list',
             component: App,
             // canReuse: false,
-            meta: {title: '商品管理'},
+            meta: {title: '菜品管理'},
             menu: true,
             children: [
                 {
                     name: "dishList",
                     menu: true,
                     path: "list",
-                    meta: {title: '商品信息'},
+                    meta: {title: '菜品列表'},
                     component: resolve => void (require(['../components/dish/List'], resolve)),
                 }
             ]
@@ -104,7 +104,7 @@ const router = new Router({
                     name: "orderList",
                     menu: true,
                     path: "list",
-                    meta: {title: '订单信息'},
+                    meta: {title: '订单列表'},
                     component: resolve => void (require(['../components/order/List'], resolve)),
                 }
             ]
@@ -123,7 +123,7 @@ const router = new Router({
                     name: "financeList",
                     menu: true,
                     path: "list",
-                    meta: {title: '财务信息'},
+                    meta: {title: '财务列表'},
                     component: resolve => void (require(['../components/finance/List'], resolve)),
                 }
             ]

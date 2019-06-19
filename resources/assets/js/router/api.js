@@ -60,7 +60,7 @@ export default {
         return post('/customer/dish/detail/served', params);
     },
     // 客户点餐上菜状态
-    customerDishDetailStatuses(params) {
+    customerDishDetailStatus(params) {
         return post('/customer/dish/detail/statuses', params);
     },
     // 财务流水列表
@@ -70,5 +70,13 @@ export default {
     // 订单列表
     orderList(params) {
         return post('/order/list', params);
+    },
+    //订单支付状态
+    orderPayStatus(params) {
+        return post('/order/pay/status', params);
+    },
+    // 订单支付渠道
+    orderChannel(params) {
+        return post('/order/channel', params);
     },
 }

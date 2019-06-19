@@ -62,8 +62,12 @@ class CustomerDishDetailController extends Controller
         }
     }
 
-    public function statuses(Request $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function status(Request $request)
     {
-        return response()->json(['status' => 1, 'data' => config('dish.statuses')]);
+        return response()->json(['status' => 1, 'data' => config('dish.dish_status')]);
     }
 }
