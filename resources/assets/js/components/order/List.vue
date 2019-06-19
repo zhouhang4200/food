@@ -198,6 +198,7 @@
                 showVisible:false,
                 tableHeight: 0,
                 url:'',
+                loading:false,
                 dialogFormVisible:false,
                 searchParams:{
                     trade_no:'',
@@ -208,6 +209,7 @@
                     pay_status:'',
                     page:1,
                 },
+                form:{},
                 showData:{},
                 TotalPage:0,
                 channels:[],

@@ -299,6 +299,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             showVisible: false,
             tableHeight: 0,
             url: '',
+            loading: false,
             dialogFormVisible: false,
             searchParams: {
                 trade_no: '',
@@ -309,6 +310,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 pay_status: '',
                 page: 1
             },
+            form: {},
             showData: {},
             TotalPage: 0,
             channels: [],
