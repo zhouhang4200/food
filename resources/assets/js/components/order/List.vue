@@ -17,7 +17,7 @@
                         <el-input v-model="searchParams.seat_id"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
+                <el-col :span="5">
                     <el-form-item label="支付渠道">
                         <el-select v-model="searchParams.channel" placeholder="请选择">
                             <el-option
@@ -29,7 +29,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
+                <el-col :span="5">
                     <el-form-item label="支付状态">
                         <el-select v-model="searchParams.pay_status" placeholder="请选择">
                             <el-option
@@ -120,10 +120,9 @@
                     width="200">
                 <template slot-scope="scope">
                     <el-button
-                            v-if="scope.row.status === 0"
                             type="primary"
                             size="small"
-                            @click="served(scope.row.id)">详情</el-button>
+                            @click="show(scope.row.id)">详情</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -136,6 +135,34 @@
                 layout="total, prev, pager, next, jumper"
                 :total="TotalPage">
         </el-pagination>
+        <el-dialog title="订单详情" :visible.sync="showVisible">
+            <el-form :model="form" ref="form" :rules="rules" label-width="80px">
+                <el-form-item label="订单号" prop="trade_no">
+                    <el-input v-model="form.trade_no" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="外部订单号" prop="out_trade_no">
+                    <el-input v-model="form.out_trade_no" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="支付状态" prop="pay_status">
+                    <el-input v-model="form.pay_status" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="支付方式" prop="channel_name">
+                    <el-input v-model="form.channel_name" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="支付金额" prop="amount">
+                    <el-input v-model="form.amount" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="支付时间" prop="created_at">
+                    <el-input v-model="form.created_at" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="点菜详情" prop="dish_detail">
+                    <el-input v-model.number="form.dish_detail" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="备注" prop="content">
+                    <el-input v-model="form.content" autocomplete="off"></el-input>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </div>
 </template>
 <style>
@@ -168,6 +195,7 @@
     export default {
         data(){
             return {
+                showVisible:false,
                 tableHeight: 0,
                 url:'',
                 dialogFormVisible:false,
@@ -180,7 +208,10 @@
                     pay_status:'',
                     page:1,
                 },
+                showData:{},
                 TotalPage:0,
+                channels:[],
+                pay_statuses:[],
                 tableData: [],
             }
         },
@@ -218,6 +249,19 @@
                     this.tableData = res.data.data;
                     this.TotalPage = res.data.total;
                     this.loading=false;
+                }).catch(err => {
+                    this.$alert('获取数据失败, 请重试!', '提示', {
+                        confirmButtonText: '确定',
+                        callback: action => {
+                        }
+                    });
+                });
+            },
+            // 详情
+            show(id){
+                this.$api.orderShow(id).then(res => {
+                    this.showData = res.data;
+                    this.showVisible = true;
                 }).catch(err => {
                     this.$alert('获取数据失败, 请重试!', '提示', {
                         confirmButtonText: '确定',

@@ -51,7 +51,7 @@ class CustomerDishDetail extends Model
             $query->where('seat_id', $filters['seat_id']);
         }
 
-        if ($filters['status']) {
+        if (isset($filters['status'])) {
             $query->where('status', $filters['status']);
         }
 

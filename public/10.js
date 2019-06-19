@@ -265,10 +265,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            showVisible: false,
             tableHeight: 0,
             url: '',
             dialogFormVisible: false,
@@ -281,7 +309,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 pay_status: '',
                 page: 1
             },
+            showData: {},
             TotalPage: 0,
+            channels: [],
+            pay_statuses: [],
             tableData: []
         };
     },
@@ -329,6 +360,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this3.loading = false;
             }).catch(function (err) {
                 _this3.$alert('获取数据失败, 请重试!', '提示', {
+                    confirmButtonText: '确定',
+                    callback: function callback(action) {}
+                });
+            });
+        },
+
+        // 详情
+        show: function show(id) {
+            var _this4 = this;
+
+            this.$api.orderShow(id).then(function (res) {
+                _this4.showData = res.data;
+                _this4.showVisible = true;
+            }).catch(function (err) {
+                _this4.$alert('获取数据失败, 请重试!', '提示', {
                     confirmButtonText: '确定',
                     callback: function callback(action) {}
                 });
@@ -456,7 +502,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-col",
-                { attrs: { span: 4 } },
+                { attrs: { span: 5 } },
                 [
                   _c(
                     "el-form-item",
@@ -491,7 +537,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-col",
-                { attrs: { span: 4 } },
+                { attrs: { span: 5 } },
                 [
                   _c(
                     "el-form-item",
@@ -677,20 +723,18 @@ var render = function() {
                 key: "default",
                 fn: function(scope) {
                   return [
-                    scope.row.status === 0
-                      ? _c(
-                          "el-button",
-                          {
-                            attrs: { type: "primary", size: "small" },
-                            on: {
-                              click: function($event) {
-                                return _vm.served(scope.row.id)
-                              }
-                            }
-                          },
-                          [_vm._v("详情")]
-                        )
-                      : _vm._e()
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { type: "primary", size: "small" },
+                        on: {
+                          click: function($event) {
+                            return _vm.show(scope.row.id)
+                          }
+                        }
+                      },
+                      [_vm._v("详情")]
+                    )
                   ]
                 }
               }
@@ -718,7 +762,179 @@ var render = function() {
             return _vm.$set(_vm.searchParams, "page", $event)
           }
         }
-      })
+      }),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: { title: "订单详情", visible: _vm.showVisible },
+          on: {
+            "update:visible": function($event) {
+              _vm.showVisible = $event
+            }
+          }
+        },
+        [
+          _c(
+            "el-form",
+            {
+              ref: "form",
+              attrs: {
+                model: _vm.form,
+                rules: _vm.rules,
+                "label-width": "80px"
+              }
+            },
+            [
+              _c(
+                "el-form-item",
+                { attrs: { label: "订单号", prop: "trade_no" } },
+                [
+                  _c("el-input", {
+                    attrs: { autocomplete: "off" },
+                    model: {
+                      value: _vm.form.trade_no,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "trade_no", $$v)
+                      },
+                      expression: "form.trade_no"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "外部订单号", prop: "out_trade_no" } },
+                [
+                  _c("el-input", {
+                    attrs: { autocomplete: "off" },
+                    model: {
+                      value: _vm.form.out_trade_no,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "out_trade_no", $$v)
+                      },
+                      expression: "form.out_trade_no"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "支付状态", prop: "pay_status" } },
+                [
+                  _c("el-input", {
+                    attrs: { autocomplete: "off" },
+                    model: {
+                      value: _vm.form.pay_status,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "pay_status", $$v)
+                      },
+                      expression: "form.pay_status"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "支付方式", prop: "channel_name" } },
+                [
+                  _c("el-input", {
+                    attrs: { autocomplete: "off" },
+                    model: {
+                      value: _vm.form.channel_name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "channel_name", $$v)
+                      },
+                      expression: "form.channel_name"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "支付金额", prop: "amount" } },
+                [
+                  _c("el-input", {
+                    attrs: { autocomplete: "off" },
+                    model: {
+                      value: _vm.form.amount,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "amount", $$v)
+                      },
+                      expression: "form.amount"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "支付时间", prop: "created_at" } },
+                [
+                  _c("el-input", {
+                    attrs: { autocomplete: "off" },
+                    model: {
+                      value: _vm.form.created_at,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "created_at", $$v)
+                      },
+                      expression: "form.created_at"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "点菜详情", prop: "dish_detail" } },
+                [
+                  _c("el-input", {
+                    attrs: { autocomplete: "off" },
+                    model: {
+                      value: _vm.form.dish_detail,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "dish_detail", _vm._n($$v))
+                      },
+                      expression: "form.dish_detail"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "备注", prop: "content" } },
+                [
+                  _c("el-input", {
+                    attrs: { autocomplete: "off" },
+                    model: {
+                      value: _vm.form.content,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "content", $$v)
+                      },
+                      expression: "form.content"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
