@@ -96,7 +96,7 @@ class OrderController extends Controller
 
     public function dishDetail($order)
     {
-        $detail = $order->detail;
+        $detail = json_decode($order->detail, true);
 
         $data = [];
         foreach ($detail as $value) {
