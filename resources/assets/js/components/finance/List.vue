@@ -149,7 +149,6 @@
         },
         created(){
             this.handleSubTypes();
-            this.handleChannels();
             this.handleTableData();
             this.handleTableHeight();
             window.addEventListener('resize', this.handleTableHeight);
