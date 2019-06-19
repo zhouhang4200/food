@@ -107,7 +107,7 @@ class OrderController extends Controller
         $data = '';
         foreach ($detail as $value) {
             $dish = Dish::find($value['dish_id']);
-            $data .= $dish->name.'【'.$dish->amount.'】'.'*'.$value['number'].'份;';
+            $data .= $dish->name.'【'.$dish->amount.'元】'.'*'.$value['number'].'份;';
         }
 
         return $data;
