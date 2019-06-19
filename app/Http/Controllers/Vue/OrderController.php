@@ -68,6 +68,7 @@ class OrderController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function show(Request $request)
     {

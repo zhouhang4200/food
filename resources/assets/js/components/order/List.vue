@@ -270,7 +270,7 @@
             },
             // 详情
             show(id){
-                this.$api.orderShow(id).then(res => {
+                this.$api.orderShow({id:id}).then(res => {
                     this.showData = res.data;
                     this.showVisible = true;
                 }).catch(err => {
