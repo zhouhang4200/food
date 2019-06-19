@@ -318,7 +318,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 created_at: '',
                 dish_detail: '',
                 amount: '',
-                comment: ''
+                comment: '空'
             },
             showData: {},
             TotalPage: 0,
@@ -788,7 +788,10 @@ var render = function() {
         [
           _c(
             "el-form",
-            { ref: "form", attrs: { model: _vm.form, "label-width": "80px" } },
+            {
+              ref: "form",
+              attrs: { model: _vm.form, "label-width": "100px", disabled: "" }
+            },
             [
               _c(
                 "el-form-item",
@@ -810,7 +813,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "外部订单号", prop: "out_trade_no" } },
+                { attrs: { label: "支付订单号", prop: "out_trade_no" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },
@@ -903,11 +906,11 @@ var render = function() {
                 { attrs: { label: "点菜详情", prop: "dish_detail" } },
                 [
                   _c("el-input", {
-                    attrs: { autocomplete: "off" },
+                    attrs: { type: "textarea" },
                     model: {
                       value: _vm.form.dish_detail,
                       callback: function($$v) {
-                        _vm.$set(_vm.form, "dish_detail", _vm._n($$v))
+                        _vm.$set(_vm.form, "dish_detail", $$v)
                       },
                       expression: "form.dish_detail"
                     }
@@ -921,7 +924,7 @@ var render = function() {
                 { attrs: { label: "备注", prop: "comment" } },
                 [
                   _c("el-input", {
-                    attrs: { autocomplete: "off" },
+                    attrs: { type: "textarea", autocomplete: "off" },
                     model: {
                       value: _vm.form.comment,
                       callback: function($$v) {

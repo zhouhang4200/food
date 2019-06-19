@@ -136,11 +136,11 @@
                 :total="TotalPage">
         </el-pagination>
         <el-dialog title="订单详情" :visible.sync="showVisible">
-            <el-form :model="form" ref="form" label-width="80px">
+            <el-form :model="form" ref="form" label-width="100px" disabled>
                 <el-form-item label="订单号" prop="trade_no">
                     <el-input v-model="form.trade_no" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="外部订单号" prop="out_trade_no">
+                <el-form-item label="支付订单号" prop="out_trade_no">
                     <el-input v-model="form.out_trade_no" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="支付状态" prop="pay_status">
@@ -156,10 +156,10 @@
                     <el-input v-model="form.created_at" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="点菜详情" prop="dish_detail">
-                    <el-input v-model.number="form.dish_detail" autocomplete="off"></el-input>
+                    <el-input type="textarea" v-model="form.dish_detail"></el-input>
                 </el-form-item>
                 <el-form-item label="备注" prop="comment">
-                    <el-input v-model="form.comment" autocomplete="off"></el-input>
+                    <el-input type="textarea" v-model="form.comment" autocomplete="off"></el-input>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -217,7 +217,7 @@
                     created_at:'',
                     dish_detail:'',
                     amount:'',
-                    comment:'',
+                    comment:'空',
                 },
                 showData:{},
                 TotalPage:0,

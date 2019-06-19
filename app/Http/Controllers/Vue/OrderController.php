@@ -94,14 +94,20 @@ class OrderController extends Controller
         }
     }
 
+    /**
+     * 拼接菜品详情字符串
+     *
+     * @param $order
+     * @return string
+     */
     public function dishDetail($order)
     {
         $detail = json_decode($order->detail, true);
 
-        $data = [];
+        $data = '';
         foreach ($detail as $value) {
             $dish = Dish::find($value['dish_id']);
-            $data[$dish->name] = $value['number'];
+            $data .= $dish->name.'*'.$value['number'].'份;'
         }
 
         return $data;
