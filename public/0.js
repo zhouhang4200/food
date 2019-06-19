@@ -387,7 +387,7 @@ var render = function() {
             [
               _c(
                 "el-col",
-                { attrs: { span: 3 } },
+                { attrs: { span: 4 } },
                 [
                   _c(
                     "el-form-item",
@@ -412,7 +412,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-col",
-                { attrs: { span: 3 } },
+                { attrs: { span: 4 } },
                 [
                   _c(
                     "el-form-item",
@@ -436,7 +436,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-col",
-                { attrs: { span: 3 } },
+                { attrs: { span: 4 } },
                 [
                   _c(
                     "el-form-item",
@@ -460,7 +460,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-col",
-                { attrs: { span: 3 } },
+                { attrs: { span: 4 } },
                 [
                   _c(
                     "el-form-item",

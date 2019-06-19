@@ -2,22 +2,22 @@
     <div class="main content amount-flow">
         <el-form :inline="true" :model="searchParams" class="search-form-inline" size="small">
             <el-row :gutter="12">
-                <el-col :span="3">
+                <el-col :span="4">
                     <el-form-item label="菜名">
                         <el-input v-model="searchParams.name" id="name"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="3">
+                <el-col :span="4">
                     <el-form-item label="桌号">
                         <el-input v-model="searchParams.table_id"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="3">
+                <el-col :span="4">
                     <el-form-item label="座号">
                         <el-input v-model="searchParams.seat_id"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="3">
+                <el-col :span="4">
                     <el-form-item label="状态">
                         <el-select v-model="searchParams.status" placeholder="请选择">
                             <el-option

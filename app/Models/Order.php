@@ -37,7 +37,7 @@ class Order extends Model
             $query->where('seat_id', $filters['seat_id']);
         }
 
-        if ($filters['pay_status']) {
+        if (isset($filters['pay_status'])) {
             $query->where('pay_status', $filters['pay_status']);
         }
 

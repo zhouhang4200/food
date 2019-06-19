@@ -7,17 +7,17 @@
                         <el-input v-model="searchParams.trade_no"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="3">
+                <el-col :span="4">
                     <el-form-item label="桌号">
                         <el-input v-model="searchParams.table_id"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="3">
+                <el-col :span="4">
                     <el-form-item label="座号">
                         <el-input v-model="searchParams.seat_id"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="3">
+                <el-col :span="4">
                     <el-form-item label="支付渠道">
                         <el-select v-model="searchParams.channel" placeholder="请选择">
                             <el-option
@@ -29,7 +29,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="3">
+                <el-col :span="4">
                     <el-form-item label="支付状态">
                         <el-select v-model="searchParams.pay_status" placeholder="请选择">
                             <el-option
