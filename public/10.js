@@ -382,7 +382,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this4 = this;
 
             this.$api.orderShow({ id: id }).then(function (res) {
-                _this4.showData = res.data;
+                _this4.form = res.data;
                 _this4.showVisible = true;
             }).catch(function (err) {
                 _this4.$alert('获取数据失败, 请重试!', '提示', {

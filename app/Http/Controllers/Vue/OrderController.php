@@ -81,7 +81,7 @@ class OrderController extends Controller
                 'amount' => $order->amount,
                 'channel_name' => $order->channel == 1 ? '微信支付' : ($order->channel == 2 ? '支付宝支付' : ''),
                 'pay_status' => $order->status == 1 ? '已支付' : '待支付',
-                'created_at' => $order->created_at,
+                'created_at' => $order->created_at->toDateTimeString(),
                 'comment' => $order->comment,
                 'dish_detail' => $this->dishDetail($order),
             ];

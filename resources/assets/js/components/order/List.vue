@@ -271,7 +271,7 @@
             // 详情
             show(id){
                 this.$api.orderShow({id:id}).then(res => {
-                    this.showData = res.data;
+                    this.form = res.data;
                     this.showVisible = true;
                 }).catch(err => {
                     this.$alert('获取数据失败, 请重试!', '提示', {
