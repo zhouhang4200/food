@@ -53,7 +53,7 @@
                     width="200">
             </el-table-column>
             <el-table-column
-                    prop="trade_no"
+                    prop="order_trade_no"
                     label="订单号"
                     width="200">
             </el-table-column>
@@ -75,7 +75,7 @@
                     label="子类型"
                     width="200">
                 <template slot-scope="scope">
-                    {{ scope.row.channel === 11 ? '微信收入' : (scope.row.channel === 12 ? '支付宝收入' : '') }}
+                    {{ scope.row.sub_type === 11 ? '微信收入' : (scope.row.sub_type === 12 ? '支付宝收入' : '') }}
                 </template>
             </el-table-column>
             <el-table-column
@@ -156,7 +156,7 @@
         methods: {
             handleSubTypes(){
                 this.$api.financeSubType().then(res => {
-                    this.channels=res.data;
+                    this.sub_types=res.data;
                 }).catch(err => {
                     this.$message({
                         type: 'error',
