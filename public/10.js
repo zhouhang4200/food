@@ -441,7 +441,7 @@ var render = function() {
             [
               _c(
                 "el-col",
-                { attrs: { span: 4 } },
+                { attrs: { span: 5 } },
                 [
                   _c(
                     "el-form-item",

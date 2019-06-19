@@ -87,6 +87,8 @@ class OrderController extends Controller
 
             return response()->json(['status' => 1, 'data' => $data]);
         } catch (\Exception $e) {
+            myLog('order_show_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+
             return response()->json(['status' => 0, 'data' => '']);
         }
     }

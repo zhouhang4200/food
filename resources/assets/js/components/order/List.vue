@@ -2,7 +2,7 @@
     <div class="main content amount-flow">
         <el-form :inline="true" :model="searchParams" class="search-form-inline" size="small">
             <el-row :gutter="12">
-                <el-col :span="4">
+                <el-col :span="5">
                     <el-form-item label="订单号">
                         <el-input v-model="searchParams.trade_no"></el-input>
                     </el-form-item>
