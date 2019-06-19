@@ -100,8 +100,8 @@ class OrderController extends Controller
 
         $data = [];
         foreach ($detail as $value) {
-            $dish = Dish::find($value->dish_id);
-            $data[$dish->name] = [$value->number];
+            $dish = Dish::find($value['dish_id']);
+            $data[$dish->name] = $value['number'];
         }
 
         return $data;
