@@ -21,7 +21,7 @@ class CreateFinancesTable extends Migration
             $table->tinyInteger('type')->comment('流水类型：');
             $table->integer('sub_type')->comment('子流水类型：');
             $table->decimal('amount', 10, 2)->comment('支付金额');
-            $table->string('comment', 200)->default('')->comment('备注');
+            $table->text('comment')->comment('备注');
             $table->timestamps();
         });
     }
