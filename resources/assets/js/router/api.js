@@ -91,6 +91,14 @@ export default {
     storeList(params) {
         return post('/store/list', params);
     },
+    // 门店添加
+    storeAdd(params) {
+        return post('/store/add', params);
+    },
+    // 门店修改
+    storeUpdate(params) {
+        return post('/store/update', params);
+    },
     // 数据统计
     dishWeekData(params) {
         return post('/static/dish/week/data', params);

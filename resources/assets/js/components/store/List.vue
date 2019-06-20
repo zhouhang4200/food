@@ -1,17 +1,17 @@
 <template>
     <div class="main content amount-flow">
-        <!--<el-form :inline="true" :model="searchParams" class="search-form-inline" size="small">-->
-            <!--<el-row :gutter="12">-->
-                <!--<el-col :span="4">-->
-                    <!--<el-form-item>-->
-                        <!--<el-button-->
-                                <!--type="primary"-->
-                                <!--size="small"-->
-                                <!--@click="dishAdd()">添加子门店</el-button>-->
-                    <!--</el-form-item>-->
-                <!--</el-col>-->
-            <!--</el-row>-->
-        <!--</el-form>-->
+        <el-form :inline="true" :model="searchParams" class="search-form-inline" size="small">
+            <el-row :gutter="12">
+                <el-col :span="4">
+                    <el-form-item>
+                        <el-button
+                                type="primary"
+                                size="small"
+                                @click="storeAdd()">添加门店</el-button>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
         <el-table
                 :data="tableData"
                 :height="tableHeight"
@@ -57,13 +57,21 @@
                     width="">
             </el-table-column>
             <el-table-column
+                    label="状态"
+                    prop="status"
+                    width="">
+                <template slot-scope="scope">
+                    {{ scope.row.status === 0 ? '审核中' : (scope.row.status === 1 ? '审核成功' : '审核失败') }}
+                </template>
+            </el-table-column>
+            <el-table-column
                     label="操作"
                     width="250">
                 <template slot-scope="scope">
                     <el-button
                             type="primary"
                             size="small"
-                            @click="dishUpdate(scope.row)">编辑</el-button>
+                            @click="storeUpdate(scope.row)">编辑</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -101,15 +109,15 @@
                     <el-input v-model.number="form.license_number" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="法人姓名" prop="legal_person">
-                    <el-input v-model.number="form.legal_person" autocomplete="off"></el-input>
+                    <el-input v-model="form.legal_person" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="法人电话" prop="legal_phone">
-                    <el-input v-model="form.legal_phone" autocomplete="off"></el-input>
+                    <el-input v-model.number="form.legal_phone" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button v-if="isAdd" type="primary" @click="submitFormAdd('form')">确认</el-button>
                     <el-button v-if="isUpdate" type="primary" @click="submitFormUpdate('form')">确认修改</el-button>
-                    <el-button @click="dishCancel('form')">取消</el-button>
+                    <el-button @click="storeCancel('form')">取消</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -153,46 +161,37 @@
                 title:'添加',
                 url:'',
                 dialogFormVisible:false,
-                // searchParams:{
-                //     name:'',
-                //     category_id:'',
-                //     page:1,
-                // },
+                searchParams:{
+                    page:1,
+                },
                 TotalPage:0,
                 tableData: [],
                 rules:{
                     name:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
-                    amount:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
-                    original_amount:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
-                    category_id:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
+                    address:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
                     logo:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
                 },
                 form: {
                     name: '',
                     address: '',
                     logo: '',
-                    license_number: '',
-                    legal_person:'',
-                    legal_phone: ''
+                    license_number: "",
+                    legal_person:"",
+                    legal_phone: ""
                 },
                 categories:{
                 },
                 tagList: [],
             }
         },
+        created(){
+            this.handleTableData();
+            this.handleTableHeight();
+            window.addEventListener('resize', this.handleTableHeight);
+        },
         methods: {
-            handleCategory(){
-                this.$api.category().then(res => {
-                    this.categories=res.data;
-                }).catch(err => {
-                    this.$message({
-                        type: 'error',
-                        message: '数据初始化异常'
-                    });
-                });
-            },
             //新增按钮
-            dishAdd(){
+            storeAdd(){
                 this.form={};
                 this.isAdd=true;
                 this.isUpdate=false;
@@ -202,7 +201,7 @@
                 this.imageUrl=false;
             },
             // 编辑按钮
-            dishUpdate(row) {
+            storeUpdate(row) {
                 this.handleTableData();
                 this.tagList=[];
                 this.isAdd=false;
@@ -211,20 +210,40 @@
                 this.imageUrl = row.logo;
                 this.dialogFormVisible = true;
                 this.form=JSON.parse(JSON.stringify(row));
-                if (row.tag) {
-                    this.tagList=row.tag.split(',');
-                }
             },
             // 取消按钮
-            dishCancel(formName) {
+            storeCancel(formName) {
                 this.dialogFormVisible = false;
                 this.$refs[formName].clearValidate();
+            },
+            // 添加
+            submitFormAdd(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.$api.storeAdd(this.form).then(res => {
+                            this.$message({
+                                showClose: true,
+                                type: res.status === 1 ? 'success' : 'error',
+                                message: res.message
+                            });
+                            this.handleTableData();
+                        }).catch(err => {
+                            this.$message({
+                                type: 'error',
+                                message: '操作失败'
+                            });
+                        });
+                    } else {
+                        return false;
+                    }
+                    this.$refs[formName].clearValidate();
+                });
             },
             // 修改
             submitFormUpdate(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$api.dishUpdate(this.form).then(res => {
+                        this.$api.storeUpdate(this.form).then(res => {
                             this.$message({
                                 showClose: true,
                                 type: res.status === 1 ? 'success' : 'error',
@@ -255,9 +274,6 @@
                         }
                     });
                 });
-            },
-            handleSearch() {
-                this.handleTableData();
             },
             handleCurrentChange(page) {
                 this.searchParams.page = page;
@@ -295,13 +311,6 @@
                 console.log(value.join(','));
                 this.form.tag = tag;
             },
-        },
-        created(){
-            this.handleTableData();
-            this.handleName();
-            this.handleTableHeight();
-            this.handleCategory();
-            window.addEventListener('resize', this.handleTableHeight);
         },
         destroyed() {
             window.removeEventListener('resize', this.handleTableHeight);

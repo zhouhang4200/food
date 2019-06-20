@@ -254,18 +254,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             title: '添加',
             url: '',
             dialogFormVisible: false,
-            // searchParams:{
-            //     name:'',
-            //     category_id:'',
-            //     page:1,
-            // },
+            searchParams: {
+                page: 1
+            },
             TotalPage: 0,
             tableData: [],
             rules: {
                 name: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
-                amount: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
-                original_amount: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
-                category_id: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
+                address: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
                 logo: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }]
             },
             form: {
@@ -280,23 +276,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             tagList: []
         };
     },
+    created: function created() {
+        this.handleTableData();
+        this.handleTableHeight();
+        window.addEventListener('resize', this.handleTableHeight);
+    },
 
     methods: {
-        handleCategory: function handleCategory() {
-            var _this = this;
-
-            this.$api.category().then(function (res) {
-                _this.categories = res.data;
-            }).catch(function (err) {
-                _this.$message({
-                    type: 'error',
-                    message: '数据初始化异常'
-                });
-            });
-        },
-
         //新增按钮
-        dishAdd: function dishAdd() {
+        storeAdd: function storeAdd() {
             this.form = {};
             this.isAdd = true;
             this.isUpdate = false;
@@ -307,7 +295,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         // 编辑按钮
-        dishUpdate: function dishUpdate(row) {
+        storeUpdate: function storeUpdate(row) {
             this.handleTableData();
             this.tagList = [];
             this.isAdd = false;
@@ -322,9 +310,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         // 取消按钮
-        dishCancel: function dishCancel(formName) {
+        storeCancel: function storeCancel(formName) {
             this.dialogFormVisible = false;
             this.$refs[formName].clearValidate();
+        },
+
+        // 添加
+        submitFormAdd: function submitFormAdd(formName) {
+            var _this = this;
+
+            this.$refs[formName].validate(function (valid) {
+                if (valid) {
+                    _this.$api.dishAdd(_this.form).then(function (res) {
+                        _this.$message({
+                            showClose: true,
+                            type: res.status === 1 ? 'success' : 'error',
+                            message: res.message
+                        });
+                        _this.handleTableData();
+                    }).catch(function (err) {
+                        _this.$message({
+                            type: 'error',
+                            message: '操作失败'
+                        });
+                    });
+                } else {
+                    return false;
+                }
+                _this.$refs[formName].clearValidate();
+            });
         },
 
         // 修改
@@ -367,9 +381,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             });
         },
-        handleSearch: function handleSearch() {
-            this.handleTableData();
-        },
         handleCurrentChange: function handleCurrentChange(page) {
             this.searchParams.page = page;
             this.handleTableData();
@@ -410,13 +421,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.tag = tag;
         }
     },
-    created: function created() {
-        this.handleTableData();
-        this.handleName();
-        this.handleTableHeight();
-        this.handleCategory();
-        window.addEventListener('resize', this.handleTableHeight);
-    },
     destroyed: function destroyed() {
         window.removeEventListener('resize', this.handleTableHeight);
     }
@@ -435,6 +439,49 @@ var render = function() {
     "div",
     { staticClass: "main content amount-flow" },
     [
+      _c(
+        "el-form",
+        {
+          staticClass: "search-form-inline",
+          attrs: { inline: true, model: _vm.searchParams, size: "small" }
+        },
+        [
+          _c(
+            "el-row",
+            { attrs: { gutter: 12 } },
+            [
+              _c(
+                "el-col",
+                { attrs: { span: 4 } },
+                [
+                  _c(
+                    "el-form-item",
+                    [
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { type: "primary", size: "small" },
+                          on: {
+                            click: function($event) {
+                              return _vm.storeAdd()
+                            }
+                          }
+                        },
+                        [_vm._v("添加门店")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
       _c(
         "el-table",
         {
@@ -504,7 +551,7 @@ var render = function() {
                         attrs: { type: "primary", size: "small" },
                         on: {
                           click: function($event) {
-                            return _vm.dishUpdate(scope.row)
+                            return _vm.storeUpdate(scope.row)
                           }
                         }
                       },
@@ -731,7 +778,7 @@ var render = function() {
                     {
                       on: {
                         click: function($event) {
-                          return _vm.dishCancel("form")
+                          return _vm.storeCancel("form")
                         }
                       }
                     },

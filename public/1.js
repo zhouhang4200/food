@@ -6,13 +6,13 @@ webpackJsonp([1],{
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(891)
+  __webpack_require__(892)
 }
 var normalizeComponent = __webpack_require__(196)
 /* script */
-var __vue_script__ = __webpack_require__(893)
+var __vue_script__ = __webpack_require__(894)
 /* template */
-var __vue_template__ = __webpack_require__(894)
+var __vue_template__ = __webpack_require__(895)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52,13 +52,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 891:
+/***/ 892:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(892);
+var content = __webpack_require__(893);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79,7 +79,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 892:
+/***/ 893:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(100)(false);
@@ -94,11 +94,19 @@ exports.push([module.i, "\n.avatar-uploader .el-upload {\n    border: 1px dashed
 
 /***/ }),
 
-/***/ 893:
+/***/ 894:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -254,52 +262,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             title: '添加',
             url: '',
             dialogFormVisible: false,
-            AccountBlackListName: {},
             searchParams: {
-                name: '',
-                category_id: '',
                 page: 1
             },
             TotalPage: 0,
             tableData: [],
             rules: {
                 name: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
-                amount: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
-                original_amount: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
-                category_id: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
+                address: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }],
                 logo: [{ required: true, message: '必填项不可为空!', trigger: 'blur' }]
             },
             form: {
                 name: '',
-                category_id: '',
-                tag: "",
-                material: '暂无',
+                address: '',
                 logo: '',
-                amount: '',
-                original_amount: '',
-                intro: '暂无'
+                license_number: "",
+                legal_person: "",
+                legal_phone: ""
             },
             categories: {},
             tagList: []
         };
     },
+    created: function created() {
+        this.handleTableData();
+        this.handleTableHeight();
+        window.addEventListener('resize', this.handleTableHeight);
+    },
 
     methods: {
-        handleCategory: function handleCategory() {
-            var _this = this;
-
-            this.$api.category().then(function (res) {
-                _this.categories = res.data;
-            }).catch(function (err) {
-                _this.$message({
-                    type: 'error',
-                    message: '数据初始化异常'
-                });
-            });
-        },
-
         //新增按钮
-        dishAdd: function dishAdd() {
+        storeAdd: function storeAdd() {
             this.form = {};
             this.isAdd = true;
             this.isUpdate = false;
@@ -310,7 +303,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         // 编辑按钮
-        dishUpdate: function dishUpdate(row) {
+        storeUpdate: function storeUpdate(row) {
             this.handleTableData();
             this.tagList = [];
             this.isAdd = false;
@@ -319,15 +312,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.imageUrl = row.logo;
             this.dialogFormVisible = true;
             this.form = JSON.parse(JSON.stringify(row));
-            if (row.tag) {
-                this.tagList = row.tag.split(',');
-            }
         },
 
         // 取消按钮
-        dishCancel: function dishCancel(formName) {
+        storeCancel: function storeCancel(formName) {
             this.dialogFormVisible = false;
             this.$refs[formName].clearValidate();
+        },
+
+        // 添加
+        submitFormAdd: function submitFormAdd(formName) {
+            var _this = this;
+
+            this.$refs[formName].validate(function (valid) {
+                if (valid) {
+                    _this.$api.storeAdd(_this.form).then(function (res) {
+                        _this.$message({
+                            showClose: true,
+                            type: res.status === 1 ? 'success' : 'error',
+                            message: res.message
+                        });
+                        _this.handleTableData();
+                    }).catch(function (err) {
+                        _this.$message({
+                            type: 'error',
+                            message: '操作失败'
+                        });
+                    });
+                } else {
+                    return false;
+                }
+                _this.$refs[formName].clearValidate();
+            });
         },
 
         // 修改
@@ -336,7 +352,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.$refs[formName].validate(function (valid) {
                 if (valid) {
-                    _this2.$api.dishUpdate(_this2.form).then(function (res) {
+                    _this2.$api.storeUpdate(_this2.form).then(function (res) {
                         _this2.$message({
                             showClose: true,
                             type: res.status === 1 ? 'success' : 'error',
@@ -359,7 +375,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         handleTableData: function handleTableData() {
             var _this3 = this;
 
-            this.$api.dishList(this.searchParams).then(function (res) {
+            this.$api.storeList(this.searchParams).then(function (res) {
                 _this3.tableData = res.data.data;
                 _this3.TotalPage = res.data.total;
                 _this3.loading = false;
@@ -369,9 +385,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     callback: function callback(action) {}
                 });
             });
-        },
-        handleSearch: function handleSearch() {
-            this.handleTableData();
         },
         handleCurrentChange: function handleCurrentChange(page) {
             this.searchParams.page = page;
@@ -413,13 +426,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.tag = tag;
         }
     },
-    created: function created() {
-        this.handleTableData();
-        this.handleName();
-        this.handleTableHeight();
-        this.handleCategory();
-        window.addEventListener('resize', this.handleTableHeight);
-    },
     destroyed: function destroyed() {
         window.removeEventListener('resize', this.handleTableHeight);
     }
@@ -427,7 +433,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 894:
+/***/ 895:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -462,11 +468,11 @@ var render = function() {
                           attrs: { type: "primary", size: "small" },
                           on: {
                             click: function($event) {
-                              return _vm.dishAdd()
+                              return _vm.storeAdd()
                             }
                           }
                         },
-                        [_vm._v("添加子门店")]
+                        [_vm._v("添加门店")]
                       )
                     ],
                     1
@@ -498,10 +504,6 @@ var render = function() {
         [
           _c("el-table-column", {
             attrs: { prop: "name", label: "店名", width: "200" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { label: "主门店", prop: "parent_name", width: "" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -542,6 +544,30 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
+            attrs: { label: "状态", prop: "status", width: "" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          scope.row.status === 0
+                            ? "审核中"
+                            : scope.row.status === 1
+                            ? "审核成功"
+                            : "审核失败"
+                        ) +
+                        "\n            "
+                    )
+                  ]
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
             attrs: { label: "操作", width: "250" },
             scopedSlots: _vm._u([
               {
@@ -554,7 +580,7 @@ var render = function() {
                         attrs: { type: "primary", size: "small" },
                         on: {
                           click: function($event) {
-                            return _vm.dishUpdate(scope.row)
+                            return _vm.storeUpdate(scope.row)
                           }
                         }
                       },
@@ -613,7 +639,7 @@ var render = function() {
             [
               _c(
                 "el-form-item",
-                { attrs: { label: "名称", prop: "name" } },
+                { attrs: { label: "店名", prop: "name" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },
@@ -631,16 +657,16 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "菜肴配料", prop: "material" } },
+                { attrs: { label: "地址", prop: "address" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },
                     model: {
-                      value: _vm.form.material,
+                      value: _vm.form.address,
                       callback: function($$v) {
-                        _vm.$set(_vm.form, "material", $$v)
+                        _vm.$set(_vm.form, "address", $$v)
                       },
-                      expression: "form.material"
+                      expression: "form.address"
                     }
                   })
                 ],
@@ -649,7 +675,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "预览图片", prop: "logo" } },
+                { attrs: { label: "门头照", prop: "logo" } },
                 [
                   _c(
                     "el-upload",
@@ -691,16 +717,16 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "价格", prop: "amount" } },
+                { attrs: { label: "营业执照号", prop: "license_number" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },
                     model: {
-                      value: _vm.form.amount,
+                      value: _vm.form.license_number,
                       callback: function($$v) {
-                        _vm.$set(_vm.form, "amount", _vm._n($$v))
+                        _vm.$set(_vm.form, "license_number", _vm._n($$v))
                       },
-                      expression: "form.amount"
+                      expression: "form.license_number"
                     }
                   })
                 ],
@@ -709,16 +735,16 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "原价", prop: "original_amount" } },
+                { attrs: { label: "法人姓名", prop: "legal_person" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },
                     model: {
-                      value: _vm.form.original_amount,
+                      value: _vm.form.legal_person,
                       callback: function($$v) {
-                        _vm.$set(_vm.form, "original_amount", _vm._n($$v))
+                        _vm.$set(_vm.form, "legal_person", $$v)
                       },
-                      expression: "form.original_amount"
+                      expression: "form.legal_person"
                     }
                   })
                 ],
@@ -727,16 +753,16 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "简介", prop: "intro" } },
+                { attrs: { label: "法人电话", prop: "legal_phone" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },
                     model: {
-                      value: _vm.form.intro,
+                      value: _vm.form.legal_phone,
                       callback: function($$v) {
-                        _vm.$set(_vm.form, "intro", $$v)
+                        _vm.$set(_vm.form, "legal_phone", _vm._n($$v))
                       },
-                      expression: "form.intro"
+                      expression: "form.legal_phone"
                     }
                   })
                 ],
@@ -781,7 +807,7 @@ var render = function() {
                     {
                       on: {
                         click: function($event) {
-                          return _vm.dishCancel("form")
+                          return _vm.storeCancel("form")
                         }
                       }
                     },

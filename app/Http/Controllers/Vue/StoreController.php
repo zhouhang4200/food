@@ -22,7 +22,7 @@ class StoreController extends Controller
 
             $data = Store::where('merchant_id', $merchant_id)
                 ->where('pid', 0)
-                ->get();
+                ->paginate(10);
 
             return response()->json(['status' => 1, 'data' => $data]);
         } catch (\Exception $e) {
@@ -43,8 +43,14 @@ class StoreController extends Controller
     {
         try {
             $data = $request->all();
+            $data['merchant_id'] = $request->user('web')->id;
+            $data['pid'] = 0;
+            $data['status'] = 0; // 审核中
+            $data['license_number'] = $request->input('license_number', '');
+            $data['legal_person'] = $request->input('legal_person', '');
+            $data['legal_phone'] = $request->input('legal_phone', '');
 
-            $data = Store::create(array_merge($data, ['merchant_id' => $request->user('web')->id]));
+            $data = Store::create($data);
 
             return response()->json(['status' => 1, 'data' => $data, 'message' => '添加成功']);
         } catch (\Exception $e) {
@@ -64,9 +70,14 @@ class StoreController extends Controller
     {
         try {
             $data = $request->all();
+            $data['merchant_id'] = $request->user('web')->id;
+            $data['pid'] = 0;
+            $data['license_number'] = $request->input('license_number') ?? '';
+            $data['legal_person'] = $request->input('legal_person') ?? '';
+            $data['legal_phone'] = $request->input('legal_phone') ?? '';
 
             $result = Store::where('id', $data['id'])
-                ->update($request->except(['id', 'merchant_id']));
+                ->update($data);
 
             return response()->json(['status' => 1, 'data' => $result, 'message' => '编辑成功']);
         } catch (\Exception $e) {

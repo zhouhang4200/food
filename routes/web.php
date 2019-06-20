@@ -75,5 +75,11 @@ Route::namespace('Vue')->group(function () {
             Route::post('finance/month/data', 'StaticController@financeMonthData');
             Route::post('finance/year/data', 'StaticController@financeYearData');
         });
+        // 门店
+        Route::prefix('store')->group(function () {
+            Route::post('list', 'StoreController@list'); // 列表
+            Route::post('add', 'StoreController@add');
+            Route::post('update', 'StoreController@update');
+        });
     });
 });

@@ -1,18 +1,18 @@
 webpackJsonp([5],{
 
-/***/ 847:
+/***/ 845:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(871)
+  __webpack_require__(864)
 }
 var normalizeComponent = __webpack_require__(196)
 /* script */
-var __vue_script__ = __webpack_require__(873)
+var __vue_script__ = __webpack_require__(866)
 /* template */
-var __vue_template__ = __webpack_require__(874)
+var __vue_template__ = __webpack_require__(867)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -29,7 +29,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/h5/Order.vue"
+Component.options.__file = "resources/assets/js/components/h5/WechatOrder.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -38,9 +38,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0cd46a83", Component.options)
+    hotAPI.createRecord("data-v-c8077f86", Component.options)
   } else {
-    hotAPI.reload("data-v-0cd46a83", Component.options)
+    hotAPI.reload("data-v-c8077f86", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -52,23 +52,23 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 871:
+/***/ 864:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(872);
+var content = __webpack_require__(865);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(350)("7e4f3efa", content, false, {});
+var update = __webpack_require__(350)("1679dd57", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cd46a83\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./Order.vue", function() {
-     var newContent = require("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cd46a83\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./Order.vue");
+   module.hot.accept("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c8077f86\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./WechatOrder.vue", function() {
+     var newContent = require("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c8077f86\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./WechatOrder.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -79,7 +79,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 872:
+/***/ 865:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(100)(false);
@@ -94,7 +94,7 @@ exports.push([module.i, "\n.imageStyle img {\n    width: 100%;\n    height: 100%
 
 /***/ }),
 
-/***/ 873:
+/***/ 866:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -183,27 +183,10 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             customerDishDetail: []
         };
     },
-    created: function created() {
-        // let code=getUrlKey("code");
-        // if(code){
-        //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-        //     this.getOpenIdApi(code);
-        // }else{
-        //     this.getCodeApi("123");
-        // }
-    },
+    created: function created() {},
 
     computed: {},
     mounted: function mounted() {
-        // let code=this.getUrlKey("code");
-        // if(code){
-        //     console.log(code);
-        //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-        //     this.getOpenIdApi(code);
-        // }else{
-        //     console.log('code');
-        //     this.getCodeApi("123");
-        // }
         this.dishes();
     },
 
@@ -311,21 +294,74 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             // console.log(Number(dish.amount), this.totalAmount, dish.amount);
         },
         onSubmit: function onSubmit() {
+            console.log(this.totalAmount);
             if (this.totalAmount > 0) {
-                var params = this.$route.params;
-                params.amount = this.totalAmount;
-                params.detail = this.customerDishDetail;
-                params.open_id = this.$route.query.open_id;
-                params.query = this.$route.query;
-
-                this.$api.h5Pay(params).then(function (res) {
+                var amount = this.totalAmount;
+                var detail = this.customerDishDetail;
+                var open_id = this.$route.query.open_id;
+                var merchant_id = this.$route.query.merchant_id;
+                var seat_id = this.$route.query.seat_id;
+                var table_id = this.$route.query.table_id;
+                var query = this.$route.query;
+                var _jsApiParameters = '';
+                this.$api.h5Pay({ amount: amount, detail: detail, open_id: open_id, merchant_id: merchant_id, seat_id: seat_id, table_id: table_id, query: query }).then(function (res) {
+                    // this.$message({
+                    //     type: 'info',
+                    //     message: res.jsApiParameters
+                    // });
                     if (res.status === 1) {
-                        console.log('pay_success');
-                    } else if (res.status === 3) {
-                        // Toast.fail(res.message);
-                    } else {
-                            // Toast.fail(res.message);
+                        _jsApiParameters = JSON.parse(res.jsApiParameters);
+
+                        if (typeof WeixinJSBridge == "undefined") {
+                            if (document.addEventListener) {
+                                document.addEventListener('WeixinJSBridgeReady', WeixinJSBridge.invoke('getBrandWCPayRequest', _jsApiParameters, function (res) {
+                                    //WeixinJSBridge.log(res.err_msg);
+                                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                        alert('支付成功');
+                                        //可以进行查看订单，等操作
+                                    } else {
+                                        // alert('支付失败0！');
+                                        alert('支付失败0！' + res.err_code + res.err_desc + res.err_msg);
+                                    }
+                                    //alert(res.err_code+res.err_desc+res.err_msg);
+                                }), false);
+                            } else if (document.attachEvent) {
+                                document.attachEvent('WeixinJSBridgeReady', WeixinJSBridge.invoke('getBrandWCPayRequest', _jsApiParameters, function (res) {
+                                    //WeixinJSBridge.log(res.err_msg);
+                                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                        alert('支付成功');
+                                        //可以进行查看订单，等操作
+                                    } else {
+                                        alert('支付失败1！' + res.err_code + res.err_desc + res.err_msg);
+                                    }
+                                    //alert(res.err_code+res.err_desc+res.err_msg);
+                                }));
+                                document.attachEvent('onWeixinJSBridgeReady', WeixinJSBridge.invoke('getBrandWCPayRequest', _jsApiParameters, function (res) {
+                                    //WeixinJSBridge.log(res.err_msg);
+                                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                        alert('支付成功');
+                                        //可以进行查看订单，等操作
+                                    } else {
+                                        alert('支付失败2！' + res.err_code + res.err_desc + res.err_msg);
+                                    }
+                                    //alert(res.err_code+res.err_desc+res.err_msg);
+                                }));
+                            }
+                        } else {
+                            WeixinJSBridge.invoke('getBrandWCPayRequest', _jsApiParameters, function (res) {
+                                //WeixinJSBridge.log(res.err_msg);
+                                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                    alert('支付成功');
+                                    //可以进行查看订单，等操作
+                                } else {
+                                    alert('支付失败3！' + res.err_code + res.err_desc + res.err_msg);
+                                }
+                                //alert(res.err_code+res.err_desc+res.err_msg);
+                            });
                         }
+                    } else {
+                        alert('网络错误，请稍后再试！');
+                    }
                 });
             }
             // console.log(this.$route.params);
@@ -384,9 +420,35 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
     }
 });
 
+function jsApiCall() {
+    WeixinJSBridge.invoke('getBrandWCPayRequest', jsApiParameters, function (res) {
+        //WeixinJSBridge.log(res.err_msg);
+        if (res.err_msg == "get_brand_wcpay_request:ok") {
+            alert('支付成功');
+            //可以进行查看订单，等操作
+        } else {
+            alert('支付失败！');
+        }
+        //alert(res.err_code+res.err_desc+res.err_msg);
+    });
+}
+
+function callPay() {
+    if (typeof WeixinJSBridge == "undefined") {
+        if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+        } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+            document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+        }
+    } else {
+        jsApiCall();
+    }
+}
+
 /***/ }),
 
-/***/ 874:
+/***/ 867:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -551,7 +613,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-0cd46a83", module.exports)
+    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-c8077f86", module.exports)
   }
 }
 
