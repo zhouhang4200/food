@@ -60,12 +60,12 @@
             <el-table-column
                     prop="amount"
                     label="金额(元）"
-                    width="200">
+                    width="">
             </el-table-column>
             <el-table-column
                     prop="type"
                     label="类型"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     {{ scope.row.type === 1 ? '收入' : '' }}
                 </template>
@@ -73,7 +73,7 @@
             <el-table-column
                     prop="sub_type"
                     label="子类型"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     {{ scope.row.sub_type === 11 ? '微信收入' : (scope.row.sub_type === 12 ? '支付宝收入' : '') }}
                 </template>
@@ -81,7 +81,7 @@
             <el-table-column
                     prop="comment"
                     label="备注"
-                    width="200">
+                    width="500">
             </el-table-column>
             <el-table-column
                     label="时间"

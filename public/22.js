@@ -477,11 +477,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "amount", label: "金额(元）", width: "200" }
+            attrs: { prop: "amount", label: "金额(元）", width: "" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "type", label: "类型", width: "200" },
+            attrs: { prop: "type", label: "类型", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -499,7 +499,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "sub_type", label: "子类型", width: "200" },
+            attrs: { prop: "sub_type", label: "子类型", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -523,7 +523,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "comment", label: "备注", width: "200" }
+            attrs: { prop: "comment", label: "备注", width: "500" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
