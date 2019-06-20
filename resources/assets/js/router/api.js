@@ -87,6 +87,10 @@ export default {
     orderShow(params) {
         return post('/order/show', params);
     },
+    // 门店列表
+    storeList(params) {
+        return post('/store/list', params);
+    },
     // 数据统计
     dishWeekData(params) {
         return post('/static/dish/week/data', params);

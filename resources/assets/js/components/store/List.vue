@@ -1,17 +1,17 @@
 <template>
     <div class="main content amount-flow">
-        <el-form :inline="true" :model="searchParams" class="search-form-inline" size="small">
-            <el-row :gutter="12">
-                <el-col :span="4">
-                    <el-form-item>
-                        <el-button
-                                type="primary"
-                                size="small"
-                                @click="dishAdd()">添加子门店</el-button>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-        </el-form>
+        <!--<el-form :inline="true" :model="searchParams" class="search-form-inline" size="small">-->
+            <!--<el-row :gutter="12">-->
+                <!--<el-col :span="4">-->
+                    <!--<el-form-item>-->
+                        <!--<el-button-->
+                                <!--type="primary"-->
+                                <!--size="small"-->
+                                <!--@click="dishAdd()">添加子门店</el-button>-->
+                    <!--</el-form-item>-->
+                <!--</el-col>-->
+            <!--</el-row>-->
+        <!--</el-form>-->
         <el-table
                 :data="tableData"
                 :height="tableHeight"
@@ -23,11 +23,11 @@
                     label="店名"
                     width="200">
             </el-table-column>
-            <el-table-column
-                    label="主门店"
-                    prop="parent_name"
-                    width="">
-            </el-table-column>
+            <!--<el-table-column-->
+                    <!--label="主门店"-->
+                    <!--prop="parent_name"-->
+                    <!--width="">-->
+            <!--</el-table-column>-->
             <el-table-column
                     label="门头照"
                     prop="logo"
@@ -78,13 +78,13 @@
         </el-pagination>
         <el-dialog :title="title" :visible.sync="dialogFormVisible">
             <el-form :model="form" ref="form" :rules="rules" label-width="80px">
-                <el-form-item label="名称" prop="name">
+                <el-form-item label="店名" prop="name">
                     <el-input v-model="form.name" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="菜肴配料" prop="material">
-                    <el-input v-model="form.material" autocomplete="off"></el-input>
+                <el-form-item label="地址" prop="address">
+                    <el-input v-model="form.address" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="预览图片" prop="logo">
+                <el-form-item label="门头照" prop="logo">
                     <el-upload
                             class="avatar-uploader"
                             action="/upload/image"
@@ -97,14 +97,14 @@
                     </el-upload>
                     <el-input v-model="form.logo" autocomplete="off" type="hidden"></el-input>
                 </el-form-item>
-                <el-form-item label="价格" prop="amount">
-                    <el-input v-model.number="form.amount" autocomplete="off"></el-input>
+                <el-form-item label="营业执照号" prop="license_number">
+                    <el-input v-model.number="form.license_number" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="原价" prop="original_amount">
-                    <el-input v-model.number="form.original_amount" autocomplete="off"></el-input>
+                <el-form-item label="法人姓名" prop="legal_person">
+                    <el-input v-model.number="form.legal_person" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="简介" prop="intro">
-                    <el-input v-model="form.intro" autocomplete="off"></el-input>
+                <el-form-item label="法人电话" prop="legal_phone">
+                    <el-input v-model="form.legal_phone" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button v-if="isAdd" type="primary" @click="submitFormAdd('form')">确认</el-button>
@@ -153,12 +153,11 @@
                 title:'添加',
                 url:'',
                 dialogFormVisible:false,
-                AccountBlackListName:{},
-                searchParams:{
-                    name:'',
-                    category_id:'',
-                    page:1,
-                },
+                // searchParams:{
+                //     name:'',
+                //     category_id:'',
+                //     page:1,
+                // },
                 TotalPage:0,
                 tableData: [],
                 rules:{
@@ -170,13 +169,11 @@
                 },
                 form: {
                     name: '',
-                    category_id: '',
-                    tag: "",
-                    material: '暂无',
+                    address: '',
                     logo: '',
-                    amount: '',
-                    original_amount:'',
-                    intro: '暂无'
+                    license_number: '',
+                    legal_person:'',
+                    legal_phone: ''
                 },
                 categories:{
                 },
@@ -247,7 +244,7 @@
             },
             // 加载数据
             handleTableData(){
-                this.$api.dishList(this.searchParams).then(res => {
+                this.$api.storeList(this.searchParams).then(res => {
                     this.tableData = res.data.data;
                     this.TotalPage = res.data.total;
                     this.loading=false;

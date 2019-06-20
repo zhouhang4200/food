@@ -254,12 +254,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             title: '添加',
             url: '',
             dialogFormVisible: false,
-            AccountBlackListName: {},
-            searchParams: {
-                name: '',
-                category_id: '',
-                page: 1
-            },
+            // searchParams:{
+            //     name:'',
+            //     category_id:'',
+            //     page:1,
+            // },
             TotalPage: 0,
             tableData: [],
             rules: {
@@ -271,13 +270,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             form: {
                 name: '',
-                category_id: '',
-                tag: "",
-                material: '暂无',
+                address: '',
                 logo: '',
-                amount: '',
-                original_amount: '',
-                intro: '暂无'
+                license_number: '',
+                legal_person: '',
+                legal_phone: ''
             },
             categories: {},
             tagList: []
@@ -359,7 +356,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         handleTableData: function handleTableData() {
             var _this3 = this;
 
-            this.$api.dishList(this.searchParams).then(function (res) {
+            this.$api.storeList(this.searchParams).then(function (res) {
                 _this3.tableData = res.data.data;
                 _this3.TotalPage = res.data.total;
                 _this3.loading = false;
@@ -439,49 +436,6 @@ var render = function() {
     { staticClass: "main content amount-flow" },
     [
       _c(
-        "el-form",
-        {
-          staticClass: "search-form-inline",
-          attrs: { inline: true, model: _vm.searchParams, size: "small" }
-        },
-        [
-          _c(
-            "el-row",
-            { attrs: { gutter: 12 } },
-            [
-              _c(
-                "el-col",
-                { attrs: { span: 4 } },
-                [
-                  _c(
-                    "el-form-item",
-                    [
-                      _c(
-                        "el-button",
-                        {
-                          attrs: { type: "primary", size: "small" },
-                          on: {
-                            click: function($event) {
-                              return _vm.dishAdd()
-                            }
-                          }
-                        },
-                        [_vm._v("添加子门店")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
         "el-table",
         {
           directives: [
@@ -498,10 +452,6 @@ var render = function() {
         [
           _c("el-table-column", {
             attrs: { prop: "name", label: "店名", width: "200" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { label: "主门店", prop: "parent_name", width: "" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -613,7 +563,7 @@ var render = function() {
             [
               _c(
                 "el-form-item",
-                { attrs: { label: "名称", prop: "name" } },
+                { attrs: { label: "店名", prop: "name" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },
@@ -631,16 +581,16 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "菜肴配料", prop: "material" } },
+                { attrs: { label: "地址", prop: "address" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },
                     model: {
-                      value: _vm.form.material,
+                      value: _vm.form.address,
                       callback: function($$v) {
-                        _vm.$set(_vm.form, "material", $$v)
+                        _vm.$set(_vm.form, "address", $$v)
                       },
-                      expression: "form.material"
+                      expression: "form.address"
                     }
                   })
                 ],
@@ -649,7 +599,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "预览图片", prop: "logo" } },
+                { attrs: { label: "门头照", prop: "logo" } },
                 [
                   _c(
                     "el-upload",
@@ -691,16 +641,16 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "价格", prop: "amount" } },
+                { attrs: { label: "营业执照号", prop: "license_number" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },
                     model: {
-                      value: _vm.form.amount,
+                      value: _vm.form.license_number,
                       callback: function($$v) {
-                        _vm.$set(_vm.form, "amount", _vm._n($$v))
+                        _vm.$set(_vm.form, "license_number", _vm._n($$v))
                       },
-                      expression: "form.amount"
+                      expression: "form.license_number"
                     }
                   })
                 ],
@@ -709,16 +659,16 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "原价", prop: "original_amount" } },
+                { attrs: { label: "法人姓名", prop: "legal_person" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },
                     model: {
-                      value: _vm.form.original_amount,
+                      value: _vm.form.legal_person,
                       callback: function($$v) {
-                        _vm.$set(_vm.form, "original_amount", _vm._n($$v))
+                        _vm.$set(_vm.form, "legal_person", _vm._n($$v))
                       },
-                      expression: "form.original_amount"
+                      expression: "form.legal_person"
                     }
                   })
                 ],
@@ -727,16 +677,16 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "简介", prop: "intro" } },
+                { attrs: { label: "法人电话", prop: "legal_phone" } },
                 [
                   _c("el-input", {
                     attrs: { autocomplete: "off" },
                     model: {
-                      value: _vm.form.intro,
+                      value: _vm.form.legal_phone,
                       callback: function($$v) {
-                        _vm.$set(_vm.form, "intro", $$v)
+                        _vm.$set(_vm.form, "legal_phone", $$v)
                       },
-                      expression: "form.intro"
+                      expression: "form.legal_phone"
                     }
                   })
                 ],
