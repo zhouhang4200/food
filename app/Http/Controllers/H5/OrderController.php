@@ -235,6 +235,7 @@ class OrderController extends Controller
             }
             return $alipay->success();
         } catch (\Exception $e) {
+            DB::rollBack();
             myLog('alipay_notify_error', ['data' => $e->getLine() . $e->getMessage()]);
             return true;
         }
@@ -324,6 +325,7 @@ class OrderController extends Controller
 
             return $response;
         } catch (\Exception $e) {
+            DB::rollBack();
             myLog('wechat_notify_error', ['data' => '微信通知异常:' . $e->getMessage(), 'ip' => ip2long(request()->ip())]);
         }
     }
@@ -357,6 +359,7 @@ class OrderController extends Controller
                     'seat_id'        => $detail['seat_id'],
                     'merchant_id'    => $detail['merchant_id'],
                     'number'         => $detail['number'],
+                    'comment'         => '',
                     'created_at'     => date("Y-m-d H:i:s"),
                     'updated_at'     => date("Y-m-d H:i:s"),
                 ];

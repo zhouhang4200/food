@@ -30,7 +30,7 @@ class CreateOrdersTable extends Migration
             $table->string('buyer_open_id')->default('')->comment('支付人open_id或app_id');
             $table->decimal('amount', 10, 2)->comment('实际支付金额');
             $table->decimal('original_amount', 10, 2)->comment('原始金额');
-            $table->string('detail')->comment('详情');
+            $table->text('detail')->comment('详情');
             $table->string('comment', 300)->default('')->comment('备注');
             $table->text('pay_info')->comment('支付返回的信息');
             $table->timestamps();
