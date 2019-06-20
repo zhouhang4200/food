@@ -37,6 +37,38 @@
                 </template>
             </el-table-column>
             <el-table-column
+                    label="宣传照1"
+                    prop="banner1"
+                    width="200">
+                <template slot-scope="scope">
+                    <img v-if="scope.row.banner1" :src="scope.row.banner1" style="width: 100%;height: 100%;display: block;">
+                </template>
+            </el-table-column>
+            <el-table-column
+                    label="宣传照2"
+                    prop="banner2"
+                    width="200">
+                <template slot-scope="scope">
+                    <img v-if="scope.row.banner2" :src="scope.row.banner2" style="width: 100%;height: 100%;display: block;">
+                </template>
+            </el-table-column>
+            <el-table-column
+                    label="宣传照3"
+                    prop="banner3"
+                    width="200">
+                <template slot-scope="scope">
+                    <img v-if="scope.row.banner3" :src="scope.row.banner3" style="width: 100%;height: 100%;display: block;">
+                </template>
+            </el-table-column>
+            <el-table-column
+                    label="宣传照4"
+                    prop="banner4"
+                    width="200">
+                <template slot-scope="scope">
+                    <img v-if="scope.row.banner4" :src="scope.row.banner4" style="width: 100%;height: 100%;display: block;">
+                </template>
+            </el-table-column>
+            <el-table-column
                     label="地址"
                     prop="address"
                     width="">
@@ -95,7 +127,7 @@
                 <el-form-item label="门头照" prop="logo">
                     <el-upload
                             class="avatar-uploader"
-                            action="/upload/image"
+                            action="/upload/image?name=logo"
                             :show-file-list="false"
                             accept="image/jpeg,image/jpg,image/png"
                             :on-success="handleAvatarSuccess"
@@ -104,6 +136,58 @@
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                     <el-input v-model="form.logo" autocomplete="off" type="hidden"></el-input>
+                </el-form-item>
+                <el-form-item label="宣传照1" prop="banner1">
+                    <el-upload
+                            class="avatar-uploader"
+                            action="/upload/image?name=banner1"
+                            :show-file-list="false"
+                            accept="image/jpeg,image/jpg,image/png"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload">
+                        <img v-if="banner1" :src="banner1" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <el-input v-model="form.banner1" autocomplete="off" type="hidden"></el-input>
+                </el-form-item>
+                <el-form-item label="宣传照2" prop="banner2">
+                    <el-upload
+                            class="avatar-uploader"
+                            action="/upload/image?name=banner2"
+                            :show-file-list="false"
+                            accept="image/jpeg,image/jpg,image/png"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload">
+                        <img v-if="banner2" :src="banner2" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <el-input v-model="form.banner2" autocomplete="off" type="hidden"></el-input>
+                </el-form-item>
+                <el-form-item label="宣传照3" prop="banner3">
+                    <el-upload
+                            class="avatar-uploader"
+                            action="/upload/image?name=banner3"
+                            :show-file-list="false"
+                            accept="image/jpeg,image/jpg,image/png"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload">
+                        <img v-if="banner3" :src="banner3" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <el-input v-model="form.banner3" autocomplete="off" type="hidden"></el-input>
+                </el-form-item>
+                <el-form-item label="宣传照4" prop="banner4">
+                    <el-upload
+                            class="avatar-uploader"
+                            action="/upload/image?name=banner4"
+                            :show-file-list="false"
+                            accept="image/jpeg,image/jpg,image/png"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload">
+                        <img v-if="banner4" :src="banner4" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <el-input v-model="form.banner4" autocomplete="off" type="hidden"></el-input>
                 </el-form-item>
                 <el-form-item label="营业执照号" prop="license_number">
                     <el-input v-model.number="form.license_number" autocomplete="off"></el-input>
@@ -154,6 +238,10 @@
         data(){
             return {
                 imageUrl:'',
+                banner1:'',
+                banner2:'',
+                banner3:'',
+                banner4:'',
                 loading:true,
                 tableHeight: 0,
                 isAdd:true,
@@ -177,7 +265,11 @@
                     logo: '',
                     license_number: "",
                     legal_person:"",
-                    legal_phone: ""
+                    legal_phone: "",
+                    banner1:'',
+                    banner2:'',
+                    banner3:'',
+                    banner4:''
                 },
                 categories:{
                 },
@@ -199,6 +291,10 @@
                 this.dialogFormVisible = true;
                 this.tagList=[];
                 this.imageUrl=false;
+                this.banner1=false;
+                this.banner2=false;
+                this.banner3=false;
+                this.banner4=false;
             },
             // 编辑按钮
             storeUpdate(row) {
@@ -208,6 +304,10 @@
                 this.isUpdate=true;
                 this.title='修改';
                 this.imageUrl = row.logo;
+                this.banner1 = row.banner1;
+                this.banner2 = row.banner2;
+                this.banner3 = row.banner3;
+                this.banner4 = row.banner4;
                 this.dialogFormVisible = true;
                 this.form=JSON.parse(JSON.stringify(row));
             },
@@ -285,13 +385,30 @@
             },
             // 图片上传成功将地址回传给表单
             handleAvatarSuccess(res, file) {
-                if (res) {
-                    this.imageUrl = URL.createObjectURL(file.raw);
-                    this.form.logo = res.path;
+                console.log(res.status, res.name);
+                if (res.status > 0) {
+                    let fileName = res.name;
+                    if (fileName === 'logo') {
+                        this.imageUrl = URL.createObjectURL(file.raw);
+                        this.form.logo = res.path;
+                    } else if (fileName === 'banner1') {
+                        this.banner1 = URL.createObjectURL(file.raw);
+                        this.form.banner1 = res.path;
+                    } else if (fileName === 'banner2') {
+                        this.banner2 = URL.createObjectURL(file.raw);
+                        this.form.banner2 = res.path;
+                    } else if (fileName === 'banner3') {
+                        this.banner3 = URL.createObjectURL(file.raw);
+                        this.form.banner3 = res.path;
+                    } else if (fileName === 'banner4') {
+                        this.banner4 = URL.createObjectURL(file.raw);
+                        this.form.banner4 = res.path;
+                    }
                 }
             },
             // 图片上传
             beforeAvatarUpload(file) {
+                console.log(file);
                 const isJPEG = file.type === 'image/jpeg';
                 // const isPng = file.type === 'image/png';
                 // const isJPG = file.type === 'image/jpg';

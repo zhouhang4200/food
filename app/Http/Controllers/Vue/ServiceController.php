@@ -13,12 +13,14 @@ class ServiceController extends Controller
     /**
      * 图片上传
      *
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function uploadImage()
+    public function uploadImage(Request $request)
     {
         try {
             $file = request('file');
+            $name = $request->input('name', '');
             $path =  public_path("/resources/vue/upload/image/".date('Ymd')."/");
 
             $extension = $file->getClientOriginalExtension();
@@ -44,7 +46,7 @@ class ServiceController extends Controller
 
             $finalPath =  str_replace('\\', '/', $path);
 
-            return response()->json(['status' => 1, 'path' => $finalPath]);
+            return response()->json(['status' => 1, 'path' => $finalPath, 'name' => $name]);
         } catch (\Exception $e) {
             return response()->ajaxFail('图片上传失败：服务器异常！');
         }

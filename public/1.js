@@ -250,11 +250,99 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             imageUrl: '',
+            banner1: '',
+            banner2: '',
+            banner3: '',
+            banner4: '',
             loading: true,
             tableHeight: 0,
             isAdd: true,
@@ -278,7 +366,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 logo: '',
                 license_number: "",
                 legal_person: "",
-                legal_phone: ""
+                legal_phone: "",
+                banner1: '',
+                banner2: '',
+                banner3: '',
+                banner4: ''
             },
             categories: {},
             tagList: []
@@ -300,6 +392,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.dialogFormVisible = true;
             this.tagList = [];
             this.imageUrl = false;
+            this.banner1 = false;
+            this.banner2 = false;
+            this.banner3 = false;
+            this.banner4 = false;
         },
 
         // 编辑按钮
@@ -310,6 +406,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.isUpdate = true;
             this.title = '修改';
             this.imageUrl = row.logo;
+            this.banner1 = row.banner1;
+            this.banner2 = row.banner2;
+            this.banner3 = row.banner3;
+            this.banner4 = row.banner4;
             this.dialogFormVisible = true;
             this.form = JSON.parse(JSON.stringify(row));
         },
@@ -398,14 +498,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         // 图片上传成功将地址回传给表单
         handleAvatarSuccess: function handleAvatarSuccess(res, file) {
-            if (res) {
-                this.imageUrl = URL.createObjectURL(file.raw);
-                this.form.logo = res.path;
+            console.log(res.status, res.name);
+            if (res.status > 0) {
+                var fileName = res.name;
+                if (fileName === 'logo') {
+                    this.imageUrl = URL.createObjectURL(file.raw);
+                    this.form.logo = res.path;
+                } else if (fileName === 'banner1') {
+                    this.banner1 = URL.createObjectURL(file.raw);
+                    this.form.banner1 = res.path;
+                } else if (fileName === 'banner2') {
+                    this.banner2 = URL.createObjectURL(file.raw);
+                    this.form.banner2 = res.path;
+                } else if (fileName === 'banner3') {
+                    this.banner3 = URL.createObjectURL(file.raw);
+                    this.form.banner3 = res.path;
+                } else if (fileName === 'banner4') {
+                    this.banner4 = URL.createObjectURL(file.raw);
+                    this.form.banner4 = res.path;
+                }
             }
         },
 
         // 图片上传
         beforeAvatarUpload: function beforeAvatarUpload(file) {
+            console.log(file);
             var isJPEG = file.type === 'image/jpeg';
             // const isPng = file.type === 'image/png';
             // const isJPG = file.type === 'image/jpg';
@@ -521,6 +638,98 @@ var render = function() {
                       },
                       attrs: { src: scope.row.logo }
                     })
+                  ]
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "宣传照1", prop: "banner1", width: "200" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    scope.row.banner1
+                      ? _c("img", {
+                          staticStyle: {
+                            width: "100%",
+                            height: "100%",
+                            display: "block"
+                          },
+                          attrs: { src: scope.row.banner1 }
+                        })
+                      : _vm._e()
+                  ]
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "宣传照2", prop: "banner2", width: "200" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    scope.row.banner2
+                      ? _c("img", {
+                          staticStyle: {
+                            width: "100%",
+                            height: "100%",
+                            display: "block"
+                          },
+                          attrs: { src: scope.row.banner2 }
+                        })
+                      : _vm._e()
+                  ]
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "宣传照3", prop: "banner3", width: "200" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    scope.row.banner3
+                      ? _c("img", {
+                          staticStyle: {
+                            width: "100%",
+                            height: "100%",
+                            display: "block"
+                          },
+                          attrs: { src: scope.row.banner3 }
+                        })
+                      : _vm._e()
+                  ]
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "宣传照4", prop: "banner4", width: "200" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    scope.row.banner4
+                      ? _c("img", {
+                          staticStyle: {
+                            width: "100%",
+                            height: "100%",
+                            display: "block"
+                          },
+                          attrs: { src: scope.row.banner4 }
+                        })
+                      : _vm._e()
                   ]
                 }
               }
@@ -682,7 +891,7 @@ var render = function() {
                     {
                       staticClass: "avatar-uploader",
                       attrs: {
-                        action: "/upload/image",
+                        action: "/upload/image?name=logo",
                         "show-file-list": false,
                         accept: "image/jpeg,image/jpg,image/png",
                         "on-success": _vm.handleAvatarSuccess,
@@ -709,6 +918,174 @@ var render = function() {
                         _vm.$set(_vm.form, "logo", $$v)
                       },
                       expression: "form.logo"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "宣传照1", prop: "banner1" } },
+                [
+                  _c(
+                    "el-upload",
+                    {
+                      staticClass: "avatar-uploader",
+                      attrs: {
+                        action: "/upload/image?name=banner1",
+                        "show-file-list": false,
+                        accept: "image/jpeg,image/jpg,image/png",
+                        "on-success": _vm.handleAvatarSuccess,
+                        "before-upload": _vm.beforeAvatarUpload
+                      }
+                    },
+                    [
+                      _vm.banner1
+                        ? _c("img", {
+                            staticClass: "avatar",
+                            attrs: { src: _vm.banner1 }
+                          })
+                        : _c("i", {
+                            staticClass: "el-icon-plus avatar-uploader-icon"
+                          })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { autocomplete: "off", type: "hidden" },
+                    model: {
+                      value: _vm.form.banner1,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "banner1", $$v)
+                      },
+                      expression: "form.banner1"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "宣传照2", prop: "banner2" } },
+                [
+                  _c(
+                    "el-upload",
+                    {
+                      staticClass: "avatar-uploader",
+                      attrs: {
+                        action: "/upload/image?name=banner2",
+                        "show-file-list": false,
+                        accept: "image/jpeg,image/jpg,image/png",
+                        "on-success": _vm.handleAvatarSuccess,
+                        "before-upload": _vm.beforeAvatarUpload
+                      }
+                    },
+                    [
+                      _vm.banner2
+                        ? _c("img", {
+                            staticClass: "avatar",
+                            attrs: { src: _vm.banner2 }
+                          })
+                        : _c("i", {
+                            staticClass: "el-icon-plus avatar-uploader-icon"
+                          })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { autocomplete: "off", type: "hidden" },
+                    model: {
+                      value: _vm.form.banner2,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "banner2", $$v)
+                      },
+                      expression: "form.banner2"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "宣传照3", prop: "banner3" } },
+                [
+                  _c(
+                    "el-upload",
+                    {
+                      staticClass: "avatar-uploader",
+                      attrs: {
+                        action: "/upload/image?name=banner3",
+                        "show-file-list": false,
+                        accept: "image/jpeg,image/jpg,image/png",
+                        "on-success": _vm.handleAvatarSuccess,
+                        "before-upload": _vm.beforeAvatarUpload
+                      }
+                    },
+                    [
+                      _vm.banner3
+                        ? _c("img", {
+                            staticClass: "avatar",
+                            attrs: { src: _vm.banner3 }
+                          })
+                        : _c("i", {
+                            staticClass: "el-icon-plus avatar-uploader-icon"
+                          })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { autocomplete: "off", type: "hidden" },
+                    model: {
+                      value: _vm.form.banner3,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "banner3", $$v)
+                      },
+                      expression: "form.banner3"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-form-item",
+                { attrs: { label: "宣传照4", prop: "banner4" } },
+                [
+                  _c(
+                    "el-upload",
+                    {
+                      staticClass: "avatar-uploader",
+                      attrs: {
+                        action: "/upload/image?name=banner4",
+                        "show-file-list": false,
+                        accept: "image/jpeg,image/jpg,image/png",
+                        "on-success": _vm.handleAvatarSuccess,
+                        "before-upload": _vm.beforeAvatarUpload
+                      }
+                    },
+                    [
+                      _vm.banner4
+                        ? _c("img", {
+                            staticClass: "avatar",
+                            attrs: { src: _vm.banner4 }
+                          })
+                        : _c("i", {
+                            staticClass: "el-icon-plus avatar-uploader-icon"
+                          })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("el-input", {
+                    attrs: { autocomplete: "off", type: "hidden" },
+                    model: {
+                      value: _vm.form.banner4,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "banner4", $$v)
+                      },
+                      expression: "form.banner4"
                     }
                   })
                 ],

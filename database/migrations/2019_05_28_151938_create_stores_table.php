@@ -24,10 +24,10 @@ class CreateStoresTable extends Migration
             $table->string('license_number')->default('')->comment('营业执照号');
             $table->string('legal_person')->default('')->comment('法人姓名');
             $table->string('legal_phone')->default('')->comment('法人电话');
-            $table->string('banner1')->default('')->comment('banner图片');
-            $table->string('banner2')->default('')->comment('banner图片');
-            $table->string('banner3')->default('')->comment('banner图片');
-            $table->string('banner4')->default('')->comment('banner图片');
+            $table->string('banner1', 100)->default('')->comment('banner图片');
+            $table->string('banner2', 100)->default('')->comment('banner图片');
+            $table->string('banner3', 100)->default('')->comment('banner图片');
+            $table->string('banner4', 100)->default('')->comment('banner图片');
             $table->timestamps();
         });
     }

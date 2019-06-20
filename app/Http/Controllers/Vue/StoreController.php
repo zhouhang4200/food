@@ -49,6 +49,10 @@ class StoreController extends Controller
             $data['license_number'] = $request->input('license_number', '');
             $data['legal_person'] = $request->input('legal_person', '');
             $data['legal_phone'] = $request->input('legal_phone', '');
+            $data['banner1'] = $request->input('banner1') ?? '';
+            $data['banner2'] = $request->input('banner2') ?? '';
+            $data['banner3'] = $request->input('banner3') ?? '';
+            $data['banner4'] = $request->input('banner4') ?? '';
 
             $data = Store::create($data);
 
@@ -75,6 +79,10 @@ class StoreController extends Controller
             $data['license_number'] = $request->input('license_number') ?? '';
             $data['legal_person'] = $request->input('legal_person') ?? '';
             $data['legal_phone'] = $request->input('legal_phone') ?? '';
+            $data['banner1'] = $request->input('banner1') ?? '';
+            $data['banner2'] = $request->input('banner2') ?? '';
+            $data['banner3'] = $request->input('banner3') ?? '';
+            $data['banner4'] = $request->input('banner4') ?? '';
 
             $result = Store::where('id', $data['id'])
                 ->update($data);
