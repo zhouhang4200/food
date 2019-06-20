@@ -379,6 +379,13 @@ class OrderController extends Controller
     {
         $dishDetail = $this->dishDetail($order);
 
+        $has = Finance::where('order_trade_no', $order->trade_no)
+            ->first();
+
+        if ($has) {
+            return $has;
+        }
+
         $finance = Finance::create([
             'date'           => date("Y-m-d"),
             'order_trade_no' => $order->trade_no,
