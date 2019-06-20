@@ -1,18 +1,18 @@
 webpackJsonp([10],{
 
-/***/ 340:
+/***/ 848:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(369)
+  __webpack_require__(875)
 }
-var normalizeComponent = __webpack_require__(81)
+var normalizeComponent = __webpack_require__(196)
 /* script */
-var __vue_script__ = __webpack_require__(371)
+var __vue_script__ = __webpack_require__(877)
 /* template */
-var __vue_template__ = __webpack_require__(372)
+var __vue_template__ = __webpack_require__(878)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -29,7 +29,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/order/List.vue"
+Component.options.__file = "resources/assets/js/components/customer/List.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -38,9 +38,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-515d48b6", Component.options)
+    hotAPI.createRecord("data-v-d7ff2f70", Component.options)
   } else {
-    hotAPI.reload("data-v-515d48b6", Component.options)
+    hotAPI.reload("data-v-d7ff2f70", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -52,23 +52,23 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 369:
+/***/ 875:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(370);
+var content = __webpack_require__(876);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(140)("62c2ffd8", content, false, {});
+var update = __webpack_require__(350)("5bbee6ad", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-515d48b6\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./List.vue", function() {
-     var newContent = require("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-515d48b6\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./List.vue");
+   module.hot.accept("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-d7ff2f70\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./List.vue", function() {
+     var newContent = require("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-d7ff2f70\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./List.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -79,10 +79,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 370:
+/***/ 876:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(34)(false);
+exports = module.exports = __webpack_require__(100)(false);
 // imports
 
 
@@ -94,7 +94,7 @@ exports.push([module.i, "\n.avatar-uploader .el-upload {\n    border: 1px dashed
 
 /***/ }),
 
-/***/ 371:
+/***/ 877:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -260,103 +260,69 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            showVisible: false,
+            loading: true,
             tableHeight: 0,
             url: '',
-            loading: false,
             dialogFormVisible: false,
             searchParams: {
-                trade_no: '',
+                name: '',
                 table_id: '',
                 seat_id: '',
                 date: '',
-                channel: '',
-                pay_status: '',
+                status: '',
                 page: 1
             },
-            form: {
-                trade_no: '',
-                out_trade_no: '',
-                channel_name: '',
-                pay_status: '',
-                created_at: '',
-                dish_detail: '',
-                amount: '',
-                comment: '空'
-            },
-            showData: {},
             TotalPage: 0,
-            channels: [],
-            pay_statuses: [],
-            tableData: []
+            tableData: [],
+            statuses: {}
         };
     },
     created: function created() {
-        this.handlePayStatuses();
-        this.handleChannels();
         this.handleTableData();
         this.handleTableHeight();
+        this.handleStatuses();
         window.addEventListener('resize', this.handleTableHeight);
     },
 
     methods: {
-        handlePayStatuses: function handlePayStatuses() {
+        handleStatuses: function handleStatuses() {
             var _this = this;
 
-            this.$api.orderPayStatus().then(function (res) {
-                _this.pay_statuses = res.data;
+            this.$api.customerDishDetailStatus().then(function (res) {
+                _this.statuses = res.data;
             }).catch(function (err) {
                 _this.$message({
                     type: 'error',
-                    message: '支付状态初始化异常'
+                    message: '数据初始化异常'
                 });
             });
         },
-        handleChannels: function handleChannels() {
+
+        // 上菜完成
+        served: function served(id) {
             var _this2 = this;
 
-            this.$api.orderChannel().then(function (res) {
-                _this2.channels = res.data;
-            }).catch(function (err) {
-                _this2.$message({
-                    type: 'error',
-                    message: '支付渠道初始化异常'
+            this.$confirm('您确定要完成吗？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(function () {
+                _this2.$api.customerDishDetailServed({ id: id }).then(function (res) {
+                    _this2.$message({
+                        showClose: true,
+                        type: res.status === 1 ? 'success' : 'error',
+                        message: res.message
+                    });
+                    _this2.handleTableData();
+                }).catch(function (err) {
+                    _this2.$message({
+                        type: 'error',
+                        message: '操作失败'
+                    });
                 });
             });
         },
@@ -365,27 +331,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         handleTableData: function handleTableData() {
             var _this3 = this;
 
-            this.$api.orderList(this.searchParams).then(function (res) {
+            this.$api.customerDishDetailList(this.searchParams).then(function (res) {
                 _this3.tableData = res.data.data;
                 _this3.TotalPage = res.data.total;
                 _this3.loading = false;
             }).catch(function (err) {
                 _this3.$alert('获取数据失败, 请重试!', '提示', {
-                    confirmButtonText: '确定',
-                    callback: function callback(action) {}
-                });
-            });
-        },
-
-        // 详情
-        show: function show(id) {
-            var _this4 = this;
-
-            this.$api.orderShow({ id: id }).then(function (res) {
-                _this4.form = res.data;
-                _this4.showVisible = true;
-            }).catch(function (err) {
-                _this4.$alert('获取数据失败, 请重试!', '提示', {
                     confirmButtonText: '确定',
                     callback: function callback(action) {}
                 });
@@ -417,7 +368,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 372:
+/***/ 878:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -441,19 +392,20 @@ var render = function() {
             [
               _c(
                 "el-col",
-                { attrs: { span: 5 } },
+                { attrs: { span: 4 } },
                 [
                   _c(
                     "el-form-item",
-                    { attrs: { label: "订单号" } },
+                    { attrs: { label: "菜名" } },
                     [
                       _c("el-input", {
+                        attrs: { id: "name" },
                         model: {
-                          value: _vm.searchParams.trade_no,
+                          value: _vm.searchParams.name,
                           callback: function($$v) {
-                            _vm.$set(_vm.searchParams, "trade_no", $$v)
+                            _vm.$set(_vm.searchParams, "name", $$v)
                           },
-                          expression: "searchParams.trade_no"
+                          expression: "searchParams.name"
                         }
                       })
                     ],
@@ -513,66 +465,28 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-col",
-                { attrs: { span: 6 } },
+                { attrs: { span: 4 } },
                 [
                   _c(
                     "el-form-item",
-                    { attrs: { label: "支付渠道" } },
+                    { attrs: { label: "状态" } },
                     [
                       _c(
                         "el-select",
                         {
                           attrs: { placeholder: "请选择" },
                           model: {
-                            value: _vm.searchParams.channel,
+                            value: _vm.searchParams.status,
                             callback: function($$v) {
-                              _vm.$set(_vm.searchParams, "channel", $$v)
+                              _vm.$set(_vm.searchParams, "status", $$v)
                             },
-                            expression: "searchParams.channel"
+                            expression: "searchParams.status"
                           }
                         },
-                        _vm._l(_vm.channels, function(channel) {
+                        _vm._l(_vm.statuses, function(status) {
                           return _c("el-option", {
-                            key: channel.id,
-                            attrs: { label: channel.name, value: channel.id }
-                          })
-                        }),
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 6 } },
-                [
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "支付状态" } },
-                    [
-                      _c(
-                        "el-select",
-                        {
-                          attrs: { placeholder: "请选择" },
-                          model: {
-                            value: _vm.searchParams.pay_status,
-                            callback: function($$v) {
-                              _vm.$set(_vm.searchParams, "pay_status", $$v)
-                            },
-                            expression: "searchParams.pay_status"
-                          }
-                        },
-                        _vm._l(_vm.pay_statuses, function(pay_status) {
-                          return _c("el-option", {
-                            key: pay_status.id,
-                            attrs: {
-                              label: pay_status.name,
-                              value: pay_status.id
-                            }
+                            key: status.id,
+                            attrs: { label: status.name, value: status.id }
                           })
                         }),
                         1
@@ -666,15 +580,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "trade_no", label: "订单号", width: "200" }
+            attrs: { prop: "order_trade_no", label: "订单号", width: "200" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "amount", label: "金额(元）", width: "200" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "channel", label: "支付渠道", width: "200" },
+            attrs: { prop: "name", label: "菜名", width: "200" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -682,13 +592,7 @@ var render = function() {
                   return [
                     _vm._v(
                       "\n                " +
-                        _vm._s(
-                          scope.row.channel === 1
-                            ? "微信支付"
-                            : scope.row.channel === 2
-                            ? "支付宝"
-                            : ""
-                        ) +
+                        _vm._s(scope.row.dish.name) +
                         "\n            "
                     )
                   ]
@@ -698,17 +602,20 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "pay_status", label: "支付状态", width: "200" },
+            attrs: { label: "菜图", prop: "logo", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",
                 fn: function(scope) {
                   return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(scope.row.channel === 1 ? "已支付" : "待支付") +
-                        "\n            "
-                    )
+                    _c("img", {
+                      staticStyle: {
+                        width: "100%",
+                        height: "100%",
+                        display: "block"
+                      },
+                      attrs: { src: scope.row.dish.logo }
+                    })
                   ]
                 }
               }
@@ -724,7 +631,29 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "下单时间", prop: "created_at", width: "200" }
+            attrs: { label: "点菜时间", prop: "created_at", width: "200" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "状态", prop: "status" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(scope.row.status === 1 ? "已上菜" : "未上菜") +
+                        "\n            "
+                    )
+                  ]
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "备注", prop: "comment", width: "200" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -734,18 +663,20 @@ var render = function() {
                 key: "default",
                 fn: function(scope) {
                   return [
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { type: "primary", size: "small" },
-                        on: {
-                          click: function($event) {
-                            return _vm.show(scope.row.id)
-                          }
-                        }
-                      },
-                      [_vm._v("详情")]
-                    )
+                    scope.row.status === 0
+                      ? _c(
+                          "el-button",
+                          {
+                            attrs: { type: "primary", size: "small" },
+                            on: {
+                              click: function($event) {
+                                return _vm.served(scope.row.id)
+                              }
+                            }
+                          },
+                          [_vm._v("完成")]
+                        )
+                      : _vm._e()
                   ]
                 }
               }
@@ -773,175 +704,7 @@ var render = function() {
             return _vm.$set(_vm.searchParams, "page", $event)
           }
         }
-      }),
-      _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          attrs: { title: "订单详情", visible: _vm.showVisible },
-          on: {
-            "update:visible": function($event) {
-              _vm.showVisible = $event
-            }
-          }
-        },
-        [
-          _c(
-            "el-form",
-            {
-              ref: "form",
-              attrs: { model: _vm.form, "label-width": "100px", disabled: "" }
-            },
-            [
-              _c(
-                "el-form-item",
-                { attrs: { label: "订单号", prop: "trade_no" } },
-                [
-                  _c("el-input", {
-                    attrs: { autocomplete: "off" },
-                    model: {
-                      value: _vm.form.trade_no,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "trade_no", $$v)
-                      },
-                      expression: "form.trade_no"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "支付订单号", prop: "out_trade_no" } },
-                [
-                  _c("el-input", {
-                    attrs: { autocomplete: "off" },
-                    model: {
-                      value: _vm.form.out_trade_no,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "out_trade_no", $$v)
-                      },
-                      expression: "form.out_trade_no"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "支付状态", prop: "pay_status" } },
-                [
-                  _c("el-input", {
-                    attrs: { autocomplete: "off" },
-                    model: {
-                      value: _vm.form.pay_status,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "pay_status", $$v)
-                      },
-                      expression: "form.pay_status"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "支付方式", prop: "channel_name" } },
-                [
-                  _c("el-input", {
-                    attrs: { autocomplete: "off" },
-                    model: {
-                      value: _vm.form.channel_name,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "channel_name", $$v)
-                      },
-                      expression: "form.channel_name"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "支付金额", prop: "amount" } },
-                [
-                  _c("el-input", {
-                    attrs: { autocomplete: "off" },
-                    model: {
-                      value: _vm.form.amount,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "amount", $$v)
-                      },
-                      expression: "form.amount"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "支付时间", prop: "created_at" } },
-                [
-                  _c("el-input", {
-                    attrs: { autocomplete: "off" },
-                    model: {
-                      value: _vm.form.created_at,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "created_at", $$v)
-                      },
-                      expression: "form.created_at"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "点菜详情", prop: "dish_detail" } },
-                [
-                  _c("el-input", {
-                    attrs: { type: "textarea" },
-                    model: {
-                      value: _vm.form.dish_detail,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "dish_detail", $$v)
-                      },
-                      expression: "form.dish_detail"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "备注", prop: "comment" } },
-                [
-                  _c("el-input", {
-                    attrs: { type: "textarea", autocomplete: "off" },
-                    model: {
-                      value: _vm.form.comment,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "comment", $$v)
-                      },
-                      expression: "form.comment"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
+      })
     ],
     1
   )
@@ -952,7 +715,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-515d48b6", module.exports)
+    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-d7ff2f70", module.exports)
   }
 }
 

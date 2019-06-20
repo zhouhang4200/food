@@ -11,12 +11,15 @@ import api from './router/api.js';
 import Vant from 'vant';
 import 'vant/lib/index.css';
 import './iconfont/iconfont.css';
+import VCharts from 'v-charts';
 
 Vue.use(Vant);
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI, {size:"small"});
 Vue.use(VueRouter);
+Vue.use(VCharts);
+
 
 // 挂载 api
 Vue.prototype.$api = api;

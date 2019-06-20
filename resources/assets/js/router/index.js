@@ -151,19 +151,26 @@ const router = new Router({
             name: "static",
             icon: "el-icon-goods",
             path: '/static/',
-            redirect: '/static/list',
+            redirect: '/static/order',
             component: App,
             // canReuse: false,
             meta: {title: '汇总管理'},
             menu: true,
             children: [
                 {
-                    name: "staticList",
+                    name: "staticOrder",
                     menu: true,
-                    path: "list",
-                    meta: {title: '汇总信息'},
-                    component: resolve => void (require(['../components/static/List'], resolve)),
-                }
+                    path: "order",
+                    meta: {title: '点餐汇总'},
+                    component: resolve => void (require(['../components/static/Order'], resolve)),
+                },
+                {
+                    name: "staticDish",
+                    menu: true,
+                    path: "dish",
+                    meta: {title: '菜品汇总'},
+                    component: resolve => void (require(['../components/static/Dish'], resolve)),
+                },
             ]
         }
     ]

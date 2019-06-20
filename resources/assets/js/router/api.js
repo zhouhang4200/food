@@ -87,4 +87,32 @@ export default {
     orderShow(params) {
         return post('/order/show', params);
     },
+    // 数据统计
+    dishWeekData(params) {
+        return post('/static/dish/week/data', params);
+    },
+    dishMonthData(params) {
+        return post('/static/dish/month/data', params);
+    },
+    dishYearData(params) {
+        return post('/static/dish/year/data', params);
+    },
+    orderWeekData(params) {
+        return post('/static/order/week/data', params);
+    },
+    orderMonthData(params) {
+        return post('/static/order/month/data', params);
+    },
+    orderYearData(params) {
+        return post('/static/order/year/data', params);
+    },
+    financeWeekData(params) {
+        return post('/static/finance/week/data', params);
+    },
+    financeMonthData(params) {
+        return post('/static/finance/month/data', params);
+    },
+    financeYearData(params) {
+        return post('/static/finance/year/data', params);
+    },
 }

@@ -16,6 +16,7 @@ class CreateStoresTable extends Migration
         Schema::create('stores', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('pid')->default(0)->comment('父级门店：默认0');
+            $table->tinyInteger('status')->default(0)->comment('审核：0审核中，1通过，2不通过');
             $table->string('name')->comment('店名');
             $table->integer('merchant_id')->comment('店长');
             $table->string('logo', 100)->default('')->comment('门店照');

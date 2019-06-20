@@ -4,6 +4,7 @@ namespace App\Http\Controllers\H5;
 
 use App\Models\CustomerDishDetail;
 use App\Models\Dish;
+use App\Models\Finance;
 use App\Models\Order;
 use Carbon\Carbon;
 use EasyWeChat\Factory;
@@ -208,6 +209,9 @@ class OrderController extends Controller
 
                             DB::table('customer_dish_details')->insert($insertData);
 
+                            // 写入流水信息
+                            $this->financeInsert($order);
+
                             DB::commit();
                         } else {
                             myLog('alipay_notify_error', ['data' => '写入订单失败:' . $order->trade_no]);
@@ -286,8 +290,11 @@ class OrderController extends Controller
                             if ($order->save()) {
                                 // 支付成功，写入点餐详情
                                 $insertData = $this->getCustomerDishDetail($order);
-
                                 DB::table('customer_dish_details')->insert($insertData);
+                                // 写入流水信息
+                                $this->financeInsert($order);
+
+                                DB::commit();
                             } else {
                                 myLog('wechat_notify_error', ['data' => '写入订单失败:' . $order->trade_no]);
 
@@ -357,5 +364,49 @@ class OrderController extends Controller
         }
 
         return $insertData;
+    }
+
+    /**
+     * 写入流水信息
+     *
+     * @param $order
+     * @return Finance|\Illuminate\Database\Eloquent\Model
+     */
+    public function financeInsert($order)
+    {
+        $dishDetail = $this->dishDetail($order);
+
+        $finance = Finance::create([
+            'date'           => date("Y-m-d"),
+            'order_trade_no' => $order->trade_no,
+            'merchant_id'    => $order->merchant_id,
+            'type'           => 1,
+            'sub_type'       => $order->channel == 1 ? '11' : ($order->channel == 2 ? '12' : ''),
+            'amount'         => $order->amount,
+            'comment'        => '桌号【' . $order->table_id . '】座位号【' . $order->seat_id . '】点菜信息【' . $dishDetail . '】',
+            'created_at'     => date("Y-m-d H:i:s"),
+            'updated_at'     => date("Y-m-d H:i:s"),
+        ]);
+
+        return $finance;
+    }
+
+    /**
+     * 拼接菜品详情字符串
+     *
+     * @param $order
+     * @return string
+     */
+    public function dishDetail($order)
+    {
+        $detail = json_decode($order->detail, true);
+
+        $data = '';
+        foreach ($detail as $value) {
+            $dish = Dish::find($value['dish_id']);
+            $data .= $dish->name . '【' . $dish->amount . '元】' . '*' . $value['number'] . '份;';
+        }
+
+        return $data;
     }
 }

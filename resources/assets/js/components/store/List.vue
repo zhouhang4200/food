@@ -3,29 +3,11 @@
         <el-form :inline="true" :model="searchParams" class="search-form-inline" size="small">
             <el-row :gutter="12">
                 <el-col :span="4">
-                    <el-form-item label="类目">
-                        <el-select v-model="searchParams.category_id" placeholder="请选择">
-                            <el-option
-                                    v-for="category in categories"
-                                    :key="category.id"
-                                    :label="category.name"
-                                    :value="category.id">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="4">
-                    <el-form-item label="名称">
-                        <el-input v-model="searchParams.name" id="name"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="4">
                     <el-form-item>
-                        <el-button type="primary" @click="handleSearch">查询</el-button>
                         <el-button
                                 type="primary"
                                 size="small"
-                                @click="dishAdd()">新增</el-button>
+                                @click="dishAdd()">添加子门店</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -38,43 +20,40 @@
                 style="width: 100%; margin-top: 1px">
             <el-table-column
                     prop="name"
-                    label="菜肴名称"
+                    label="店名"
                     width="200">
             </el-table-column>
             <el-table-column
-                    label="价格"
-                    prop="amount"
+                    label="主门店"
+                    prop="parent_name"
                     width="">
             </el-table-column>
             <el-table-column
-                    label="所属类目"
-                    prop="category_id"
-                    width="200">
-                <template slot-scope="scope">
-                    {{ scope.row.category.name }}
-                </template>
-            </el-table-column>
-            <el-table-column
-                    label="预览图片"
+                    label="门头照"
                     prop="logo"
-                    width="">
+                    width="200">
                 <template slot-scope="scope">
                     <img :src="scope.row.logo" style="width: 100%;height: 100%;display: block;">
                 </template>
             </el-table-column>
             <el-table-column
-                    label="口味标记"
-                    prop="tag"
+                    label="地址"
+                    prop="address"
                     width="">
             </el-table-column>
             <el-table-column
-                    label="菜肴配料"
-                    prop="material"
+                    label="执照号"
+                    prop="license_number"
                     width="">
             </el-table-column>
             <el-table-column
-                    label="简介"
-                    prop="intro"
+                    label="法人姓名"
+                    prop="legal_person"
+                    width="">
+            </el-table-column>
+            <el-table-column
+                    label="法人电话"
+                    prop="legal_phone"
                     width="">
             </el-table-column>
             <el-table-column
@@ -85,10 +64,6 @@
                             type="primary"
                             size="small"
                             @click="dishUpdate(scope.row)">编辑</el-button>
-                    <el-button
-                            type="primary"
-                            size="small"
-                            @click="dishDelete(scope.row.id)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -103,26 +78,8 @@
         </el-pagination>
         <el-dialog :title="title" :visible.sync="dialogFormVisible">
             <el-form :model="form" ref="form" :rules="rules" label-width="80px">
-                <el-form-item label="菜肴名称" prop="name">
+                <el-form-item label="名称" prop="name">
                     <el-input v-model="form.name" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="所属类目" prop="category_id">
-                    <el-select v-model="form.category_id" placeholder="请选择">
-                        <el-option
-                                v-for="category in categories"
-                                :key="category.id"
-                                :label="category.name"
-                                :value="category.id">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="口味标记" prop="tag">
-                    <!--<el-input v-model.number="form.tag" autocomplete="off"></el-input>-->
-                    <el-checkbox-group v-model="tagList" autocomplete="off" @change="tagChange">
-                        <el-checkbox label="不辣"></el-checkbox>
-                        <el-checkbox label="微辣"></el-checkbox>
-                        <el-checkbox label="特辣"></el-checkbox>
-                    </el-checkbox-group>
                 </el-form-item>
                 <el-form-item label="菜肴配料" prop="material">
                     <el-input v-model="form.material" autocomplete="off"></el-input>
@@ -266,29 +223,6 @@
                 this.dialogFormVisible = false;
                 this.$refs[formName].clearValidate();
             },
-            // 添加
-            submitFormAdd(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        this.$api.dishAdd(this.form).then(res => {
-                            this.$message({
-                                showClose: true,
-                                type: res.status === 1 ? 'success' : 'error',
-                                message: res.message
-                            });
-                            this.handleTableData();
-                        }).catch(err => {
-                            this.$message({
-                                type: 'error',
-                                message: '操作失败'
-                            });
-                        });
-                    } else {
-                        return false;
-                    }
-                    this.$refs[formName].clearValidate();
-                });
-            },
             // 修改
             submitFormUpdate(formName) {
                 this.$refs[formName].validate((valid) => {
@@ -325,45 +259,12 @@
                     });
                 });
             },
-            handleName(){
-                // this.$api.AccountBlackListName(this.searchParams).then(res => {
-                //     this.AccountBlackListName = res;
-                // }).catch(err => {
-                //     this.$alert('获取数据失败, 请重试!', '提示', {
-                //         confirmButtonText: '确定',
-                //         callback: action => {
-                //         }
-                //     });
-                // });
-            },
             handleSearch() {
                 this.handleTableData();
             },
             handleCurrentChange(page) {
                 this.searchParams.page = page;
                 this.handleTableData();
-            },
-            // 删除
-            dishDelete (id) {
-                this.$confirm('您确定要删除吗？', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.$api.dishDelete({id:id}).then(res => {
-                        this.$message({
-                            showClose: true,
-                            type: res.status === 1 ? 'success' : 'error',
-                            message: res.message
-                        });
-                        this.handleTableData();
-                    }).catch(err => {
-                        this.$message({
-                            type: 'error',
-                            message: '操作失败'
-                        });
-                    });
-                });
             },
             // 表格高度计算
             handleTableHeight() {

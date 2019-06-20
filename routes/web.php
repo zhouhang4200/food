@@ -63,5 +63,17 @@ Route::namespace('Vue')->group(function () {
             Route::post('channel', 'OrderController@channel'); // 列表
             Route::post('show', 'OrderController@show'); // 列表
         });
+        // 数据统计
+        Route::prefix('static')->group(function () {
+            Route::post('dish/week/data', 'StaticController@dishWeekData');
+            Route::post('dish/month/data', 'StaticController@dishMonthData');
+            Route::post('dish/year/data', 'StaticController@dishYearData');
+            Route::post('order/week/data', 'StaticController@orderWeekData');
+            Route::post('order/month/data', 'StaticController@orderMonthData');
+            Route::post('order/year/data', 'StaticController@orderYearData');
+            Route::post('finance/week/data', 'StaticController@financeWeekData');
+            Route::post('finance/month/data', 'StaticController@financeMonthData');
+            Route::post('finance/year/data', 'StaticController@financeYearData');
+        });
     });
 });
