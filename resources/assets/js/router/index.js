@@ -161,14 +161,14 @@ const router = new Router({
                     name: "staticOrder",
                     menu: true,
                     path: "order",
-                    meta: {title: '点餐汇总'},
+                    meta: {title: '订单流水'},
                     component: resolve => void (require(['../components/static/Order'], resolve)),
                 },
                 {
                     name: "staticDish",
                     menu: true,
                     path: "dish",
-                    meta: {title: '菜品汇总'},
+                    meta: {title: '菜品统计'},
                     component: resolve => void (require(['../components/static/Dish'], resolve)),
                 },
             ]

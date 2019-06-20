@@ -132,36 +132,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            weekDishData: {
+            weekOrderData: {
                 columns: ['日期', '共计点菜数', '成功下单数', '成功下单金额'],
-                rows: [{ '日期': '1/1', '共计点菜数': 1393, '成功下单数': 1093, '成功下单金额': 0.32 }, { '日期': '1/2', '共计点菜数': 3530, '成功下单数': 3230, '成功下单金额': 0.26 }, { '日期': '1/3', '共计点菜数': 2923, '成功下单数': 2623, '成功下单金额': 0.76 }, { '日期': '1/4', '共计点菜数': 1723, '成功下单数': 1423, '成功下单金额': 0.49 }, { '日期': '1/5', '共计点菜数': 3792, '成功下单数': 3492, '成功下单金额': 0.323 }, { '日期': '1/6', '共计点菜数': 4593, '成功下单数': 4293, '成功下单金额': 0.78 }]
+                rows: []
             },
-            monthDishData: {
+            monthOrderData: {
                 columns: ['日期', '共计点菜数', '成功下单数', '成功下单金额'],
-                rows: [{ '日期': '1/1', '共计点菜数': 1393, '成功下单数': 1093, '成功下单金额': 0.32 }, { '日期': '1/2', '共计点菜数': 3530, '成功下单数': 3230, '成功下单金额': 0.26 }, { '日期': '1/3', '共计点菜数': 2923, '成功下单数': 2623, '成功下单金额': 0.76 }, { '日期': '1/4', '共计点菜数': 1723, '成功下单数': 1423, '成功下单金额': 0.49 }, { '日期': '1/5', '共计点菜数': 3792, '成功下单数': 3492, '成功下单金额': 0.323 }, { '日期': '1/6', '共计点菜数': 4593, '成功下单数': 4293, '成功下单金额': 0.78 }]
+                rows: []
             },
-            yearDishData: {
+            yearOrderData: {
                 columns: ['日期', '共计点菜数', '成功下单数', '成功下单金额'],
-                rows: [{ '日期': '1/1', '共计点菜数': 1393, '成功下单数': 1093, '成功下单金额': 0.32 }, { '日期': '1/2', '共计点菜数': 3530, '成功下单数': 3230, '成功下单金额': 0.26 }, { '日期': '1/3', '共计点菜数': 2923, '成功下单数': 2623, '成功下单金额': 0.76 }, { '日期': '1/4', '共计点菜数': 1723, '成功下单数': 1423, '成功下单金额': 0.49 }, { '日期': '1/5', '共计点菜数': 3792, '成功下单数': 3492, '成功下单金额': 0.323 }, { '日期': '1/6', '共计点菜数': 4593, '成功下单数': 4293, '成功下单金额': 0.78 }]
+                rows: []
             }
         };
     },
     created: function created() {
-        // this.handleWeekData();
-        // this.handleMonthData();
-        // this.handleYearData();
+        this.handleWeekData();
+        this.handleMonthData();
+        this.handleYearData();
     },
 
     methods: {
         handleWeekData: function handleWeekData() {
             var _this = this;
 
-            this.$api.dishWeekData().then(function (res) {
-                _this.weekDishData = res.data;
+            this.$api.orderWeekData().then(function (res) {
+                if (res.status === 1) {
+                    _this.weekOrderData.rows = res.data;
+                }
             }).catch(function (err) {
                 _this.$message({
                     type: 'error',
@@ -172,8 +175,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         handleMonthData: function handleMonthData() {
             var _this2 = this;
 
-            this.$api.dishMonthData().then(function (res) {
-                _this2.monthDishData = res.data;
+            this.$api.orderMonthData().then(function (res) {
+                if (res.status === 1) {
+                    _this2.monthOrderData.rows = res.data;
+                }
             }).catch(function (err) {
                 _this2.$message({
                     type: 'error',
@@ -184,8 +189,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         handleYearData: function handleYearData() {
             var _this3 = this;
 
-            this.$api.dishYearData().then(function (res) {
-                _this3.yearDishData = res.data;
+            this.$api.orderYearData().then(function (res) {
+                _this3.yearOrderData.rows = res.data;
             }).catch(function (err) {
                 _this3.$message({
                     type: 'error',
@@ -210,11 +215,11 @@ var render = function() {
     "div",
     { staticClass: "main content amount-flow" },
     [
-      _c("ve-line", { attrs: { data: _vm.weekDishData } }),
+      _c("ve-line", { attrs: { data: _vm.weekOrderData } }),
       _vm._v(" "),
-      _c("ve-line", { attrs: { data: _vm.monthDishData } }),
+      _c("ve-line", { attrs: { data: _vm.monthOrderData } }),
       _vm._v(" "),
-      _c("ve-line", { attrs: { data: _vm.yearDishData } })
+      _c("ve-histogram", { attrs: { data: _vm.yearOrderData } })
     ],
     1
   )
