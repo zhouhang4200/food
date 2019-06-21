@@ -52,7 +52,7 @@
                             <template slot="title">
                                 <span class="header-avatar">
                                 </span>
-                                我的工作台
+                                欢迎，{{ merchant_name }}
                             </template>
                             <el-menu-item index="2-1">修改密码</el-menu-item>
                             <el-menu-item index="2-2" @click="handleLogout">退出</el-menu-item>
@@ -84,6 +84,7 @@
         name:"Main",
         data() {
             return {
+                merchant_name:'',
                 collapse: false,
                 menus:null,
                 openMenu:['1'],
@@ -101,8 +102,18 @@
                     this.collapse ? 'rotate-icon' : ''
                 ];
             },
+
+        },
+        created(){
+            this.handleMerchantName();
+            window.addEventListener('resize', this.handleContentContainerStyle);
+            this.handleContentContainerStyle();
+            this.handleBreadcrumb();
         },
         methods: {
+            handleMerchantName() {
+                this.merchant_name = sessionStorage.getItem('name')
+            },
             handleCollapse() {
                 if(this.collapse) {
                     this.collapse = false;
@@ -145,11 +156,6 @@
 
                 });
             }
-        },
-        created() {
-            window.addEventListener('resize', this.handleContentContainerStyle);
-            this.handleContentContainerStyle();
-            this.handleBreadcrumb();
         },
         beforeMount(){
             this.openMenu[0] = sessionStorage.getItem('openMenu')

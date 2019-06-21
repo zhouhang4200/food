@@ -89,7 +89,7 @@ class LoginController extends Controller
 
         if ($this->attemptLogin($request)) {
             if ($this->sendLoginResponse($request)) {
-                return response()->ajaxSuccess(1, 'success');
+                return response()->json(['status' => 1, 'data' => $merchant->name]);
             }
         }
         // If the login attempt was unsuccessful we will increment the number of attempts

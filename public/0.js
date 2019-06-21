@@ -483,12 +483,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     // this.formLogin.password = encrypt(this.formLogin.password);
                     _this2.$api.login(_this2.formLogin).then(function (res) {
                         if (res.status === 1) {
+                            console.log(res.data);
                             // sessionStorage.setItem('token', res.data.token);
-                            sessionStorage.setItem('success', 'success');
+                            // sessionStorage.setItem('success', 'success');
+                            sessionStorage.setItem('name', res.data);
                             // window.location.href = '/dish/list';
                             _this2.$router.push({ name: 'dish', query: {} });
                         } else {
-                            _this2.loginPasswordErrorMessage = res.message;
+                            _this2.loginPasswordErrorMessage = res.content;
                             _this2.formLogin.password = '';
                         }
                     }).catch(function (error) {

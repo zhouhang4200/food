@@ -392,12 +392,14 @@
                         // this.formLogin.password = encrypt(this.formLogin.password);
                         this.$api.login(this.formLogin).then(res => {
                             if (res.status === 1) {
+                                console.log(res.data);
                                 // sessionStorage.setItem('token', res.data.token);
-                                sessionStorage.setItem('success', 'success');
+                                // sessionStorage.setItem('success', 'success');
+                                sessionStorage.setItem('name', res.data);
                                 // window.location.href = '/dish/list';
                                 this.$router.push({name:'dish', query:{}});
                             } else {
-                                this.loginPasswordErrorMessage = res.message;
+                                this.loginPasswordErrorMessage = res.content;
                                 this.formLogin.password = '';
                             }
                         }).catch((error) => {

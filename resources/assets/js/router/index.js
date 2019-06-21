@@ -53,7 +53,7 @@ const router = new Router({
             component: resolve => void(require(['../components/h5/Order'], resolve)),
         },
         {
-            name: "客户管理",
+            name: "customer",
             icon: "el-icon-goods",
             path: '/customer/',
             redirect: '/customer/list',

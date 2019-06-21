@@ -137,4 +137,73 @@ class StaticController extends Controller
                 group by month(m.date)
             ");
     }
+
+    /**
+     * 菜品统计
+     *
+     * @param $merchant_id
+     * @param $startDate
+     * @param $endDate
+     * @return mixed
+     */
+    public function dishStaticData($merchant_id, $startDate, $endDate)
+    {
+        return DB::select("
+                select a.date, sum(a.number) as number, a.dish_id, b.name from customer_dish_details a
+                left join dishes b
+                on a.dish_id = b.id
+                where a.date >= '$startDate' and a.date <= '$endDate' and a.merchant_id = '$merchant_id'
+                group by a.dish_id
+            ");
+    }
+
+    /**
+     * 菜品7日统计
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function dishWeekData(Request $request)
+    {
+        try {
+            $merchant_id = $request->user('web')->id;
+            $todayDate = Carbon::now()->toDateString();
+            $last7Date = Carbon::now()->subDays(6)->toDateString();
+
+            $data = $this->dishStaticData($merchant_id, $last7Date, $todayDate);
+
+            return response()->json(['status' => 1, 'data' => $data]);
+
+        } catch (\Exception $e) {
+            myLog('order_week_data', ['data' => $e->getLine().$e->getMessage()]);
+
+            return response()->json(['status' => 0, 'data' => '']);
+        }
+    }
+
+    /**
+     * 菜品30日统计
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function dishMonthData(Request $request)
+    {
+        try {
+            $merchant_id = $request->user('web')->id;
+            $todayDate = Carbon::now()->toDateString();
+            $last7Date = Carbon::now()->subDays(29)->toDateString();
+
+            $data = $this->dishStaticData($merchant_id, $last7Date, $todayDate);
+
+            return response()->json(['status' => 1, 'data' => $data]);
+
+        } catch (\Exception $e) {
+            myLog('order_month_data', ['data' => $e->getLine().$e->getMessage()]);
+
+            return response()->json(['status' => 0, 'data' => '']);
+        }
+    }
 }
