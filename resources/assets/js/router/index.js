@@ -54,7 +54,7 @@ const router = new Router({
         },
         {
             name: "customer",
-            icon: "el-icon-goods",
+            icon: "el-icon-news",
             path: '/customer/',
             redirect: '/customer/list',
             component: App,
@@ -111,7 +111,7 @@ const router = new Router({
         },
         {
             name: "finance",
-            icon: "el-icon-goods",
+            icon: "el-icon-date",
             path: '/finance/',
             redirect: '/finance/list',
             component: App,
@@ -149,7 +149,7 @@ const router = new Router({
         },
         {
             name: "static",
-            icon: "el-icon-goods",
+            icon: "el-icon-news",
             path: '/static/',
             redirect: '/static/order',
             component: App,
