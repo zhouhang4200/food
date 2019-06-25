@@ -679,7 +679,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "所属类目", prop: "category_id", width: "200" },
+            attrs: { label: "所属类目", prop: "category_id", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -730,7 +730,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "操作", width: "250" },
+            attrs: { label: "操作", width: "150" },
             scopedSlots: _vm._u([
               {
                 key: "default",

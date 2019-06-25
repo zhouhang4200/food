@@ -21,7 +21,7 @@
             <el-table-column
                     prop="name"
                     label="店名"
-                    width="200">
+                    width="100">
             </el-table-column>
             <!--<el-table-column-->
                     <!--label="主门店"-->
@@ -31,7 +31,7 @@
             <el-table-column
                     label="门头照"
                     prop="logo"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     <img :src="scope.row.logo" style="width: 100%;height: 100%;display: block;">
                 </template>
@@ -39,7 +39,7 @@
             <el-table-column
                     label="宣传照1"
                     prop="banner1"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     <img v-if="scope.row.banner1" :src="scope.row.banner1" style="width: 100%;height: 100%;display: block;">
                 </template>
@@ -47,7 +47,7 @@
             <el-table-column
                     label="宣传照2"
                     prop="banner2"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     <img v-if="scope.row.banner2" :src="scope.row.banner2" style="width: 100%;height: 100%;display: block;">
                 </template>
@@ -55,7 +55,7 @@
             <el-table-column
                     label="宣传照3"
                     prop="banner3"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     <img v-if="scope.row.banner3" :src="scope.row.banner3" style="width: 100%;height: 100%;display: block;">
                 </template>
@@ -63,7 +63,7 @@
             <el-table-column
                     label="宣传照4"
                     prop="banner4"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     <img v-if="scope.row.banner4" :src="scope.row.banner4" style="width: 100%;height: 100%;display: block;">
                 </template>
@@ -98,7 +98,7 @@
             </el-table-column>
             <el-table-column
                     label="操作"
-                    width="250">
+                    width="">
                 <template slot-scope="scope">
                     <el-button
                             type="primary"

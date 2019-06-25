@@ -620,11 +620,11 @@ var render = function() {
         },
         [
           _c("el-table-column", {
-            attrs: { prop: "name", label: "店名", width: "200" }
+            attrs: { prop: "name", label: "店名", width: "100" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "门头照", prop: "logo", width: "200" },
+            attrs: { label: "门头照", prop: "logo", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -645,7 +645,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "宣传照1", prop: "banner1", width: "200" },
+            attrs: { label: "宣传照1", prop: "banner1", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -668,7 +668,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "宣传照2", prop: "banner2", width: "200" },
+            attrs: { label: "宣传照2", prop: "banner2", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -691,7 +691,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "宣传照3", prop: "banner3", width: "200" },
+            attrs: { label: "宣传照3", prop: "banner3", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -714,7 +714,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "宣传照4", prop: "banner4", width: "200" },
+            attrs: { label: "宣传照4", prop: "banner4", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -777,7 +777,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "操作", width: "250" },
+            attrs: { label: "操作", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",

@@ -662,7 +662,7 @@ var render = function() {
         },
         [
           _c("el-table-column", {
-            attrs: { prop: "date", label: "日期", width: "200" }
+            attrs: { prop: "date", label: "日期", width: "" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -670,11 +670,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "amount", label: "金额(元）", width: "200" }
+            attrs: { prop: "amount", label: "金额(元）", width: "" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "channel", label: "支付渠道", width: "200" },
+            attrs: { prop: "channel", label: "支付渠道", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -698,7 +698,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "pay_status", label: "支付状态", width: "200" },
+            attrs: { prop: "pay_status", label: "支付状态", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -724,11 +724,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "下单时间", prop: "created_at", width: "200" }
+            attrs: { label: "下单时间", prop: "created_at", width: "100" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "操作", width: "200" },
+            attrs: { label: "操作", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",

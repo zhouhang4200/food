@@ -576,7 +576,7 @@ var render = function() {
         },
         [
           _c("el-table-column", {
-            attrs: { prop: "date", label: "日期", width: "200" }
+            attrs: { prop: "date", label: "日期", width: "100" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -584,7 +584,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "name", label: "菜名", width: "200" },
+            attrs: { prop: "name", label: "菜名", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -631,7 +631,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "点菜时间", prop: "created_at", width: "200" }
+            attrs: { label: "点菜时间", prop: "created_at", width: "150" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -657,7 +657,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "操作", width: "200" },
+            attrs: { label: "操作", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",

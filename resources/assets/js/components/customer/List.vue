@@ -60,7 +60,7 @@
             <el-table-column
                     prop="date"
                     label="日期"
-                    width="200">
+                    width="100">
             </el-table-column>
             <el-table-column
                     prop="order_trade_no"
@@ -70,7 +70,7 @@
             <el-table-column
                     prop="name"
                     label="菜名"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     {{ scope.row.dish.name }}
                 </template>
@@ -96,7 +96,7 @@
             <el-table-column
                     label="点菜时间"
                     prop="created_at"
-                    width="200">
+                    width="150">
             </el-table-column>
             <el-table-column
                     label="状态"
@@ -112,7 +112,7 @@
             </el-table-column>
             <el-table-column
                     label="操作"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     <el-button
                             v-if="scope.row.status === 0"

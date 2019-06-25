@@ -49,7 +49,7 @@
             <el-table-column
                     label="所属类目"
                     prop="category_id"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     {{ scope.row.category.name }}
                 </template>
@@ -79,7 +79,7 @@
             </el-table-column>
             <el-table-column
                     label="操作"
-                    width="250">
+                    width="150">
                 <template slot-scope="scope">
                     <el-button
                             type="primary"

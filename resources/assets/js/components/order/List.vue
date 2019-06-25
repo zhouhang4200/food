@@ -72,7 +72,7 @@
             <el-table-column
                     prop="date"
                     label="日期"
-                    width="200">
+                    width="">
             </el-table-column>
             <el-table-column
                     prop="trade_no"
@@ -82,12 +82,12 @@
             <el-table-column
                     prop="amount"
                     label="金额(元）"
-                    width="200">
+                    width="">
             </el-table-column>
             <el-table-column
                     prop="channel"
                     label="支付渠道"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     {{ scope.row.channel === 1 ? '微信支付' : (scope.row.channel === 2 ? '支付宝' : '') }}
                 </template>
@@ -95,7 +95,7 @@
             <el-table-column
                     prop="pay_status"
                     label="支付状态"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     {{ scope.row.channel === 1 ? '已支付' : '待支付' }}
                 </template>
@@ -113,11 +113,11 @@
             <el-table-column
                     label="下单时间"
                     prop="created_at"
-                    width="200">
+                    width="100">
             </el-table-column>
             <el-table-column
                     label="操作"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     <el-button
                             type="primary"
