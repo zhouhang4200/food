@@ -102,7 +102,6 @@
                     this.collapse ? 'rotate-icon' : ''
                 ];
             },
-
         },
         created(){
             this.handleMerchantName();
@@ -153,7 +152,6 @@
                         window.location.href = '/login';
                     })
                 }).catch(() => {
-
                 });
             }
         },
@@ -197,7 +195,7 @@
         position: relative;
         top: 0;
         right: 10px;
-        background: url('/frontend/v2/images/default_avatar.png');
+        background: url('/images/banner1.jpg');
         background-size: 100%;
     }
     .el-header {
