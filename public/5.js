@@ -1,18 +1,18 @@
 webpackJsonp([5],{
 
-/***/ 845:
+/***/ 871:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(864)
+  __webpack_require__(890)
 }
-var normalizeComponent = __webpack_require__(196)
+var normalizeComponent = __webpack_require__(202)
 /* script */
-var __vue_script__ = __webpack_require__(866)
+var __vue_script__ = __webpack_require__(892)
 /* template */
-var __vue_template__ = __webpack_require__(867)
+var __vue_template__ = __webpack_require__(893)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -33,7 +33,7 @@ Component.options.__file = "resources/assets/js/components/h5/WechatOrder.vue"
 
 /* hot reload */
 if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
@@ -52,23 +52,23 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 864:
+/***/ 890:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(865);
+var content = __webpack_require__(891);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(350)("1679dd57", content, false, {});
+var update = __webpack_require__(363)("3bcc8297", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c8077f86\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./WechatOrder.vue", function() {
-     var newContent = require("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c8077f86\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./WechatOrder.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c8077f86\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./WechatOrder.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c8077f86\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./WechatOrder.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -79,10 +79,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 865:
+/***/ 891:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(100)(false);
+exports = module.exports = __webpack_require__(105)(false);
 // imports
 
 
@@ -94,13 +94,13 @@ exports.push([module.i, "\n.imageStyle img {\n    width: 100%;\n    height: 100%
 
 /***/ }),
 
-/***/ 866:
+/***/ 892:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vant__ = __webpack_require__(351);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vant__ = __webpack_require__(364);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 //
 //
@@ -153,16 +153,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant__["a" /* GoodsAction */]).use(__WEBPACK_IMPORTED_MODULE_0_vant__["b" /* GoodsActionBigBtn */]).use(__WEBPACK_IMPORTED_MODULE_0_vant__["c" /* GoodsActionMiniBtn */]);
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant__["a" /* GoodsAction */]);
+// .use(GoodsActionBigBtn)
+// .use(GoodsActionMiniBtn);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            activeKey: 0,
             form: {
                 account: '',
                 fee: ''
@@ -187,10 +197,13 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
 
     computed: {},
     mounted: function mounted() {
-        this.dishes();
+        this.dishes(1);
     },
 
     methods: {
+        check: function check(category_id) {
+            this.dishes(category_id);
+        },
         getUrlKey: function getUrlKey(name) {
             //获取url 参数
             return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null;
@@ -366,12 +379,12 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             }
             // console.log(this.$route.params);
         },
-        dishes: function dishes() {
+        dishes: function dishes(category_id) {
             var _this = this;
 
             var merchant_id = this.$route.query.merchant_id;
             // console.log(merchant_id);
-            this.$api.h5DishList({ merchant_id: merchant_id }).then(function (res) {
+            this.$api.h5DishList({ merchant_id: merchant_id, category_id: category_id }).then(function (res) {
                 if (res.status === 1) {
                     _this.dishData = res.data;
                 } else if (res.status === 3) {
@@ -448,7 +461,7 @@ function callPay() {
 
 /***/ }),
 
-/***/ 867:
+/***/ 893:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -502,11 +515,73 @@ var render = function() {
           }
         },
         [
+          _c(
+            "van-sidebar",
+            {
+              staticStyle: { width: "30%", float: "left" },
+              model: {
+                value: _vm.activeKey,
+                callback: function($$v) {
+                  _vm.activeKey = $$v
+                },
+                expression: "activeKey"
+              }
+            },
+            [
+              _c("van-sidebar-item", {
+                attrs: { title: "炒菜" },
+                on: {
+                  click: function($event) {
+                    return _vm.check(1)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("van-sidebar-item", {
+                attrs: { title: "锅仔" },
+                on: {
+                  click: function($event) {
+                    return _vm.check(2)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("van-sidebar-item", {
+                attrs: { title: "汤类" },
+                on: {
+                  click: function($event) {
+                    return _vm.check(3)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("van-sidebar-item", {
+                attrs: { title: "酒水" },
+                on: {
+                  click: function($event) {
+                    return _vm.check(4)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("van-sidebar-item", {
+                attrs: { title: "主食" },
+                on: {
+                  click: function($event) {
+                    return _vm.check(5)
+                  }
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
           _vm._l(_vm.dishData, function(dish) {
             return _c(
               "van-swipe-cell",
               {
                 key: dish.id,
+                staticStyle: { width: "70%", float: "right" },
                 attrs: { "right-width": 10, "on-close": _vm.onClose }
               },
               [
@@ -613,7 +688,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-c8077f86", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-c8077f86", module.exports)
   }
 }
 

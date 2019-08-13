@@ -235,6 +235,6 @@ return [
 
     ],
 
-//    'h5_domain' => 'h5.keeper.test',
-    'h5_domain' => 'h5.diancan.nanmingyu.com',
+    'h5_domain' => 'h5.diancan.test',
+//    'h5_domain' => 'h5.diancan.nanmingyu.com',
 ];

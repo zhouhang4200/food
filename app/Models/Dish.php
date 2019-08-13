@@ -19,11 +19,11 @@ class Dish extends Model
      */
     public static function scopeFilter($query, $filters = [])
     {
-        if ($filters['name']) {
+        if (isset($filters['name']) && $filters['name']) {
             $query->where('name', 'like', "%".$filters['name']."%");
         }
 
-        if ($filters['category_id']) {
+        if (isset($filters['category_id']) && $filters['category_id']) {
             $query->where('category_id', $filters['category_id']);
         }
 
@@ -38,5 +38,9 @@ class Dish extends Model
     public function merchant()
     {
         return $this->belongsTo(Merchant::class);
+    }
+
+    public function comments() {
+        return $this->hasMany(DishComment::class);
     }
 }

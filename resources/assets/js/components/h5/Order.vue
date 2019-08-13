@@ -38,30 +38,19 @@
                 />
             </div>
         </div>
-        <!--<div class="foot">-->
-            <!--<van-submit-bar-->
-                    <!--id="pay"-->
-                    <!--:price="totalAmount"-->
-                    <!--button-text="提交订单"-->
-                    <!--@submit="onSubmit()"-->
-            <!--/>-->
-        <!--</div>-->
     </div>
 </template>
-
 <script>
     import {Toast} from 'vant';
+    import { Sidebar, SidebarItem } from 'vant';
+    Vue.use(Sidebar);
+    Vue.use(SidebarItem);
     import Vue from 'vue';
     import {
         GoodsAction,
         GoodsActionBigBtn,
         GoodsActionMiniBtn
     } from 'vant';
-
-    Vue
-        .use(GoodsAction)
-        .use(GoodsActionBigBtn)
-        .use(GoodsActionMiniBtn);
 
     export default {
         data() {

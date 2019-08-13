@@ -10,7 +10,14 @@
         </div>
         <div class="body">
             <div class="main" style="position:relative; width: 100%; float: right; margin-bottom: 55px">
-                <van-swipe-cell :right-width="10" :on-close="onClose" v-for="dish in dishData" :key="dish.id">
+                <van-sidebar v-model="activeKey" style="width: 30%;float: left;">
+                    <van-sidebar-item title="炒菜" @click="check(1)" />
+                    <van-sidebar-item title="锅仔" @click="check(2)" />
+                    <van-sidebar-item title="汤类" @click="check(3)" />
+                    <van-sidebar-item title="酒水" @click="check(4)" />
+                    <van-sidebar-item title="主食" @click="check(5)" />
+                </van-sidebar>
+                <van-swipe-cell :right-width="10" :on-close="onClose" v-for="dish in dishData" :key="dish.id" style="width: 70%;float: right;">
                     <van-cell-group>
                         <van-card
                                 :price="dish.amount"
@@ -54,18 +61,19 @@
     import Vue from 'vue';
     import {
         GoodsAction,
-        GoodsActionBigBtn,
-        GoodsActionMiniBtn
+        // GoodsActionBigBtn,
+        // GoodsActionMiniBtn
     } from 'vant';
 
     Vue
         .use(GoodsAction)
-        .use(GoodsActionBigBtn)
-        .use(GoodsActionMiniBtn);
+        // .use(GoodsActionBigBtn)
+        // .use(GoodsActionMiniBtn);
 
     export default {
         data() {
             return {
+                activeKey: 0,
                 form: {
                     account: '',
                     fee: '',
@@ -95,9 +103,12 @@
         },
         computed: {},
         mounted() {
-            this.dishes();
+            this.dishes(1);
         },
         methods: {
+            check(category_id) {
+                this.dishes(category_id);
+            },
             getUrlKey(name){//获取url 参数
                 return decodeURIComponent((new RegExp('[?|&]'+name+'='+'([^&;]+?)(&|#|;|$)').exec(location.href)||[,""])[1].replace(/\+/g,'%20'))||null;
             },
@@ -284,10 +295,10 @@
                 // console.log(this.$route.params);
             },
 
-            dishes() {
+            dishes(category_id) {
                 let merchant_id = this.$route.query.merchant_id;
                 // console.log(merchant_id);
-                this.$api.h5DishList({merchant_id:merchant_id}).then(res => {
+                this.$api.h5DishList({merchant_id:merchant_id, category_id:category_id}).then(res => {
                     if (res.status === 1) {
                         this.dishData = res.data;
                     } else if (res.status === 3) {

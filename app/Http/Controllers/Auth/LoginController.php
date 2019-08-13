@@ -69,7 +69,6 @@ class LoginController extends Controller
         // 对前端转输数据进行解密
         $request['password'] = $request->password;
 
-        // 检查账号是否被禁用
         $merchant = Merchant::where('phone', $request->phone)->first();
 
         if ($merchant && \Hash::check($request['password'], $merchant->password)) {

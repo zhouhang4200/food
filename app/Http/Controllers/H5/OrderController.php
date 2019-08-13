@@ -26,7 +26,11 @@ class OrderController extends Controller
     public function dishList(Request $request)
     {
         try {
-            $data = Dish::where('merchant_id', $request->input('merchant_id'))
+            $category_id = $request->input('category_id');
+            $filters = compact('category_id');
+
+            $data = Dish::filter($filters)
+                ->where('merchant_id', $request->input('merchant_id'))
                 ->get();
 
             return response()->json(['status' => 1, 'data' => $data]);

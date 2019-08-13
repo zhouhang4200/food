@@ -54,14 +54,14 @@
     import Vue from 'vue';
     import {
         GoodsAction,
-        GoodsActionBigBtn,
-        GoodsActionMiniBtn
+        // GoodsActionBigBtn,
+        // GoodsActionMiniBtn
     } from 'vant';
 
     Vue
         .use(GoodsAction)
-        .use(GoodsActionBigBtn)
-        .use(GoodsActionMiniBtn);
+        // .use(GoodsActionBigBtn)
+        // .use(GoodsActionMiniBtn);
 
     export default {
         data() {
