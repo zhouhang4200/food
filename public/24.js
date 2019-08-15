@@ -147,14 +147,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -210,33 +202,58 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
         //     console.log('code');
         //     this.getCodeApi("123");
         // }
-        this.dishes();
         this.handleCategories();
         this.handleBanner();
+        this.dishes();
     },
 
     methods: {
-        handleCategories: function handleCategories() {
+        check: function check(category_id, key) {
+            if (key === 0) {
+                document.getElementById('head').scrollIntoView();
+            } else {
+                document.getElementById(category_id).scrollIntoView();
+            }
+        },
+        dishes: function dishes(category_id) {
             var _this = this;
 
             var merchant_id = this.$route.query.merchant_id;
+            // console.log(merchant_id);
+            this.$api.h5DishList({ merchant_id: merchant_id, category_id: category_id }).then(function (res) {
+                if (res.status === 1) {
+                    _this.dishData = res.data;
+                } else if (res.status === 3) {
+                    __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
+                    // this.$router.push({name: 'login', query: {}});
+                } else {
+                    __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
+                }
+            });
+        },
+        handleCategories: function handleCategories() {
+            var _this2 = this;
+
+            var merchant_id = this.$route.query.merchant_id;
             this.$api.h5Category({ merchant_id: merchant_id }).then(function (res) {
-                _this.categories = res.data;
+                _this2.categories = res.data;
+                // let category_id = res.data[0].id;
+                // this.dishes(category_id);
             }).catch(function (err) {
-                _this.$message({
+                _this2.$message({
                     type: 'error',
                     message: '类目获取失败'
                 });
             });
         },
         handleBanner: function handleBanner() {
-            var _this2 = this;
+            var _this3 = this;
 
             var merchant_id = this.$route.query.merchant_id;
             this.$api.h5Banner({ merchant_id: merchant_id }).then(function (res) {
-                _this2.store = res.data;
+                _this3.store = res.data;
             }).catch(function (err) {
-                _this2.$message({
+                _this3.$message({
                     type: 'error',
                     message: 'store获取失败'
                 });
@@ -278,8 +295,6 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             // } else {
             //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
             // }
-
-            console.log(this.customerDishDetail);
         },
         add: function add(dish) {
             var dishId = dish.id;
@@ -321,7 +336,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             // console.log(Number(dish.amount), this.totalAmount, dish.amount);
         },
         onSubmit: function onSubmit() {
-            var _this3 = this;
+            var _this4 = this;
 
             console.log(this.totalAmount);
             if (this.totalAmount > 0) {
@@ -347,35 +362,19 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                         document.body.appendChild(div);
                         document.forms[0].submit();
                     } else {
-                        _this3.$message({
+                        _this4.$message({
                             type: 'info',
                             message: '网络错误，请稍后再试'
                         });
                     }
                 }).catch(function (error) {
-                    _this3.$message({
+                    _this4.$message({
                         type: 'info',
                         message: error
                     });
                 });
             }
             // console.log(this.$route.params);
-        },
-        dishes: function dishes() {
-            var _this4 = this;
-
-            var merchant_id = this.$route.query.merchant_id;
-            // console.log(merchant_id);
-            this.$api.h5DishList({ merchant_id: merchant_id }).then(function (res) {
-                if (res.status === 1) {
-                    _this4.dishData = res.data;
-                } else if (res.status === 3) {
-                    __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
-                    // this.$router.push({name: 'login', query: {}});
-                } else {
-                    __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
-                }
-            });
         },
         onConfirmAccount: function onConfirmAccount(value, index) {
             this.form.account = value;
@@ -503,6 +502,7 @@ var render = function() {
               "van-swipe-cell",
               {
                 key: dish.id,
+                staticStyle: { width: "80%", float: "right" },
                 attrs: { "right-width": 10, "on-close": _vm.onClose }
               },
               [

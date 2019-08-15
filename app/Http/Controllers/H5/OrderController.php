@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\H5;
 
+use App\Models\Category;
 use App\Models\CustomerDishDetail;
 use App\Models\Dish;
 use App\Models\Finance;
@@ -27,10 +28,10 @@ class OrderController extends Controller
     {
         try {
             $category_id = $request->input('category_id');
-            $filters = compact('category_id');
+            $merchant_id = $request->input('merchant_id');
 
-            $data = Dish::filter($filters)
-                ->where('merchant_id', $request->input('merchant_id'))
+            $data = Category::where('merchant_id', $merchant_id)
+                ->with('dishes')
                 ->get();
 
             return response()->json(['status' => 1, 'data' => $data]);

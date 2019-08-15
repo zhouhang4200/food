@@ -12,7 +12,7 @@
                 <van-sidebar v-model="activeKey" style="width: 20%;float: left;">
                     <van-sidebar-item v-for="category in categories" :title="category.name" @click="check(category.id)" />
                 </van-sidebar>
-                <van-swipe-cell :right-width="10" :on-close="onClose" v-for="dish in dishData" :key="dish.id">
+                <van-swipe-cell :right-width="10" :on-close="onClose" v-for="dish in dishData" :key="dish.id" style="width: 80%;float: right;">
                     <van-cell-group>
                         <van-card
                                 :price="dish.amount"
@@ -40,14 +40,6 @@
                 />
             </div>
         </div>
-        <!--<div class="foot">-->
-        <!--<van-submit-bar-->
-        <!--id="pay"-->
-        <!--:price="totalAmount"-->
-        <!--button-text="提交订单"-->
-        <!--@submit="onSubmit()"-->
-        <!--/>-->
-        <!--</div>-->
     </div>
 </template>
 
@@ -116,15 +108,38 @@
             //     console.log('code');
             //     this.getCodeApi("123");
             // }
-            this.dishes();
             this.handleCategories();
             this.handleBanner();
+            this.dishes();
         },
         methods: {
+            check(category_id, key) {
+                if (key === 0) {
+                    document.getElementById('head').scrollIntoView();
+                } else {
+                    document.getElementById(category_id).scrollIntoView();
+                }
+            },
+            dishes(category_id) {
+                let merchant_id = this.$route.query.merchant_id;
+                // console.log(merchant_id);
+                this.$api.h5DishList({merchant_id:merchant_id, category_id:category_id}).then(res => {
+                    if (res.status === 1) {
+                        this.dishData = res.data;
+                    } else if (res.status === 3) {
+                        Toast.fail(res.message);
+                        // this.$router.push({name: 'login', query: {}});
+                    } else {
+                        Toast.fail(res.message);
+                    }
+                });
+            },
             handleCategories(){
                 let merchant_id = this.$route.query.merchant_id;
                 this.$api.h5Category({merchant_id:merchant_id}).then(res => {
                     this.categories=res.data;
+                    // let category_id = res.data[0].id;
+                    // this.dishes(category_id);
                 }).catch(err => {
                     this.$message({
                         type: 'error',
@@ -179,8 +194,6 @@
                 // } else {
                 //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
                 // }
-
-                console.log(this.customerDishDetail);
             },
             add(dish) {
                 let dishId = dish.id;
@@ -259,20 +272,6 @@
                     });
                 }
                 // console.log(this.$route.params);
-            },
-            dishes() {
-                let merchant_id = this.$route.query.merchant_id;
-                // console.log(merchant_id);
-                this.$api.h5DishList({merchant_id:merchant_id}).then(res => {
-                    if (res.status === 1) {
-                        this.dishData = res.data;
-                    } else if (res.status === 3) {
-                        Toast.fail(res.message);
-                        // this.$router.push({name: 'login', query: {}});
-                    } else {
-                        Toast.fail(res.message);
-                    }
-                });
             },
             onConfirmAccount(value, index) {
                 this.form.account = value;
