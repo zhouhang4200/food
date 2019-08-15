@@ -9,7 +9,8 @@ class Dish extends Model
 {
     protected $fillable = [
         'name', 'amount', 'original_amount', 'rate', 'logo',
-        'material', 'category_id', 'merchant_id', 'tag', 'intro'
+        'material', 'category_id', 'merchant_id', 'tag', 'intro',
+        'thumb', 'like_count'
     ];
 
     /**

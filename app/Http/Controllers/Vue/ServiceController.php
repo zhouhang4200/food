@@ -5,23 +5,19 @@ namespace App\Http\Controllers\Vue;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 
 class ServiceController extends Controller
 {
     protected static $extensions = ['png', 'jpg', 'jpeg', 'gif'];
 
-    /**
-     * 图片上传
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function uploadImage(Request $request)
     {
         try {
             $file = request('file');
             $name = $request->input('name', '');
-            $path =  public_path("/resources/vue/upload/image/".date('Ymd')."/");
+            $path = public_path("/upload/" . date('Ymd') . "/");
 
             $extension = $file->getClientOriginalExtension();
 
@@ -36,18 +32,26 @@ class ServiceController extends Controller
             if (!file_exists($path)) {
                 mkdir($path, 0755, true);
             }
-            $randNum = rand(1, 100000000) . rand(1, 100000000);
 
-            $fileName = time().substr($randNum, 0, 6).'.'.$extension;
+            $fileName = time() . mt_rand(1, 100) . '.' . $extension;
+            $filepath = strstr($file->move($path, $fileName), '/upload');
+            $finalPath = str_replace('\\', '/', $filepath);
 
-            $path = $file->move($path, $fileName);
+            $image = Image::make(public_path($finalPath));
+            $image->resize(300, 200);
+            $thumb_path = public_path("/upload/" . date('Ymd') . "/thumb");
+            if (!file_exists($thumb_path)) {
+                mkdir($thumb_path, 0755, true);
+            }
+            $thumb = $thumb_path . '/' . $fileName;
+            $image->save($thumb);
+            $thumb_file  = strstr($thumb, '/upload');
+            $final_thumb = str_replace('\\', '/', $thumb_file);
 
-            $path = strstr($path, '/resources');
-
-            $finalPath =  str_replace('\\', '/', $path);
-
-            return response()->json(['status' => 1, 'path' => $finalPath, 'name' => $name]);
+            return response()->json(['status' => 1, 'path' => $finalPath, 'thumb' => $final_thumb, 'name' => $name]);
         } catch (\Exception $e) {
+            myLog('upload_error', [$e->getFile() . $e->getLine() . $e->getMessage()]);
+
             return response()->ajaxFail('图片上传失败：服务器异常！');
         }
     }

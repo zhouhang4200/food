@@ -1,18 +1,18 @@
 webpackJsonp([22],{
 
-/***/ 851:
+/***/ 873:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(887)
+  __webpack_require__(898)
 }
-var normalizeComponent = __webpack_require__(196)
+var normalizeComponent = __webpack_require__(202)
 /* script */
-var __vue_script__ = __webpack_require__(889)
+var __vue_script__ = __webpack_require__(900)
 /* template */
-var __vue_template__ = __webpack_require__(890)
+var __vue_template__ = __webpack_require__(901)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -29,18 +29,18 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/finance/List.vue"
+Component.options.__file = "resources/assets/js/components/h5/Order.vue"
 
 /* hot reload */
 if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-309ca9ea", Component.options)
+    hotAPI.createRecord("data-v-0cd46a83", Component.options)
   } else {
-    hotAPI.reload("data-v-309ca9ea", Component.options)
+    hotAPI.reload("data-v-0cd46a83", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -52,23 +52,23 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 887:
+/***/ 898:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(888);
+var content = __webpack_require__(899);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(350)("793cbcc0", content, false, {});
+var update = __webpack_require__(363)("5c819603", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-309ca9ea\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./List.vue", function() {
-     var newContent = require("!!../../../../../node_modules/_css-loader@0.28.11@css-loader/index.js!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-309ca9ea\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/_vue-loader@13.7.3@vue-loader/lib/selector.js?type=styles&index=0!./List.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cd46a83\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Order.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cd46a83\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Order.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -79,26 +79,29 @@ if(false) {
 
 /***/ }),
 
-/***/ 888:
+/***/ 899:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(100)(false);
+exports = module.exports = __webpack_require__(105)(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n.avatar-uploader .el-upload {\n    border: 1px dashed #d9d9d9;\n    border-radius: 6px;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n}\n.avatar-uploader .el-upload:hover {\n    border-color: #409EFF;\n}\n.avatar-uploader-icon {\n    font-size: 28px;\n    color: #8c939d;\n    width: 300px;\n    height: 200px;\n    line-height: 200px;\n    text-align: center;\n}\n.avatar {\n    width: 300px;\n    height: 200px;\n    display: block;\n}\n", ""]);
+exports.push([module.i, "\n.imageStyle img {\n    width: 100%;\n    height: 100%;\n    display: block;\n}\n.van-card__thumb {\n    width: 100px;\n    height: 70px;\n    margin-right: 10px;\n    /* -webkit-box-align: center; */\n    /* -webkit-align-items: center; */\n    /* align-items: center; */\n    /* -webkit-box-pack: center; */\n    -webkit-justify-content: center;\n    /* justify-content: center; */\n    /* -webkit-box-flex: 0; */\n    -webkit-flex: none;\n    /* flex: none; */\n    /* margin-top: 20px; */\n}\n.van-button--warning {\n    color: #fff;\n    background-color: #409eff;\n    border: 1px solid #409eff;\n}\n.van-card {\n    position: relative;\n    color: #323233;\n    padding: 10px 15px;\n    font-size: 14px;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    background-color: #fafafa;\n}\n.van-card__content, .van-card__header {\n    height: 44px;\n}\n.van-card__title {\n    line-height: 16px;\n    max-height: 32px;\n    font-weight: 500;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    display: -webkit-box;\n    -webkit-line-clamp: 2;\n    -webkit-box-orient: vertical;\n    padding-top: 5px;\n}\n.van-card__bottom, .van-card__desc {\n    line-height: 20px;\n    margin-top: 4px;\n    font-size: 14px;\n}\n\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 889:
+/***/ 900:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vant__ = __webpack_require__(364);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 //
 //
 //
@@ -141,420 +144,398 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
+
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant__["b" /* Sidebar */]);
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant__["c" /* SidebarItem */]);
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            showVisible: false,
-            tableHeight: 0,
-            url: '',
-            loading: false,
-            dialogFormVisible: false,
-            searchParams: {
-                trade_no: '',
-                sub_type: '',
-                date: '',
-                page: 1
+            form: {
+                account: '',
+                fee: ''
             },
-            showData: {},
-            TotalPage: 0,
-            sub_types: [],
-            tableData: []
+            accountOptions: [],
+            accountShow: false,
+            showNumber: false,
+            images: ["h5.keeper.test/images/banner1.jpg", "h5.keeper.test/images/banner2.jpg"],
+            imageURL: "",
+            hot: '热卖中',
+            price: '',
+            originPrice: '',
+            desc: '微辣',
+            title: '',
+            number: 0,
+            totalAmount: 0,
+            dishData: {},
+            customerDishDetail: []
         };
     },
     created: function created() {
-        this.handleSubTypes();
-        this.handleTableData();
-        this.handleTableHeight();
-        window.addEventListener('resize', this.handleTableHeight);
+        // let code=getUrlKey("code");
+        // if(code){
+        //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
+        //     this.getOpenIdApi(code);
+        // }else{
+        //     this.getCodeApi("123");
+        // }
+    },
+
+    computed: {},
+    mounted: function mounted() {
+        // let code=this.getUrlKey("code");
+        // if(code){
+        //     console.log(code);
+        //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
+        //     this.getOpenIdApi(code);
+        // }else{
+        //     console.log('code');
+        //     this.getCodeApi("123");
+        // }
+        this.dishes();
     },
 
     methods: {
-        handleSubTypes: function handleSubTypes() {
+        getUrlKey: function getUrlKey(name) {
+            //获取url 参数
+            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null;
+        },
+        getCodeApi: function getCodeApi(state) {
+            //获取code
+            var urlNow = encodeURIComponent(window.location.href);
+            var scope = 'snsapi_base'; //snsapi_userinfo   //静默授权 用户无感知
+            var appid = 'wx5e0fd315aff830a4';
+            var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + urlNow + '&response_type=code&scope=' + scope + '&state=' + state + '#wechat_redirect';
+            window.location.replace(url);
+        },
+        getOpenIdApi: function getOpenIdApi(code) {
+            this.$api.getopenId({ code: code }).then(function (res) {
+                console.log(123122312);
+                if (res.status === 1) {
+                    console.log('pay_success');
+                } else if (res.status === 3) {
+                    // Toast.fail(res.message);
+                } else {
+                        // Toast.fail(res.message);
+                    }
+            });
+        },
+        sub: function sub(dish) {
+            var dishId = dish.id;
+            var id = 'number' + dishId;
+            var numberObject = document.getElementById(id);
+            var numberValue = Number(numberObject.value);
+            var finalNumber = 0;
+
+            if (numberValue > 0) {
+                numberObject.setAttribute("style", "width: 40px; text-align: center;color: #f44");
+                finalNumber = numberValue - 1;
+                numberObject.value = finalNumber;
+
+                if (this.customerDishDetail.length > 0) {
+                    for (var i = 0; i < this.customerDishDetail.length; i++) {
+                        if (this.customerDishDetail[i].dish_id === dishId) {
+                            this.customerDishDetail[i].number = finalNumber;
+
+                            if (finalNumber < 1) {
+                                this.customerDishDetail.splice(i, 1);
+                            }
+
+                            // 总价减去次价格
+                            this.totalAmount -= Number(dish.amount) * 100;
+                        }
+                    }
+                }
+            }
+            if (finalNumber < 1) {
+                numberObject.setAttribute("style", "width: 40px; text-align: center;");
+            }
+
+            // if (this.totalAmount > 0) {
+            //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #f44;border: 1px solid #f44;")
+            // } else {
+            //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
+            // }
+
+            console.log(this.customerDishDetail);
+        },
+        add: function add(dish) {
+            var dishId = dish.id;
+            var id = 'number' + dishId;
+            var numberObject = document.getElementById(id);
+            var numberValue = Number(numberObject.value);
+            var finalNumber = 0;
+            numberObject.setAttribute("style", "width: 40px; text-align: center;color: #f44");
+
+            finalNumber = numberValue + 1;
+            numberObject.value = finalNumber;
+            // console.log(numberObject.value);
+            if (this.customerDishDetail.length > 0 && numberValue > 0) {
+                for (var i = 0; i < this.customerDishDetail.length; i++) {
+                    if (this.customerDishDetail[i].dish_id === dishId) {
+                        this.customerDishDetail[i].number = finalNumber;
+
+                        // 总价增加
+                        this.totalAmount += Number(dish.amount) * 100;
+                    }
+                }
+            } else {
+                var newJson = {};
+                newJson.dish_id = dishId;
+                newJson.number = finalNumber;
+                this.customerDishDetail.push(newJson);
+
+                // 总价增加
+                this.totalAmount += Number(dish.amount) * 100;
+            }
+
+            // if (this.totalAmount > 0) {
+            //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #f44;border: 1px solid #f44;")
+            // } else {
+            //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
+            // }
+
+            console.log(this.customerDishDetail);
+            // console.log(Number(dish.amount), this.totalAmount, dish.amount);
+        },
+        onSubmit: function onSubmit() {
+            if (this.totalAmount > 0) {
+                var params = this.$route.params;
+                params.amount = this.totalAmount;
+                params.detail = this.customerDishDetail;
+                params.open_id = this.$route.query.open_id;
+                params.query = this.$route.query;
+
+                this.$api.h5Pay(params).then(function (res) {
+                    if (res.status === 1) {
+                        console.log('pay_success');
+                    } else if (res.status === 3) {
+                        // Toast.fail(res.message);
+                    } else {
+                            // Toast.fail(res.message);
+                        }
+                });
+            }
+            // console.log(this.$route.params);
+        },
+        dishes: function dishes() {
             var _this = this;
 
-            this.$api.financeSubType().then(function (res) {
-                _this.sub_types = res.data;
-            }).catch(function (err) {
-                _this.$message({
-                    type: 'error',
-                    message: '支付渠道初始化异常'
-                });
+            var merchant_id = this.$route.query.merchant_id;
+            // console.log(merchant_id);
+            this.$api.h5DishList({ merchant_id: merchant_id }).then(function (res) {
+                if (res.status === 1) {
+                    _this.dishData = res.data;
+                } else if (res.status === 3) {
+                    __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
+                    // this.$router.push({name: 'login', query: {}});
+                } else {
+                    __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
+                }
             });
         },
+        onConfirmAccount: function onConfirmAccount(value, index) {
+            this.form.account = value;
+            this.accountShow = false;
+        },
+        onInput: function onInput(key) {
+            this.form.fee += key;
+        },
+        onDelete: function onDelete() {
+            this.form.fee = '';
+        },
+        onClose: function onClose() {
+            this.showNumber = false;
+        },
 
-        // 加载数据
-        handleTableData: function handleTableData() {
+        // 表单提交
+        onSubmitForm: function onSubmitForm() {
             var _this2 = this;
 
-            this.$api.financeList(this.searchParams).then(function (res) {
-                _this2.tableData = res.data.data;
-                _this2.TotalPage = res.data.total;
-                _this2.loading = false;
-            }).catch(function (err) {
-                _this2.$alert('获取数据失败, 请重试!', '提示', {
-                    confirmButtonText: '确定',
-                    callback: function callback(action) {}
-                });
+            this.$validator.validateAll().then(function (result) {
+                if (result) {
+                    _this2.$api.FinanceWithdrawApply(_this2.form).then(function (res) {
+                        if (res.status === 1) {
+                            __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].success(res.message);
+                        } else if (res.status === 3) {
+                            __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
+                            _this2.$router.push({ name: 'login', query: {} });
+                        } else {
+                            __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
+                        }
+                    }).catch(function (err) {
+                        __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail('表单数据异常!');
+                    });
+                }
             });
-        },
-        handleSearch: function handleSearch() {
-            this.handleTableData();
-        },
-        handleCurrentChange: function handleCurrentChange(page) {
-            this.searchParams.page = page;
-            this.handleTableData();
-        },
-
-        // 表格高度计算
-        handleTableHeight: function handleTableHeight() {
-            this.tableHeight = window.innerHeight - 318;
-        },
-        tagChange: function tagChange(value) {
-            var checkedCount = value.length;
-            var tag = value.join(',');
-            console.log(value.join(','));
-            this.form.tag = tag;
         }
-    },
-    destroyed: function destroyed() {
-        window.removeEventListener('resize', this.handleTableHeight);
     }
 });
 
 /***/ }),
 
-/***/ 890:
+/***/ 901:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "main content amount-flow" },
-    [
-      _c(
-        "el-form",
-        {
-          staticClass: "search-form-inline",
-          attrs: { inline: true, model: _vm.searchParams, size: "small" }
-        },
-        [
-          _c(
-            "el-row",
-            { attrs: { gutter: 12 } },
-            [
-              _c(
-                "el-col",
-                { attrs: { span: 5 } },
-                [
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "订单号" } },
-                    [
-                      _c("el-input", {
-                        model: {
-                          value: _vm.searchParams.trade_no,
-                          callback: function($$v) {
-                            _vm.$set(_vm.searchParams, "trade_no", $$v)
-                          },
-                          expression: "searchParams.trade_no"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 6 } },
-                [
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "收入类型" } },
-                    [
-                      _c(
-                        "el-select",
-                        {
-                          attrs: { placeholder: "请选择" },
-                          model: {
-                            value: _vm.searchParams.sub_type,
-                            callback: function($$v) {
-                              _vm.$set(_vm.searchParams, "sub_type", $$v)
-                            },
-                            expression: "searchParams.sub_type"
-                          }
-                        },
-                        _vm._l(_vm.sub_types, function(sub_type) {
-                          return _c("el-option", {
-                            key: sub_type.id,
-                            attrs: { label: sub_type.name, value: sub_type.id }
-                          })
-                        }),
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 5 } },
-                [
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "日期" } },
-                    [
-                      _c("el-date-picker", {
-                        attrs: {
-                          type: "daterange",
-                          align: "right",
-                          "unlink-panels": "",
-                          format: "yyyy-MM-dd",
-                          "value-format": "yyyy-MM-dd",
-                          "range-separator": "至",
-                          "start-placeholder": "开始日期",
-                          "end-placeholder": "结束日期"
-                        },
-                        model: {
-                          value: _vm.searchParams.date,
-                          callback: function($$v) {
-                            _vm.$set(_vm.searchParams, "date", $$v)
-                          },
-                          expression: "searchParams.date"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 3 } },
-                [
-                  _c(
-                    "el-form-item",
-                    [
-                      _c(
-                        "el-button",
-                        {
-                          attrs: { type: "primary" },
-                          on: { click: _vm.handleSearch }
-                        },
-                        [_vm._v("查询")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-table",
-        {
-          directives: [
-            {
-              name: "loading",
-              rawName: "v-loading",
-              value: _vm.loading,
-              expression: "loading"
-            }
+  return _c("div", { staticStyle: { "margin-top": "20px" } }, [
+    _c(
+      "div",
+      { staticClass: "head" },
+      [
+        _c(
+          "van-swipe",
+          {
+            staticClass: "imageStyle",
+            attrs: { autoplay: 3000, height: 150, "indicator-color": "white" }
+          },
+          [
+            _c("van-swipe-item", [
+              _c("img", { attrs: { src: "/images/banner1.jpg" } })
+            ]),
+            _vm._v(" "),
+            _c("van-swipe-item", [
+              _c("img", { attrs: { src: "/images/banner2.jpg" } })
+            ]),
+            _vm._v(" "),
+            _c("van-swipe-item", [
+              _c("img", { attrs: { src: "/images/banner1.jpg" } })
+            ]),
+            _vm._v(" "),
+            _c("van-swipe-item", [
+              _c("img", { attrs: { src: "/images/banner2.jpg" } })
+            ])
           ],
-          staticStyle: { width: "100%", "margin-top": "1px" },
-          attrs: { data: _vm.tableData, height: _vm.tableHeight, border: "" }
+          1
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "body" }, [
+      _c(
+        "div",
+        {
+          staticClass: "main",
+          staticStyle: {
+            position: "relative",
+            width: "100%",
+            float: "right",
+            "margin-bottom": "55px"
+          }
         },
         [
-          _c("el-table-column", {
-            attrs: { prop: "date", label: "日期", width: "200" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "order_trade_no", label: "订单号", width: "200" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "amount", label: "金额(元）", width: "" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "type", label: "类型", width: "" },
-            scopedSlots: _vm._u([
+          _vm._l(_vm.dishData, function(dish) {
+            return _c(
+              "van-swipe-cell",
               {
-                key: "default",
-                fn: function(scope) {
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(scope.row.type === 1 ? "收入" : "") +
-                        "\n            "
+                key: dish.id,
+                attrs: { "right-width": 10, "on-close": _vm.onClose }
+              },
+              [
+                _c(
+                  "van-cell-group",
+                  [
+                    _c(
+                      "van-card",
+                      {
+                        attrs: {
+                          price: dish.amount,
+                          title: dish.name,
+                          thumb: dish.logo,
+                          "origin-price": dish.original_amount
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { attrs: { slot: "footer" }, slot: "footer" },
+                          [
+                            _c("div", { staticClass: "amount_container" }, [
+                              _c(
+                                "div",
+                                { staticClass: "amount_box" },
+                                [
+                                  _c(
+                                    "van-button",
+                                    {
+                                      attrs: { size: "mini" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.sub(dish)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("-")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticStyle: {
+                                      width: "40px",
+                                      "text-align": "center"
+                                    },
+                                    attrs: {
+                                      type: "number",
+                                      value: "0",
+                                      id: "number" + dish.id,
+                                      maxlength: "2",
+                                      pattern: "[0-9]*",
+                                      readonly: "readonly"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "van-button",
+                                    {
+                                      attrs: { size: "mini" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.add(dish)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("+")]
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          ]
+                        )
+                      ]
                     )
-                  ]
-                }
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          }),
+          _vm._v(" "),
+          _c("van-submit-bar", {
+            attrs: {
+              id: "pay",
+              price: _vm.totalAmount,
+              "button-text": "提交订单"
+            },
+            on: {
+              submit: function($event) {
+                return _vm.onSubmit()
               }
-            ])
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "sub_type", label: "子类型", width: "" },
-            scopedSlots: _vm._u([
-              {
-                key: "default",
-                fn: function(scope) {
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(
-                          scope.row.sub_type === 11
-                            ? "微信收入"
-                            : scope.row.sub_type === 12
-                            ? "支付宝收入"
-                            : ""
-                        ) +
-                        "\n            "
-                    )
-                  ]
-                }
-              }
-            ])
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "comment", label: "备注", width: "500" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { label: "时间", prop: "created_at", width: "200" }
+            }
           })
         ],
-        1
-      ),
-      _vm._v(" "),
-      _c("el-pagination", {
-        staticStyle: { "margin-top": "25px" },
-        attrs: {
-          background: "",
-          "current-page": _vm.searchParams.page,
-          "page-size": 10,
-          layout: "total, prev, pager, next, jumper",
-          total: _vm.TotalPage
-        },
-        on: {
-          "current-change": _vm.handleCurrentChange,
-          "update:currentPage": function($event) {
-            return _vm.$set(_vm.searchParams, "page", $event)
-          },
-          "update:current-page": function($event) {
-            return _vm.$set(_vm.searchParams, "page", $event)
-          }
-        }
-      })
-    ],
-    1
-  )
+        2
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -562,7 +543,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-309ca9ea", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-0cd46a83", module.exports)
   }
 }
 

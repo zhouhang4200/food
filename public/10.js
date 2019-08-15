@@ -289,6 +289,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            timer: '',
             imageUrl: '',
             loading: true,
             tableHeight: 0,
@@ -351,6 +352,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.tagList = [];
             this.imageUrl = false;
         },
+        categoryAdd: function categoryAdd() {
+            this.category_form = {};
+            this.isAdd = true;
+            this.isUpdate = false;
+            this.title = '类目添加';
+            this.category_visible = true;
+            this.tagList = [];
+            this.imageUrl = false;
+        },
 
         // 编辑按钮
         dishUpdate: function dishUpdate(row) {
@@ -370,6 +380,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // 取消按钮
         dishCancel: function dishCancel(formName) {
             this.dialogFormVisible = false;
+            this.category_visible = false;
             this.$refs[formName].clearValidate();
         },
 
@@ -491,6 +502,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // 图片上传成功将地址回传给表单
         handleAvatarSuccess: function handleAvatarSuccess(res, file) {
             if (res) {
+                console.log(res);
                 this.imageUrl = URL.createObjectURL(file.raw);
                 this.form.logo = res.path;
             }
@@ -524,6 +536,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.handleTableHeight();
         this.handleCategory();
         window.addEventListener('resize', this.handleTableHeight);
+    },
+    mounted: function mounted() {
+        this.timer = setInterval(this.handleTableData, 5000);
+    },
+    beforeDestroy: function beforeDestroy() {
+        clearInterval(this.timer);
     },
     destroyed: function destroyed() {
         window.removeEventListener('resize', this.handleTableHeight);
@@ -640,7 +658,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("新增")]
+                        [_vm._v("新增菜品")]
                       )
                     ],
                     1

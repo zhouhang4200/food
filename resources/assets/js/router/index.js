@@ -82,6 +82,13 @@ const router = new Router({
             menu: true,
             children: [
                 {
+                    name: "categoryList",
+                    menu: true,
+                    path: "category",
+                    meta: {title: '类目列表'},
+                    component: resolve => void (require(['../components/dish/CategoryList'], resolve)),
+                },
+                {
                     name: "dishList",
                     menu: true,
                     path: "list",

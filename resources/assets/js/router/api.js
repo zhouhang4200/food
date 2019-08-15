@@ -27,7 +27,7 @@ export default {
     h5Pay(params) {
         return post('/h5/pay', params);
     },
-    // 菜单删除
+    // 获取类目
     category(params) {
         return post('/category', params);
     },
@@ -39,17 +39,27 @@ export default {
     dishList(params) {
         return post('/dish/list', params);
     },
-    // 菜单新增
     dishAdd(params) {
         return post('/dish/add', params);
     },
-    // 菜单修改
     dishUpdate(params) {
         return post('/dish/update', params);
     },
-    // 菜单删除
     dishDelete(params) {
         return post('/dish/delete', params);
+    },
+    // 类目
+    categoryList(params) {
+        return post('/category/list', params);
+    },
+    categoryAdd(params) {
+        return post('/category/add', params);
+    },
+    categoryUpdate(params) {
+        return post('/category/update', params);
+    },
+    categoryDelete(params) {
+        return post('/category/delete', params);
     },
     // 客户点餐列表
     customerDishDetailList(params) {

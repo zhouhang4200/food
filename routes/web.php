@@ -45,6 +45,12 @@ Route::namespace('Vue')->group(function () {
             Route::post('update', 'DishController@update'); // 编辑
             Route::post('delete', 'DishController@delete'); // 删除
         });
+        Route::prefix('category')->group(function () {
+            Route::post('list', 'CategoryController@list'); // 列表
+            Route::post('add', 'CategoryController@add'); // 添加
+            Route::post('update', 'CategoryController@update'); // 编辑
+            Route::post('delete', 'CategoryController@delete'); // 删除
+        });
         // 客户已点菜品
         Route::prefix('customer/dish/detail/')->group(function () {
             Route::post('list', 'CustomerDishDetailController@list'); // 列表

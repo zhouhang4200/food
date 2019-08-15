@@ -25,7 +25,7 @@
                         <el-button
                                 type="primary"
                                 size="small"
-                                @click="dishAdd()">新增</el-button>
+                                @click="dishAdd()">新增菜品</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -56,10 +56,10 @@
             </el-table-column>
             <el-table-column
                     label="预览图片"
-                    prop="logo"
+                    prop="thumb"
                     width="">
                 <template slot-scope="scope">
-                    <img :src="scope.row.logo" style="width: 100%;height: 100%;display: block;">
+                    <img :src="scope.row.thumb" style="width: 100%;height: 100%;display: block;">
                 </template>
             </el-table-column>
             <el-table-column
@@ -188,6 +188,7 @@
     export default {
         data(){
             return {
+                timer:'',
                 imageUrl:'',
                 loading:true,
                 tableHeight: 0,
@@ -214,12 +215,14 @@
                 form: {
                     name: '',
                     category_id: '',
-                    tag: "",
-                    material: '暂无',
+                    tag: '',
+                    material: '',
                     logo: '',
+                    thumb:'',
+                    like_count:'',
                     amount: '',
                     original_amount:'',
-                    intro: '暂无'
+                    intro: ''
                 },
                 categories:{
                 },
@@ -374,6 +377,7 @@
                 if (res) {
                     this.imageUrl = URL.createObjectURL(file.raw);
                     this.form.logo = res.path;
+                    this.form.thumb = res.thumb;
                 }
             },
             // 图片上传
@@ -405,9 +409,14 @@
             this.handleCategory();
             window.addEventListener('resize', this.handleTableHeight);
         },
+        mounted() {
+            this.timer = setInterval(this.handleTableData, 5000);
+        },
+        beforeDestroy() {
+            clearInterval(this.timer);
+        },
         destroyed() {
             window.removeEventListener('resize', this.handleTableHeight);
         },
-
     }
 </script>

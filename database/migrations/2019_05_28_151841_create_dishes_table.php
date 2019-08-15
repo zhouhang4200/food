@@ -24,7 +24,7 @@ class CreateDishesTable extends Migration
             $table->integer('rate')->default(100)->comment('折扣：默认100');
             $table->string('thumb')->comment('菜单略缩图');
             $table->string('logo')->comment('菜单完整图片');
-            $table->integer('like_count')->comment('点赞数');
+            $table->string('like_count')->default('')->comment('点赞数');
             $table->string('material', 200)->default('暂无')->comment('配料');
             $table->string('intro', 300)->default('暂无')->comment('简介');
             $table->timestamps();
