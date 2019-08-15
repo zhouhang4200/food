@@ -84,8 +84,9 @@ class CategoryController extends Controller
     public function delete(Request $request)
     {
         try {
-            $category = Category::where('id', $request->id)
-                ->delete();
+            $category = Category::find($request->input('id'));
+            $category->dishes()->delete();
+            $category->delete();
 
             return response()->json(['status' => 1, 'data' => $category, 'message' => '删除成功']);
         } catch (\Exception $e) {

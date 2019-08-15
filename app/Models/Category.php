@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     protected $fillable = [
-        'pid', 'name'
+        'merchant_id', 'name'
     ];
 
     public function dishes() {

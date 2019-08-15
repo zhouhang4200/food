@@ -219,7 +219,7 @@
             },
             // 删除
             categoryDelete (id) {
-                this.$confirm('您确定要删除吗？', '提示', {
+                this.$confirm('删除此类目将会使该类目下的所有菜品也删除，您确定要删除吗？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
