@@ -41,7 +41,7 @@ class CategoryController extends Controller
     {
         try {
             $data = $request->all();
-            $data['pid'] = 0;
+            $data['merchant_id'] = $request->user('web')->id;
 
             $category = Category::create($data);
 
@@ -65,7 +65,7 @@ class CategoryController extends Controller
             $data = $request->all();
 
             $category = Category::where('id', $data['id'])
-                ->update($request->except(['id', 'merchant_id', 'category']));
+                ->update($request->except(['id', 'merchant_id']));
 
             return response()->json(['status' => 1, 'data' => $category, 'message' => '编辑成功']);
         } catch (\Exception $e) {
