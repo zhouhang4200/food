@@ -1,37 +1,49 @@
 <template>
     <div style="margin-top: 20px">
-        <div class="head">
-            <van-swipe :autoplay="3000" :height="150" indicator-color="white" class="imageStyle">
-                <van-swipe-item v-if="store.banner1"><img :src="store.banner1"></van-swipe-item>
-                <van-swipe-item v-if="store.banner2"><img :src="store.banner2"></van-swipe-item>
-                <van-swipe-item v-if="store.banner3"><img :src="store.banner3"></van-swipe-item>
-            </van-swipe>
-        </div>
-        <div class="body">
-            <div class="main" style="position:relative; width: 100%; float: right; margin-bottom: 55px">
-                <van-sidebar v-model="activeKey" style="width: 20%;float: left;">
-                    <van-sidebar-item v-for="category in categories" :title="category.name" @click="check(category.id)" />
-                </van-sidebar>
-                <van-swipe-cell :right-width="10" :on-close="onClose" v-for="dish in dishData" :key="dish.id" style="width: 80%;float: right;">
-                    <van-cell-group>
-                        <van-card
-                                :price="dish.amount"
-                                :title="dish.name"
-                                :thumb="dish.logo"
-                                :origin-price="dish.original_amount"
-                        >
-                            <div slot="footer">
-                                <div class="amount_container">
-                                    <div class="amount_box">
-                                        <van-button size="mini"  @click="sub(dish)">-</van-button>
-                                        <input type="number" style="width: 40px; text-align: center;" value=0 :id="'number'+dish.id" maxlength="2" pattern="[0-9]*" readonly="readonly"/>
-                                        <van-button size="mini" @click="add(dish)">+</van-button>
-                                    </div>
-                                </div>
+        <div class="body" style="margin: 0;padding: 0;height: 100%">
+            <div class="main" style="width: 100%;margin: 0;padding: 0;">
+                <div class="head" style="position:fixed;width: 100%;top: 0;line-height:150px;z-index: 9999;">
+                    <van-swipe :autoplay="3000" :height="150" indicator-color="white" class="imageStyle">
+                        <van-swipe-item v-if="store.banner1"><img :src="store.banner1"></van-swipe-item>
+                        <van-swipe-item v-if="store.banner2"><img :src="store.banner2"></van-swipe-item>
+                        <van-swipe-item v-if="store.banner3"><img :src="store.banner3"></van-swipe-item>
+                    </van-swipe>
+                </div>
+                <div style="position:absolute;width: 100%;margin-top: 150px;">
+                    <div style="width: 20%;position:fixed;">
+                        <van-sidebar v-model="activeKey">
+                            <van-sidebar-item v-for="category,key in categories" :title="category.name"
+                                              @click="check(category.id, key)"/>
+                        </van-sidebar>
+                    </div>
+                    <div style="width: 80%;position:absolute;margin-left: 75px;overflow:scroll" id="dish">
+                        <van-swipe-cell :right-width="10" :on-close="onClose" v-for="category in dishData"
+                                        :key="category.id" :id="category.id">
+                            <div v-for="dish in category.dishes">
+                                <van-cell-group>
+                                    <van-card
+                                            :price="dish.amount"
+                                            :title="dish.name"
+                                            :thumb="dish.logo"
+                                            :origin-price="dish.original_amount"
+                                    >
+                                        <div slot="footer">
+                                            <div class="amount_container">
+                                                <div class="amount_box">
+                                                    <van-button size="mini" @click="sub(dish)">-</van-button>
+                                                    <input type="number" style="width: 40px; text-align: center;"
+                                                           value=0 :id="'number'+dish.id" maxlength="2" pattern="[0-9]*"
+                                                           readonly="readonly"/>
+                                                    <van-button size="mini" @click="add(dish)">+</van-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </van-card>
+                                </van-cell-group>
                             </div>
-                        </van-card>
-                    </van-cell-group>
-                </van-swipe-cell>
+                        </van-swipe-cell>
+                    </div>
+                </div>
                 <van-submit-bar
                         id="pay"
                         :price="totalAmount"
@@ -115,7 +127,7 @@
         methods: {
             check(category_id, key) {
                 if (key === 0) {
-                    document.getElementById('head').scrollIntoView();
+                    document.documentElement.scrollTop = 1;
                 } else {
                     document.getElementById(category_id).scrollIntoView();
                 }
