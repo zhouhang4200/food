@@ -147,19 +147,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -173,6 +160,8 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
     data: function data() {
         return {
             activeKey: 0,
+            categories: {},
+            store: {},
             form: {
                 account: '',
                 fee: ''
@@ -198,6 +187,8 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
     computed: {},
     mounted: function mounted() {
         this.dishes(1);
+        this.handleCategories();
+        this.handleBanner();
     },
 
     methods: {
@@ -318,10 +309,6 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                 var query = this.$route.query;
                 var _jsApiParameters = '';
                 this.$api.h5Pay({ amount: amount, detail: detail, open_id: open_id, merchant_id: merchant_id, seat_id: seat_id, table_id: table_id, query: query }).then(function (res) {
-                    // this.$message({
-                    //     type: 'info',
-                    //     message: res.jsApiParameters
-                    // });
                     if (res.status === 1) {
                         _jsApiParameters = JSON.parse(res.jsApiParameters);
 
@@ -379,14 +366,40 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             }
             // console.log(this.$route.params);
         },
-        dishes: function dishes(category_id) {
+        handleCategories: function handleCategories() {
             var _this = this;
+
+            var merchant_id = this.$route.query.merchant_id;
+            this.$api.h5Category({ merchant_id: merchant_id }).then(function (res) {
+                _this.categories = res.data;
+            }).catch(function (err) {
+                _this.$message({
+                    type: 'error',
+                    message: '类目获取失败'
+                });
+            });
+        },
+        handleBanner: function handleBanner() {
+            var _this2 = this;
+
+            var merchant_id = this.$route.query.merchant_id;
+            this.$api.h5Banner({ merchant_id: merchant_id }).then(function (res) {
+                _this2.store = res.data;
+            }).catch(function (err) {
+                _this2.$message({
+                    type: 'error',
+                    message: 'store获取失败'
+                });
+            });
+        },
+        dishes: function dishes(category_id) {
+            var _this3 = this;
 
             var merchant_id = this.$route.query.merchant_id;
             // console.log(merchant_id);
             this.$api.h5DishList({ merchant_id: merchant_id, category_id: category_id }).then(function (res) {
                 if (res.status === 1) {
-                    _this.dishData = res.data;
+                    _this3.dishData = res.data;
                 } else if (res.status === 3) {
                     __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
                     // this.$router.push({name: 'login', query: {}});
@@ -411,16 +424,16 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
 
         // 表单提交
         onSubmitForm: function onSubmitForm() {
-            var _this2 = this;
+            var _this4 = this;
 
             this.$validator.validateAll().then(function (result) {
                 if (result) {
-                    _this2.$api.FinanceWithdrawApply(_this2.form).then(function (res) {
+                    _this4.$api.FinanceWithdrawApply(_this4.form).then(function (res) {
                         if (res.status === 1) {
                             __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].success(res.message);
                         } else if (res.status === 3) {
                             __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
-                            _this2.$router.push({ name: 'login', query: {} });
+                            _this4.$router.push({ name: 'login', query: {} });
                         } else {
                             __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
                         }
@@ -480,21 +493,23 @@ var render = function() {
             attrs: { autoplay: 3000, height: 150, "indicator-color": "white" }
           },
           [
-            _c("van-swipe-item", [
-              _c("img", { attrs: { src: "/images/banner1.jpg" } })
-            ]),
+            _vm.store.banner1
+              ? _c("van-swipe-item", [
+                  _c("img", { attrs: { src: _vm.store.banner1 } })
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("van-swipe-item", [
-              _c("img", { attrs: { src: "/images/banner2.jpg" } })
-            ]),
+            _vm.store.banner2
+              ? _c("van-swipe-item", [
+                  _c("img", { attrs: { src: _vm.store.banner2 } })
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("van-swipe-item", [
-              _c("img", { attrs: { src: "/images/banner1.jpg" } })
-            ]),
-            _vm._v(" "),
-            _c("van-swipe-item", [
-              _c("img", { attrs: { src: "/images/banner2.jpg" } })
-            ])
+            _vm.store.banner3
+              ? _c("van-swipe-item", [
+                  _c("img", { attrs: { src: _vm.store.banner3 } })
+                ])
+              : _vm._e()
           ],
           1
         )
@@ -518,7 +533,7 @@ var render = function() {
           _c(
             "van-sidebar",
             {
-              staticStyle: { width: "30%", float: "left" },
+              staticStyle: { width: "20%", float: "left" },
               model: {
                 value: _vm.activeKey,
                 callback: function($$v) {
@@ -527,52 +542,16 @@ var render = function() {
                 expression: "activeKey"
               }
             },
-            [
-              _c("van-sidebar-item", {
-                attrs: { title: "炒菜" },
+            _vm._l(_vm.categories, function(category) {
+              return _c("van-sidebar-item", {
+                attrs: { title: category.name },
                 on: {
                   click: function($event) {
-                    return _vm.check(1)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("van-sidebar-item", {
-                attrs: { title: "锅仔" },
-                on: {
-                  click: function($event) {
-                    return _vm.check(2)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("van-sidebar-item", {
-                attrs: { title: "汤类" },
-                on: {
-                  click: function($event) {
-                    return _vm.check(3)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("van-sidebar-item", {
-                attrs: { title: "酒水" },
-                on: {
-                  click: function($event) {
-                    return _vm.check(4)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("van-sidebar-item", {
-                attrs: { title: "主食" },
-                on: {
-                  click: function($event) {
-                    return _vm.check(5)
+                    return _vm.check(category.id)
                   }
                 }
               })
-            ],
+            }),
             1
           ),
           _vm._v(" "),

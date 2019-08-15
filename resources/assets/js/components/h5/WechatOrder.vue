@@ -2,20 +2,15 @@
     <div style="margin-top: 20px">
         <div class="head">
             <van-swipe :autoplay="3000" :height="150" indicator-color="white" class="imageStyle">
-                <van-swipe-item><img src="/images/banner1.jpg"></van-swipe-item>
-                <van-swipe-item><img src="/images/banner2.jpg"></van-swipe-item>
-                <van-swipe-item><img src="/images/banner1.jpg"></van-swipe-item>
-                <van-swipe-item><img src="/images/banner2.jpg"></van-swipe-item>
+                <van-swipe-item v-if="store.banner1"><img :src="store.banner1"></van-swipe-item>
+                <van-swipe-item v-if="store.banner2"><img :src="store.banner2"></van-swipe-item>
+                <van-swipe-item v-if="store.banner3"><img :src="store.banner3"></van-swipe-item>
             </van-swipe>
         </div>
         <div class="body">
             <div class="main" style="position:relative; width: 100%; float: right; margin-bottom: 55px">
-                <van-sidebar v-model="activeKey" style="width: 30%;float: left;">
-                    <van-sidebar-item title="炒菜" @click="check(1)" />
-                    <van-sidebar-item title="锅仔" @click="check(2)" />
-                    <van-sidebar-item title="汤类" @click="check(3)" />
-                    <van-sidebar-item title="酒水" @click="check(4)" />
-                    <van-sidebar-item title="主食" @click="check(5)" />
+                <van-sidebar v-model="activeKey" style="width: 20%;float: left;">
+                    <van-sidebar-item v-for="category in categories" :title="category.name" @click="check(category.id)" />
                 </van-sidebar>
                 <van-swipe-cell :right-width="10" :on-close="onClose" v-for="dish in dishData" :key="dish.id" style="width: 70%;float: right;">
                     <van-cell-group>
@@ -45,14 +40,6 @@
                 />
             </div>
         </div>
-        <!--<div class="foot">-->
-        <!--<van-submit-bar-->
-        <!--id="pay"-->
-        <!--:price="totalAmount"-->
-        <!--button-text="提交订单"-->
-        <!--@submit="onSubmit()"-->
-        <!--/>-->
-        <!--</div>-->
     </div>
 </template>
 
@@ -74,6 +61,9 @@
         data() {
             return {
                 activeKey: 0,
+                categories:{
+                },
+                store:{},
                 form: {
                     account: '',
                     fee: '',
@@ -95,7 +85,6 @@
                 totalAmount:0,
                 dishData: {},
                 customerDishDetail:[
-
                 ]
             };
         },
@@ -104,6 +93,8 @@
         computed: {},
         mounted() {
             this.dishes(1);
+            this.handleCategories();
+            this.handleBanner();
         },
         methods: {
             check(category_id) {
@@ -221,10 +212,6 @@
                     let query = this.$route.query;
                     let jsApiParameters = '';
                     this.$api.h5Pay({amount:amount, detail:detail, open_id:open_id, merchant_id:merchant_id, seat_id:seat_id, table_id:table_id, query:query}).then(res => {
-                        // this.$message({
-                        //     type: 'info',
-                        //     message: res.jsApiParameters
-                        // });
                         if (res.status === 1) {
                             jsApiParameters = JSON.parse(res.jsApiParameters);
 
@@ -294,7 +281,28 @@
                 }
                 // console.log(this.$route.params);
             },
-
+            handleCategories(){
+                let merchant_id = this.$route.query.merchant_id;
+                this.$api.h5Category({merchant_id:merchant_id}).then(res => {
+                    this.categories=res.data;
+                }).catch(err => {
+                    this.$message({
+                        type: 'error',
+                        message: '类目获取失败'
+                    });
+                });
+            },
+            handleBanner(){
+                let merchant_id = this.$route.query.merchant_id;
+                this.$api.h5Banner({merchant_id:merchant_id}).then(res => {
+                    this.store=res.data;
+                }).catch(err => {
+                    this.$message({
+                        type: 'error',
+                        message: 'store获取失败'
+                    });
+                });
+            },
             dishes(category_id) {
                 let merchant_id = this.$route.query.merchant_id;
                 // console.log(merchant_id);

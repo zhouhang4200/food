@@ -153,6 +153,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -165,6 +167,8 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            categories: {},
+            store: {},
             form: {
                 account: '',
                 fee: ''
@@ -207,9 +211,37 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
         //     this.getCodeApi("123");
         // }
         this.dishes();
+        this.handleCategories();
+        this.handleBanner();
     },
 
     methods: {
+        handleCategories: function handleCategories() {
+            var _this = this;
+
+            var merchant_id = this.$route.query.merchant_id;
+            this.$api.h5Category({ merchant_id: merchant_id }).then(function (res) {
+                _this.categories = res.data;
+            }).catch(function (err) {
+                _this.$message({
+                    type: 'error',
+                    message: '类目获取失败'
+                });
+            });
+        },
+        handleBanner: function handleBanner() {
+            var _this2 = this;
+
+            var merchant_id = this.$route.query.merchant_id;
+            this.$api.h5Banner({ merchant_id: merchant_id }).then(function (res) {
+                _this2.store = res.data;
+            }).catch(function (err) {
+                _this2.$message({
+                    type: 'error',
+                    message: 'store获取失败'
+                });
+            });
+        },
         sub: function sub(dish) {
             var dishId = dish.id;
             var id = 'number' + dishId;
@@ -289,7 +321,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             // console.log(Number(dish.amount), this.totalAmount, dish.amount);
         },
         onSubmit: function onSubmit() {
-            var _this = this;
+            var _this3 = this;
 
             console.log(this.totalAmount);
             if (this.totalAmount > 0) {
@@ -315,13 +347,13 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
                         document.body.appendChild(div);
                         document.forms[0].submit();
                     } else {
-                        _this.$message({
+                        _this3.$message({
                             type: 'info',
                             message: '网络错误，请稍后再试'
                         });
                     }
                 }).catch(function (error) {
-                    _this.$message({
+                    _this3.$message({
                         type: 'info',
                         message: error
                     });
@@ -330,13 +362,13 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             // console.log(this.$route.params);
         },
         dishes: function dishes() {
-            var _this2 = this;
+            var _this4 = this;
 
             var merchant_id = this.$route.query.merchant_id;
             // console.log(merchant_id);
             this.$api.h5DishList({ merchant_id: merchant_id }).then(function (res) {
                 if (res.status === 1) {
-                    _this2.dishData = res.data;
+                    _this4.dishData = res.data;
                 } else if (res.status === 3) {
                     __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
                     // this.$router.push({name: 'login', query: {}});
@@ -361,16 +393,16 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
 
         // 表单提交
         onSubmitForm: function onSubmitForm() {
-            var _this3 = this;
+            var _this5 = this;
 
             this.$validator.validateAll().then(function (result) {
                 if (result) {
-                    _this3.$api.FinanceWithdrawApply(_this3.form).then(function (res) {
+                    _this5.$api.FinanceWithdrawApply(_this5.form).then(function (res) {
                         if (res.status === 1) {
                             __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].success(res.message);
                         } else if (res.status === 3) {
                             __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
-                            _this3.$router.push({ name: 'login', query: {} });
+                            _this5.$router.push({ name: 'login', query: {} });
                         } else {
                             __WEBPACK_IMPORTED_MODULE_0_vant__["d" /* Toast */].fail(res.message);
                         }
@@ -404,21 +436,23 @@ var render = function() {
             attrs: { autoplay: 3000, height: 150, "indicator-color": "white" }
           },
           [
-            _c("van-swipe-item", [
-              _c("img", { attrs: { src: "/images/banner1.jpg" } })
-            ]),
+            _vm.store.banner1
+              ? _c("van-swipe-item", [
+                  _c("img", { attrs: { src: _vm.store.banner1 } })
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("van-swipe-item", [
-              _c("img", { attrs: { src: "/images/banner2.jpg" } })
-            ]),
+            _vm.store.banner2
+              ? _c("van-swipe-item", [
+                  _c("img", { attrs: { src: _vm.store.banner2 } })
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("van-swipe-item", [
-              _c("img", { attrs: { src: "/images/banner1.jpg" } })
-            ]),
-            _vm._v(" "),
-            _c("van-swipe-item", [
-              _c("img", { attrs: { src: "/images/banner2.jpg" } })
-            ])
+            _vm.store.banner3
+              ? _c("van-swipe-item", [
+                  _c("img", { attrs: { src: _vm.store.banner3 } })
+                ])
+              : _vm._e()
           ],
           1
         )
@@ -439,6 +473,31 @@ var render = function() {
           }
         },
         [
+          _c(
+            "van-sidebar",
+            {
+              staticStyle: { width: "20%", float: "left" },
+              model: {
+                value: _vm.activeKey,
+                callback: function($$v) {
+                  _vm.activeKey = $$v
+                },
+                expression: "activeKey"
+              }
+            },
+            _vm._l(_vm.categories, function(category) {
+              return _c("van-sidebar-item", {
+                attrs: { title: category.name },
+                on: {
+                  click: function($event) {
+                    return _vm.check(category.id)
+                  }
+                }
+              })
+            }),
+            1
+          ),
+          _vm._v(" "),
           _vm._l(_vm.dishData, function(dish) {
             return _c(
               "van-swipe-cell",
