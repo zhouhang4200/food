@@ -215,11 +215,11 @@
                 form: {
                     name: '',
                     category_id: '',
-                    tag: '',
+                    tag: "",
                     material: '',
                     logo: '',
                     thumb:'',
-                    like_count:'',
+                    like_count:"",
                     amount: '',
                     original_amount:'',
                     intro: ''
@@ -260,6 +260,8 @@
                 this.imageUrl = row.logo;
                 this.dialogFormVisible = true;
                 this.form=JSON.parse(JSON.stringify(row));
+                this.form.tag='';
+                this.form.like_count='';
                 if (row.tag) {
                     this.tagList=row.tag.split(',');
                 }
@@ -397,9 +399,12 @@
             },
             tagChange(value) {
                 let checkedCount = value.length;
-                let tag = value.join(',');
-                console.log(value.join(','));
-                this.form.tag = tag;
+
+                this.form.tag = '';
+                if (checkedCount > 0) {
+                    let tag = value.join(',');
+                    this.form.tag = tag;
+                }
             },
         },
         created(){

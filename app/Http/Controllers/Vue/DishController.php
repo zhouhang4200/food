@@ -61,10 +61,11 @@ class DishController extends Controller
     public function update(Request $request)
     {
         try {
-            $data = $request->all();
+            $data = $request->except(['merchant_id', 'category', 'like_count']);
+            $data['tag'] = $request->input('tag', '') ?? '';
 
             $result = Dish::where('id', $data['id'])
-                ->update($request->except(['id', 'merchant_id', 'category']));
+                ->update($data);
 
             return response()->json(['status' => 1, 'data' => $result, 'message' => '编辑成功']);
         } catch (\Exception $e) {
