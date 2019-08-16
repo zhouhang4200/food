@@ -26,7 +26,7 @@ class DishController extends Controller
             return response()->json(['status' => 1, 'data' => $data]);
         } catch (\Exception $e) {
             myLog('dish_list_error', ['message' => '【' . $e->getLine() . '】' . '【' . $e->getMessage() . '】']);
-            return response()->json(['status' => 0, 'data' => '']);
+            return response()->json(['status' => 0, 'data' => '', 'message' => '服务器错误']);
         }
     }
 
