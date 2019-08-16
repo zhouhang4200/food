@@ -66,7 +66,7 @@ const router = new Router({
                     name: "customerList",
                     menu: true,
                     path: "list",
-                    meta: {title: '点菜列表'},
+                    meta: {title: '点单处理'},
                     component: resolve => void (require(['../components/customer/List'], resolve)),
                 }
             ]
