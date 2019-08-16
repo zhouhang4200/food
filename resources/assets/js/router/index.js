@@ -18,13 +18,6 @@ const router = new Router({
             component: resolve => void (require(['../components/auth/Login'], resolve)),
         },
         {
-            name: "register",
-            menu: false,
-            path: "/register",
-            meta: {title: '注册'},
-            component: resolve => void (require(['../components/auth/Login'], resolve)),
-        },
-        {
             name: "h5Auth",
             menu: false,
             path: "/h5/auth",
