@@ -139,6 +139,7 @@
     export default {
         data() {
             return {
+                timer: '',
                 loading: true,
                 tableHeight: 0,
                 url: '',
@@ -225,6 +226,12 @@
                 let tag = value.join(',');
                 this.form.tag = tag;
             },
+        },
+        mounted() {
+            this.timer = setInterval(this.handleTableData, 5000);
+        },
+        beforeDestroy() {
+            clearInterval(this.timer);
         },
         destroyed() {
             window.removeEventListener('resize', this.handleTableHeight);

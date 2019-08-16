@@ -384,7 +384,7 @@
             window.addEventListener('resize', this.handleTableHeight);
         },
         mounted() {
-            this.timer = setInterval(this.handleTableData, 5000);
+
         },
         beforeDestroy() {
             clearInterval(this.timer);
