@@ -21,7 +21,7 @@ class DishController extends Controller
             $data = Dish::where('merchant_id', $request->user('web')->id)
                 ->filter($request->all())
                 ->with('category')
-                ->paginate(20);
+                ->paginate(10);
 
             return response()->json(['status' => 1, 'data' => $data]);
         } catch (\Exception $e) {

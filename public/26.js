@@ -240,6 +240,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            timer: '',
             loading: true,
             tableHeight: 0,
             url: '',
@@ -335,6 +336,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var tag = value.join(',');
             this.form.tag = tag;
         }
+    },
+    mounted: function mounted() {
+        this.timer = setInterval(this.handleTableData, 5000);
+    },
+    beforeDestroy: function beforeDestroy() {
+        clearInterval(this.timer);
     },
     destroyed: function destroyed() {
         window.removeEventListener('resize', this.handleTableHeight);

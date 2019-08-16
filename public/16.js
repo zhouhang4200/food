@@ -502,9 +502,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.handleCategory();
         window.addEventListener('resize', this.handleTableHeight);
     },
-    mounted: function mounted() {
-        this.timer = setInterval(this.handleTableData, 5000);
-    },
+    mounted: function mounted() {},
     beforeDestroy: function beforeDestroy() {
         clearInterval(this.timer);
     },
