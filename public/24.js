@@ -171,6 +171,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            activeKey: 0,
             categories: {},
             store: {},
             form: {

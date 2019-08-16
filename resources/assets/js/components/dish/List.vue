@@ -45,12 +45,12 @@
             <el-table-column
                     label="价格(元)"
                     prop="amount"
-                    width="">
+                    width="200">
             </el-table-column>
             <el-table-column
                     label="所属类目"
                     prop="category_id"
-                    width="">
+                    width="200">
                 <template slot-scope="scope">
                     {{ scope.row.category.name }}
                 </template>
@@ -66,21 +66,11 @@
             <el-table-column
                     label="口味标记"
                     prop="tag"
-                    width="">
-            </el-table-column>
-            <el-table-column
-                    label="菜肴配料"
-                    prop="material"
-                    width="">
-            </el-table-column>
-            <el-table-column
-                    label="简介"
-                    prop="intro"
-                    width="">
+                    width="200">
             </el-table-column>
             <el-table-column
                     label="操作"
-                    width="150">
+                    width="200">
                 <template slot-scope="scope">
                     <el-button
                             type="primary"

@@ -253,16 +253,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -656,11 +646,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "价格(元)", prop: "amount", width: "" }
+            attrs: { label: "价格(元)", prop: "amount", width: "200" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "所属类目", prop: "category_id", width: "" },
+            attrs: { label: "所属类目", prop: "category_id", width: "200" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -699,19 +689,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "口味标记", prop: "tag", width: "" }
+            attrs: { label: "口味标记", prop: "tag", width: "200" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "菜肴配料", prop: "material", width: "" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { label: "简介", prop: "intro", width: "" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { label: "操作", width: "150" },
+            attrs: { label: "操作", width: "200" },
             scopedSlots: _vm._u([
               {
                 key: "default",
