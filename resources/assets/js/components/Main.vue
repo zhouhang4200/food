@@ -62,7 +62,8 @@
                         </el-menu-item>
                         <el-submenu index="2">
                             <template slot="title">
-                                <span class="header-avatar">
+                                <span>
+                                    <img class="header-avatar" src="/images/banner1.jpg">
                                 </span>
                                 欢迎，{{ merchant_name }}
                             </template>
@@ -229,7 +230,6 @@
         position: relative;
         top: 0;
         right: 10px;
-        background: url("/images/banner1.jpg");
         background-size: 100%;
     }
 
