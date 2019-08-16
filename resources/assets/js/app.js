@@ -12,6 +12,7 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 import './iconfont/iconfont.css';
 import VCharts from 'v-charts';
+import './encrypt.js';
 
 Vue.use(Vant);
 

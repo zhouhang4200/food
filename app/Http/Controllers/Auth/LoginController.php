@@ -67,7 +67,7 @@ class LoginController extends Controller
         }
 
         // 对前端转输数据进行解密
-        $request['password'] = $request->password;
+        $request['password'] = clientRSADecrypt($request->password);
 
         $merchant = Merchant::where('phone', $request->phone)->first();
 

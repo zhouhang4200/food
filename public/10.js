@@ -253,38 +253,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -317,11 +285,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 name: '',
                 category_id: '',
                 tag: "",
-                material: '暂无',
+                material: '',
                 logo: '',
+                thumb: '',
+                like_count: "",
                 amount: '',
                 original_amount: '',
-                intro: '暂无'
+                intro: ''
             },
             categories: {},
             tagList: []
@@ -352,15 +322,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.tagList = [];
             this.imageUrl = false;
         },
-        categoryAdd: function categoryAdd() {
-            this.category_form = {};
-            this.isAdd = true;
-            this.isUpdate = false;
-            this.title = '类目添加';
-            this.category_visible = true;
-            this.tagList = [];
-            this.imageUrl = false;
-        },
 
         // 编辑按钮
         dishUpdate: function dishUpdate(row) {
@@ -372,6 +333,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.imageUrl = row.logo;
             this.dialogFormVisible = true;
             this.form = JSON.parse(JSON.stringify(row));
+            this.form.tag = '';
+            this.form.like_count = '';
             if (row.tag) {
                 this.tagList = row.tag.split(',');
             }
@@ -380,7 +343,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // 取消按钮
         dishCancel: function dishCancel(formName) {
             this.dialogFormVisible = false;
-            this.category_visible = false;
             this.$refs[formName].clearValidate();
         },
 
@@ -450,17 +412,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             });
         },
-        handleName: function handleName() {
-            // this.$api.AccountBlackListName(this.searchParams).then(res => {
-            //     this.AccountBlackListName = res;
-            // }).catch(err => {
-            //     this.$alert('获取数据失败, 请重试!', '提示', {
-            //         confirmButtonText: '确定',
-            //         callback: action => {
-            //         }
-            //     });
-            // });
-        },
+        handleName: function handleName() {},
         handleSearch: function handleSearch() {
             this.handleTableData();
         },
@@ -502,9 +454,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // 图片上传成功将地址回传给表单
         handleAvatarSuccess: function handleAvatarSuccess(res, file) {
             if (res) {
-                console.log(res);
                 this.imageUrl = URL.createObjectURL(file.raw);
                 this.form.logo = res.path;
+                this.form.thumb = res.thumb;
             }
         },
 
@@ -525,9 +477,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         tagChange: function tagChange(value) {
             var checkedCount = value.length;
-            var tag = value.join(',');
-            console.log(value.join(','));
-            this.form.tag = tag;
+
+            this.form.tag = '';
+            if (checkedCount > 0) {
+                var tag = value.join(',');
+                this.form.tag = tag;
+            }
         }
     },
     created: function created() {
@@ -537,9 +492,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.handleCategory();
         window.addEventListener('resize', this.handleTableHeight);
     },
-    mounted: function mounted() {
-        this.timer = setInterval(this.handleTableData, 5000);
-    },
+    mounted: function mounted() {},
     beforeDestroy: function beforeDestroy() {
         clearInterval(this.timer);
     },
@@ -658,7 +611,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("新增菜品")]
+                        [_vm._v("新增菜品\n                    ")]
                       )
                     ],
                     1
@@ -693,11 +646,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "价格(元)", prop: "amount", width: "" }
+            attrs: { label: "价格(元)", prop: "amount", width: "200" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "所属类目", prop: "category_id", width: "" },
+            attrs: { label: "所属类目", prop: "category_id", width: "200" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -715,7 +668,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "预览图片", prop: "logo", width: "" },
+            attrs: { label: "预览图片", prop: "thumb", width: "" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -723,11 +676,11 @@ var render = function() {
                   return [
                     _c("img", {
                       staticStyle: {
-                        width: "100%",
-                        height: "100%",
+                        width: "100px",
+                        height: "50px",
                         display: "block"
                       },
-                      attrs: { src: scope.row.logo }
+                      attrs: { src: scope.row.thumb }
                     })
                   ]
                 }
@@ -736,19 +689,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "口味标记", prop: "tag", width: "" }
+            attrs: { label: "口味标记", prop: "tag", width: "200" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "菜肴配料", prop: "material", width: "" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { label: "简介", prop: "intro", width: "" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { label: "操作", width: "150" },
+            attrs: { label: "操作", width: "200" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -764,7 +709,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("编辑")]
+                      [_vm._v("编辑\n                ")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -777,7 +722,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("删除")]
+                      [_vm._v("删除\n                ")]
                     )
                   ]
                 }

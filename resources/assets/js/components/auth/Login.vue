@@ -261,36 +261,6 @@
                     username: [
                         {required: true, message: '请输入账号呢称', trigger: 'blur'}
                     ],
-                    // email: [
-                    //     {required: true, message: '请输入您的邮箱', trigger: 'blur'},
-                    //     {
-                    //         validator:(rule,value,callback)=>{
-                    //             if(value != ""){
-                    //                 if((/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/).test(value) == false){
-                    //                     callback(new Error("请输入正确的邮箱地址"));
-                    //                 }else{
-                    //                     callback();
-                    //                 }
-                    //             }else{
-                    //                 callback();
-                    //             }
-                    //         },
-                    //         trigger:'blur'
-                    //     },
-                    // ],
-                    // qq: [
-                    //     {required: true, message: '请输入QQ', trigger: 'blur'},
-                    //     {
-                    //         validator:(rule,value,callback)=>{
-                    //             if((/^[0-9]{5,12}$/).test(value) == false){
-                    //                 callback(new Error("请输入正确的QQ"));
-                    //             }else{
-                    //                 callback();
-                    //             }
-                    //         },
-                    //         trigger:'blur'
-                    //     },
-                    // ],
                     phone: [
                         {required: true, message: '请输入手机号', trigger: 'blur'},
                         {
@@ -321,65 +291,6 @@
             }
         },
         methods: {
-            // 初始化登录验证码
-            // initLoginCaptcha() {
-            //     let currentThis = this;
-            //     this.$api.captcha({}).then(res => {
-            //         window.initGeetest({
-            //             gt: res.gt,
-            //             challenge: res.challenge,
-            //             offline: !res.success,
-            //             new_captcha: true,
-            //             product: 'float',
-            //             area: '#form',
-            //             next_width: '100%',
-            //             bg_color: '#ffffff',
-            //             lang: 'zh-cn',
-            //             http: 'http://',
-            //             width: '100%',
-            //         }, function (captchaObj) {
-            //             captchaObj.appendTo("#captcha-login");
-            //             captchaObj.onReady(function () {
-            //             }).onSuccess(function () {
-            //                 currentThis.formLogin.geetest_challenge = document.getElementById('captcha-login').getElementsByTagName('input')['geetest_challenge'].value;
-            //                 currentThis.formLogin.geetest_seccode = document.getElementById('captcha-login').getElementsByTagName('input')['geetest_seccode'].value;
-            //                 currentThis.formLogin.geetest_validate = document.getElementById('captcha-login').getElementsByTagName('input')['geetest_validate'].value;
-            //                 currentThis.$refs['captchaLogin'].clearValidate();
-            //             }).onError(function () {
-            //
-            //             })
-            //         });
-            //     });
-            // },
-            // 初始化注册验证码
-            // initRegisterCaptcha() {
-            //     let currentThis = this;
-            //     this.$api.captcha({}).then(res => {
-            //         window.initGeetest({
-            //             gt: res.gt,
-            //             challenge: res.challenge,
-            //             offline: !res.success,
-            //             new_captcha: true,
-            //             product: 'float',
-            //             area: '#form',
-            //             next_width: '100%',
-            //             bg_color: 'black',
-            //             lang: 'zh-cn',
-            //             http: 'http://',
-            //             width: '100%',
-            //         }, function (captchaObj) {
-            //             captchaObj.appendTo("#captcha-register");
-            //             captchaObj.onReady(function () {
-            //             }).onSuccess(function () {
-            //                 currentThis.formRegister.geetest_challenge = document.getElementById('captcha-register').getElementsByTagName('input')['geetest_challenge'].value;
-            //                 currentThis.formRegister.geetest_seccode = document.getElementById('captcha-register').getElementsByTagName('input')['geetest_seccode'].value;
-            //                 currentThis.formRegister.geetest_validate = document.getElementById('captcha-register').getElementsByTagName('input')['geetest_validate'].value;
-            //                 currentThis.$refs['captchaRegister'].clearValidate();
-            //             }).onError(function () {
-            //             })
-            //         });
-            //     });
-            // },
             handleTabClick(tab, event) {
                 sessionStorage.setItem('loginRegisterActive', tab.name);
                 this.$router.push(tab.name);
@@ -389,7 +300,8 @@
                 this.$refs.formLogin.validate((valid) => {
                     if (valid) {
                         this.loginPasswordErrorMessage = '';
-                        // this.formLogin.password = encrypt(this.formLogin.password);
+                        this.formLogin.password = encrypt(this.formLogin.password);
+                       
                         this.$api.login(this.formLogin).then(res => {
                             if (res.status === 1) {
                                 console.log(res.data);
