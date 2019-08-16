@@ -676,8 +676,8 @@ var render = function() {
                   return [
                     _c("img", {
                       staticStyle: {
-                        width: "50%",
-                        height: "50%",
+                        width: "100px",
+                        height: "50px",
                         display: "block"
                       },
                       attrs: { src: scope.row.thumb }

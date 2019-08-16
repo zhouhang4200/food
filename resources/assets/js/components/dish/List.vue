@@ -60,7 +60,7 @@
                     prop="thumb"
                     width="">
                 <template slot-scope="scope">
-                    <img :src="scope.row.thumb" style="width: 50%;height: 50%;display: block;">
+                    <img :src="scope.row.thumb" style="width: 100px;height: 50px;display: block;">
                 </template>
             </el-table-column>
             <el-table-column
