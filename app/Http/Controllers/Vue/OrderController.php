@@ -21,7 +21,7 @@ class OrderController extends Controller
         try {
             $merchant_id = $request->user('web')->id;
 
-            $queryData = $request->all();
+            $queryData                = $request->all();
             $queryData['merchant_id'] = $merchant_id;
 
             $data = Order::where('merchant_id', $merchant_id)
@@ -31,7 +31,7 @@ class OrderController extends Controller
 
             return response()->json(['status' => 1, 'data' => $data]);
         } catch (\Exception $e) {
-            myLog('order_list_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+            myLog('order_list_error', ['message' => '【' . $e->getLine() . '】' . '【' . $e->getMessage() . '】']);
 
             return response()->json(['status' => 0, 'data' => '']);
         }
@@ -76,19 +76,19 @@ class OrderController extends Controller
             $order = Order::find($request->input('id'));
 
             $data = [
-                'trade_no' => $order->trade_no,
+                'trade_no'     => $order->trade_no,
                 'out_trade_no' => $order->out_trade_no,
-                'amount' => $order->amount.'元',
+                'amount'       => $order->amount . '元',
                 'channel_name' => $order->channel == 1 ? '微信支付' : ($order->channel == 2 ? '支付宝支付' : ''),
-                'pay_status' => $order->status == 1 ? '已支付' : '待支付',
-                'created_at' => $order->created_at->toDateTimeString(),
-                'comment' => $order->comment ?: '暂无',
-                'dish_detail' => $this->dishDetail($order),
+                'pay_status'   => $order->status == 1 ? '已支付' : '待支付',
+                'created_at'   => $order->created_at->toDateTimeString(),
+                'comment'      => $order->comment ?: '暂无',
+                'dish_detail'  => $this->dishDetail($order),
             ];
 
             return response()->json(['status' => 1, 'data' => $data]);
         } catch (\Exception $e) {
-            myLog('order_show_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+            myLog('order_show_error', ['message' => '【' . $e->getLine() . '】' . '【' . $e->getMessage() . '】']);
 
             return response()->json(['status' => 0, 'data' => '']);
         }
@@ -107,7 +107,7 @@ class OrderController extends Controller
         $data = '';
         foreach ($detail as $value) {
             $dish = Dish::find($value['dish_id']);
-            $data .= $dish->name.'【'.$dish->amount.'元】'.'*'.$value['number'].'份;';
+            $data .= $dish->name . '【' . $dish->amount . '元】' . '*' . $value['number'] . '份;';
         }
 
         return $data;

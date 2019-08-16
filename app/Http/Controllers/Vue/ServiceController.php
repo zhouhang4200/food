@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Vue;
 
-use App\Category;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
@@ -11,13 +11,23 @@ class ServiceController extends Controller
 {
     protected static $extensions = ['png', 'jpg', 'jpeg', 'gif'];
 
-
+    /**
+     * 图片下载
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function uploadImage(Request $request)
     {
         try {
             $file = request('file');
+
+            if (!$file->isValid()) {
+                return response()->ajaxFail('图片上传失败：无效的图片！');
+            }
+
             $name = $request->input('name', '');
-            $path = public_path("/upload/" . date('Ymd') . "/");
 
             $extension = $file->getClientOriginalExtension();
 
@@ -25,34 +35,32 @@ class ServiceController extends Controller
                 return response()->ajaxFail('图片上传失败：图片格式不正确!');
             }
 
-            if (!$file->isValid()) {
-                return response()->ajaxFail('图片上传失败：无效的图片！');
-            }
-
+            $path = public_path("/upload/" . date('Ymd') . "/");
             if (!file_exists($path)) {
                 mkdir($path, 0755, true);
             }
 
-            $fileName = time() . mt_rand(1, 100) . '.' . $extension;
-            $filepath = strstr($file->move($path, $fileName), '/upload');
-            $finalPath = str_replace('\\', '/', $filepath);
+            $file_name = time() . mt_rand(1, 100) . '.' . $extension; // 文件名
+            $file_path = strstr($file->move($path, $file_name), '/upload');
+            $file_path = str_replace('\\', '/', $file_path); // 生成的大图路径
 
-            $image = Image::make(public_path($finalPath));
+            // 生成略缩图
+            $image = Image::make(public_path($file_path));
             $image->resize(300, 200);
             $thumb_path = public_path("/upload/" . date('Ymd') . "/thumb");
             if (!file_exists($thumb_path)) {
                 mkdir($thumb_path, 0755, true);
             }
-            $thumb = $thumb_path . '/' . $fileName;
+            $thumb = $thumb_path . '/' . $file_name;
             $image->save($thumb);
-            $thumb_file  = strstr($thumb, '/upload');
-            $final_thumb = str_replace('\\', '/', $thumb_file);
+            $thumb_file = strstr($thumb, '/upload');
+            $thumb_file = str_replace('\\', '/', $thumb_file); // 生成的略缩图路径
 
-            return response()->json(['status' => 1, 'path' => $finalPath, 'thumb' => $final_thumb, 'name' => $name]);
+            return response()->json(['status' => 1, 'path' => $file_path, 'thumb' => $thumb_file, 'name' => $name]);
         } catch (\Exception $e) {
             myLog('upload_error', [$e->getFile() . $e->getLine() . $e->getMessage()]);
 
-            return response()->ajaxFail('图片上传失败：服务器异常！');
+            return response()->ajaxFail('图片上传失败：服务器错误！');
         }
     }
 

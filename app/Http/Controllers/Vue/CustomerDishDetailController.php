@@ -21,7 +21,7 @@ class CustomerDishDetailController extends Controller
         try {
             $merchant_id = $request->user('web')->id;
 
-            $queryData = $request->all();
+            $queryData                = $request->all();
             $queryData['merchant_id'] = $merchant_id;
 
             $data = CustomerDishDetail::where('merchant_id', $merchant_id)
@@ -33,7 +33,7 @@ class CustomerDishDetailController extends Controller
 
             return response()->json(['status' => 1, 'data' => $data]);
         } catch (\Exception $e) {
-            myLog('customer_dish_detail_list_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+            myLog('customer_dish_detail_list_error', ['message' => '【' . $e->getLine() . '】' . '【' . $e->getMessage() . '】']);
 
             return response()->json(['status' => 0, 'data' => '']);
         }
@@ -56,7 +56,7 @@ class CustomerDishDetailController extends Controller
 
             return response()->json(['status' => 1, 'data' => $customerDishDetail, 'message' => '操作成功!']);
         } catch (\Exception $e) {
-            myLog('customer_dish_detail_served_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+            myLog('customer_dish_detail_served_error', ['message' => '【' . $e->getLine() . '】' . '【' . $e->getMessage() . '】']);
 
             return response()->json(['status' => 0, 'data' => '', 'message' => '操作失败!']);
         }

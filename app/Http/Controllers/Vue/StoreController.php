@@ -26,7 +26,7 @@ class StoreController extends Controller
 
             return response()->json(['status' => 1, 'data' => $data]);
         } catch (\Exception $e) {
-            myLog('store_list_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+            myLog('store_list_error', ['message' => '【' . $e->getLine() . '】' . '【' . $e->getMessage() . '】']);
 
             return response()->json(['status' => 0, 'data' => '']);
         }
@@ -42,23 +42,23 @@ class StoreController extends Controller
     public function add(Request $request)
     {
         try {
-            $data = $request->all();
-            $data['merchant_id'] = $request->user('web')->id;
-            $data['pid'] = 0;
-            $data['status'] = 0; // 审核中
+            $data                   = $request->all();
+            $data['merchant_id']    = $request->user('web')->id;
+            $data['pid']            = 0;
+            $data['status']         = 0; // 审核中
             $data['license_number'] = $request->input('license_number', '');
-            $data['legal_person'] = $request->input('legal_person', '');
-            $data['legal_phone'] = $request->input('legal_phone', '');
-            $data['banner1'] = $request->input('banner1') ?? '';
-            $data['banner2'] = $request->input('banner2') ?? '';
-            $data['banner3'] = $request->input('banner3') ?? '';
-            $data['banner4'] = $request->input('banner4') ?? '';
+            $data['legal_person']   = $request->input('legal_person', '');
+            $data['legal_phone']    = $request->input('legal_phone', '');
+            $data['banner1']        = $request->input('banner1') ?? '';
+            $data['banner2']        = $request->input('banner2') ?? '';
+            $data['banner3']        = $request->input('banner3') ?? '';
+            $data['banner4']        = $request->input('banner4') ?? '';
 
             $data = Store::create($data);
 
             return response()->json(['status' => 1, 'data' => $data, 'message' => '添加成功']);
         } catch (\Exception $e) {
-            myLog('store_add_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+            myLog('store_add_error', ['message' => '【' . $e->getLine() . '】' . '【' . $e->getMessage() . '】']);
             return response()->json(['status' => 0, 'data' => '', 'message' => '添加失败']);
         }
     }
@@ -73,23 +73,23 @@ class StoreController extends Controller
     public function update(Request $request)
     {
         try {
-            $data = $request->all();
-            $data['merchant_id'] = $request->user('web')->id;
-            $data['pid'] = 0;
+            $data                   = $request->all();
+            $data['merchant_id']    = $request->user('web')->id;
+            $data['pid']            = 0;
             $data['license_number'] = $request->input('license_number') ?? '';
-            $data['legal_person'] = $request->input('legal_person') ?? '';
-            $data['legal_phone'] = $request->input('legal_phone') ?? '';
-            $data['banner1'] = $request->input('banner1') ?? '';
-            $data['banner2'] = $request->input('banner2') ?? '';
-            $data['banner3'] = $request->input('banner3') ?? '';
-            $data['banner4'] = $request->input('banner4') ?? '';
+            $data['legal_person']   = $request->input('legal_person') ?? '';
+            $data['legal_phone']    = $request->input('legal_phone') ?? '';
+            $data['banner1']        = $request->input('banner1') ?? '';
+            $data['banner2']        = $request->input('banner2') ?? '';
+            $data['banner3']        = $request->input('banner3') ?? '';
+            $data['banner4']        = $request->input('banner4') ?? '';
 
             $result = Store::where('id', $data['id'])
                 ->update($data);
 
             return response()->json(['status' => 1, 'data' => $result, 'message' => '编辑成功']);
         } catch (\Exception $e) {
-            myLog('store_update_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+            myLog('store_update_error', ['message' => '【' . $e->getLine() . '】' . '【' . $e->getMessage() . '】']);
             return response()->json(['status' => 0, 'data' => '', 'message' => '编辑失败']);
         }
     }

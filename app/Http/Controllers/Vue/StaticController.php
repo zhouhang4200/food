@@ -22,8 +22,10 @@ class StaticController extends Controller
     {
         try {
             $merchant_id = $request->user('web')->id;
-            $todayDate = Carbon::now()->toDateString();
-            $last7Date = Carbon::now()->subDays(6)->toDateString();
+
+            $now = Carbon::now();
+            $todayDate = $now->toDateString();
+            $last7Date = $now->subDays(6)->toDateString();
 
             $data = $this->orderStaticData($merchant_id, $last7Date, $todayDate);
 
@@ -47,8 +49,10 @@ class StaticController extends Controller
     {
         try {
             $merchant_id = $request->user('web')->id;
-            $todayDate = Carbon::now()->toDateString();
-            $last7Date = Carbon::now()->subDays(29)->toDateString();
+
+            $now = Carbon::now();
+            $todayDate = $now->toDateString();
+            $last7Date = $now->subDays(29)->toDateString();
 
             $data = $this->orderStaticData($merchant_id, $last7Date, $todayDate, '近30日');
 
@@ -72,7 +76,6 @@ class StaticController extends Controller
     {
         try {
             $merchant_id = $request->user('web')->id;
-            $year = Carbon::now()->year;
 
             $data = $this->orderYearStaticData($merchant_id, '每月');
 
@@ -196,8 +199,10 @@ class StaticController extends Controller
     {
         try {
             $merchant_id = $request->user('web')->id;
-            $todayDate = Carbon::now()->toDateString();
-            $last7Date = Carbon::now()->subDays(6)->toDateString();
+
+            $now = Carbon::now();
+            $todayDate = $now->toDateString();
+            $last7Date = $now->subDays(6)->toDateString();
 
             $data = $this->dishStaticData($merchant_id, $last7Date, $todayDate);
 
@@ -221,8 +226,10 @@ class StaticController extends Controller
     {
         try {
             $merchant_id = $request->user('web')->id;
-            $todayDate = Carbon::now()->toDateString();
-            $last7Date = Carbon::now()->subDays(29)->toDateString();
+
+            $now = Carbon::now();
+            $todayDate = $now->toDateString();
+            $last7Date = $now->subDays(29)->toDateString();
 
             $data = $this->dishStaticData($merchant_id, $last7Date, $todayDate, '近30日共计点菜数');
 

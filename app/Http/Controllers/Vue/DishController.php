@@ -25,7 +25,7 @@ class DishController extends Controller
 
             return response()->json(['status' => 1, 'data' => $data]);
         } catch (\Exception $e) {
-            myLog('dish_list_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+            myLog('dish_list_error', ['message' => '【' . $e->getLine() . '】' . '【' . $e->getMessage() . '】']);
             return response()->json(['status' => 0, 'data' => '']);
         }
     }
@@ -46,7 +46,7 @@ class DishController extends Controller
 
             return response()->json(['status' => 1, 'data' => $data, 'message' => '添加成功']);
         } catch (\Exception $e) {
-            myLog('dish_add_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+            myLog('dish_add_error', ['message' => '【' . $e->getLine() . '】' . '【' . $e->getMessage() . '】']);
             return response()->json(['status' => 0, 'data' => '', 'message' => '添加失败']);
         }
     }
@@ -61,7 +61,7 @@ class DishController extends Controller
     public function update(Request $request)
     {
         try {
-            $data = $request->except(['merchant_id', 'category', 'like_count']);
+            $data        = $request->except(['merchant_id', 'category', 'like_count']);
             $data['tag'] = $request->input('tag', '') ?? '';
 
             $result = Dish::where('id', $data['id'])
@@ -69,7 +69,7 @@ class DishController extends Controller
 
             return response()->json(['status' => 1, 'data' => $result, 'message' => '编辑成功']);
         } catch (\Exception $e) {
-            myLog('dish_update_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+            myLog('dish_update_error', ['message' => '【' . $e->getLine() . '】' . '【' . $e->getMessage() . '】']);
             return response()->json(['status' => 0, 'data' => '', 'message' => '编辑失败']);
         }
     }
@@ -89,7 +89,7 @@ class DishController extends Controller
 
             return response()->json(['status' => 1, 'data' => $data, 'message' => '删除成功']);
         } catch (\Exception $e) {
-            myLog('dish_delete_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+            myLog('dish_delete_error', ['message' => '【' . $e->getLine() . '】' . '【' . $e->getMessage() . '】']);
             return response()->json(['status' => 0, 'data' => '', 'message' => '删除失败']);
         }
     }

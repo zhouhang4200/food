@@ -13,7 +13,7 @@ class FinanceController extends Controller
         try {
             $merchant_id = $request->user('web')->id;
 
-            $queryData = $request->all();
+            $queryData                = $request->all();
             $queryData['merchant_id'] = $merchant_id;
 
             $data = Finance::where('merchant_id', $merchant_id)
@@ -23,7 +23,7 @@ class FinanceController extends Controller
 
             return response()->json(['status' => 1, 'data' => $data]);
         } catch (\Exception $e) {
-            myLog('finance_list_error', ['message' => '【'. $e->getLine().'】'.'【'.$e->getMessage().'】']);
+            myLog('finance_list_error', ['message' => '【' . $e->getLine() . '】' . '【' . $e->getMessage() . '】']);
 
             return response()->json(['status' => 0, 'data' => '']);
         }
