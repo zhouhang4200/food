@@ -71,6 +71,7 @@ Route::namespace('Vue')->group(function () {
         });
         // 数据统计
         Route::prefix('static')->group(function () {
+            Route::post('', 'StaticController@static');
             Route::post('dish/week/data', 'StaticController@dishWeekData');
             Route::post('dish/month/data', 'StaticController@dishMonthData');
             Route::post('dish/year/data', 'StaticController@dishYearData');

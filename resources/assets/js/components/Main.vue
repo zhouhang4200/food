@@ -45,6 +45,18 @@
                 <el-header style="font-size: 30px;height:60px;line-height:60px">
                     <i class="icon-ios-menu" :class="rotateIcon" @click="handleCollapse"></i>
                     <el-menu class="el-menu-demo" mode="horizontal" style="float: right">
+                        <el-menu-item index="2">
+                            <span>日单：{{day_order_count}}</span>
+                        </el-menu-item>
+                        <el-menu-item index="2">
+                            <span>日流水：{{day_balance}}</span>
+                        </el-menu-item>
+                        <el-menu-item index="2">
+                            <span>总单：{{all_order_count}}</span>
+                        </el-menu-item>
+                        <el-menu-item index="2">
+                            <span>总流水：{{all_balance}}</span>
+                        </el-menu-item>
                         <el-menu-item index="1">
                             <i class="el-icon-bell"></i>
                         </el-menu-item>
@@ -84,6 +96,10 @@
         name: "Main",
         data() {
             return {
+                day_balance:0,
+                day_order_count:0,
+                all_order_count:0,
+                all_balance:0,
                 merchant_name: '',
                 collapse: false,
                 menus: null,
@@ -108,8 +124,23 @@
             window.addEventListener('resize', this.handleContentContainerStyle);
             this.handleContentContainerStyle();
             this.handleBreadcrumb();
+            this.handleStatic();
         },
         methods: {
+            handleStatic() {
+                this.$api.static().then(res => {
+                    let data = res.data;
+                    this.day_order_count = data.day_order_count;
+                    this.day_balance = data.day_balance;
+                    this.all_order_count = data.all_order_count;
+                    this.all_balance = data.all_balance;
+                }).catch(err => {
+                    this.$message({
+                        type: 'error',
+                        message: '获取统计数据失败'
+                    });
+                });
+            },
             handleMerchantName() {
                 this.merchant_name = sessionStorage.getItem('name')
             },

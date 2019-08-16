@@ -123,7 +123,7 @@
                 :total="TotalPage">
         </el-pagination>
         <el-dialog :title="title" :visible.sync="dialogFormVisible">
-            <el-form :model="form" ref="form" :rules="rules" label-width="80px">
+            <el-form :model="form" ref="form" :rules="rules" label-width="90px">
                 <el-form-item label="店名" prop="name">
                     <el-input v-model="form.name" autocomplete="off"></el-input>
                 </el-form-item>

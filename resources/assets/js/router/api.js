@@ -125,4 +125,7 @@ export default {
     financeYearData(params) {
         return post('/static/finance/year/data', params);
     },
+    static(params) {
+        return post('/static', params);
+    },
 }

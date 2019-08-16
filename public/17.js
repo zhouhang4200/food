@@ -821,7 +821,7 @@ var render = function() {
               attrs: {
                 model: _vm.form,
                 rules: _vm.rules,
-                "label-width": "80px"
+                "label-width": "90px"
               }
             },
             [

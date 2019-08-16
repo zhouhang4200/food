@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Vue;
 
 use App\Models\CustomerDishDetail;
 use App\Models\Dish;
+use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -260,6 +261,41 @@ class StaticController extends Controller
 
         } catch (\Exception $e) {
             myLog('dish_year_data', ['data' => $e->getLine().$e->getMessage()]);
+
+            return response()->json(['status' => 0, 'data' => '']);
+        }
+    }
+
+    public function static(Request $request) {
+        try {
+            $today = Carbon::now()->toDateString();
+            $merchant_id = $request->user('web')->id;
+
+            $day_balance = Order::where('date', $today)
+                ->where('merchant_id', $merchant_id)
+                ->sum('amount');
+
+            $all_balance = Order::where('merchant_id', $merchant_id)
+                ->sum('amount');
+
+            $day_order_count = Order::where('date', $today)
+                ->where('merchant_id', $merchant_id)
+                ->count();
+
+            $all_order_count = Order::where('merchant_id', $merchant_id)
+                ->count();
+
+            $data = [
+                'day_balance' => $day_balance,
+                'day_order_count' => $day_order_count,
+                'all_balance' => $all_balance,
+                'all_order_count' => $all_order_count,
+            ];
+
+            return response()->json(['status' => 1, 'data' => $data]);
+
+        } catch (\Exception $e) {
+            myLog('static_data', ['data' => $e->getLine().$e->getMessage()]);
 
             return response()->json(['status' => 0, 'data' => '']);
         }
