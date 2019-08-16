@@ -178,7 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         //
-        App\Providers\ResponseMacroServiceProvider::class,
+        App\Providers\ResponseServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         Overtrue\LaravelWeChat\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class
@@ -236,7 +236,4 @@ return [
         'Image' => Intervention\Image\Facades\Image::class
 
     ],
-
-//    'h5_domain' => 'h5.diancan.test',
-    'h5_domain' => 'h5.diancan.nanmingyu.com',
 ];

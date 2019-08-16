@@ -14,7 +14,7 @@
 // 首页，去除路由中的*号
 Route::get('/{vue?}', 'H5Controller@index')->where('vue', '[\/\w\.-]*')->where('vue', '^(?!socket$).*$');
 
-
+// 所有的h5扫码路由在此
 Route::post('/dish/list', 'OrderController@dishList');
 Route::post('/category/list', 'CategoryController@list');
 Route::post('/category/banner', 'CategoryController@banner');

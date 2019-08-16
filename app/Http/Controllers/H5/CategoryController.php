@@ -9,6 +9,13 @@ use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
+    /**
+     * 商户下面的分类列表
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function list(Request $request)
     {
         try {
@@ -24,6 +31,13 @@ class CategoryController extends Controller
         }
     }
 
+    /**
+     * 商户下面的banner
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function banner(Request $request) {
         try {
             $merchant_id = $request->input('merchant_id');

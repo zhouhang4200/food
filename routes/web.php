@@ -15,7 +15,7 @@
 ////    return view('welcome');
 //    return response()->json(['staus' => 1, 'data' => 'yes']);
 //});
-
+// 所有的后台vue路由在此
 Route::get('/{vue?}', 'Vue\VueController@index')->where('vue', '[\/\w\.-]*')->where('vue', '^(?!socket$).*$');
 
 Route::namespace('Auth')->group(function () {

@@ -27,7 +27,6 @@ class OrderController extends Controller
     public function dishList(Request $request)
     {
         try {
-            $category_id = $request->input('category_id');
             $merchant_id = $request->input('merchant_id');
 
             $data = Category::where('merchant_id', $merchant_id)
@@ -364,7 +363,7 @@ class OrderController extends Controller
                     'seat_id'        => $detail['seat_id'],
                     'merchant_id'    => $detail['merchant_id'],
                     'number'         => $detail['number'],
-                    'comment'         => '',
+                    'comment'        => '',
                     'created_at'     => date("Y-m-d H:i:s"),
                     'updated_at'     => date("Y-m-d H:i:s"),
                 ];

@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 //});
 
 // 自带一个api中间件
-Route::namespace('V1')->prefix('v1')->group(function () {
+//Route::namespace('V1')->prefix('v1')->group(function () {
     // 登录
 //    Route::post('login', 'LoginController@login');
 //    Route::post('register', 'RegisterController@register');
@@ -26,4 +26,4 @@ Route::namespace('V1')->prefix('v1')->group(function () {
 //    Route::middleware(['auth'])->prefix('dish')->group(function () {
 //        Route::post('list', 'DishController@list');
 //    });
-});
+//});

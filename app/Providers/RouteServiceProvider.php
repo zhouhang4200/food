@@ -39,7 +39,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         // H5端
-        if(request()->getHost() == config('app.h5_domain')) {
+        if(request()->getHost() == env('H5_DOMAIN')) {
             $this->mapH5Routes();
             $this->mapAuthRoutes();
         } else {

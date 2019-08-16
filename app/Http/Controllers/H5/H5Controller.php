@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 class H5Controller extends Controller
 {
     /**
-     * vue 入口
+     * vue 入口,跳转获取用户openid
      *
      * @param Request $request
      * @param $vue
