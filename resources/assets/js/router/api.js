@@ -1,4 +1,4 @@
-import { post, get } from './axios';
+import {post, get} from './axios';
 
 // 获取订单数据
 export default {
@@ -11,7 +11,7 @@ export default {
     register(params) {
         return post('/register', params);
     },
-    // h5 菜肴
+    // h5 路由
     h5DishList(params) {
         return post('/h5/dish/list', params);
     },
@@ -21,27 +21,23 @@ export default {
     h5Banner(params) {
         return post('/h5/category/banner', params);
     },
-    // h5 点餐详情
     h5CustomerDishDetail(params) {
         return post('/h5/customer/detail', params);
     },
-    // 获取openid
     getOpenId(params) {
         return post('/h5/openid', params);
     },
-    // h5 支付
     h5Pay(params) {
         return post('/h5/pay', params);
     },
-    // 获取类目
+
+    // 后台vue路由
     category(params) {
         return post('/category', params);
     },
-    // 餐桌
     tableList(params) {
         return post('/tables/list', params);
     },
-    // 菜单
     dishList(params) {
         return post('/dish/list', params);
     },
@@ -54,7 +50,6 @@ export default {
     dishDelete(params) {
         return post('/dish/delete', params);
     },
-    // 类目
     categoryList(params) {
         return post('/category/list', params);
     },
@@ -67,55 +62,42 @@ export default {
     categoryDelete(params) {
         return post('/category/delete', params);
     },
-    // 客户点餐列表
     customerDishDetailList(params) {
         return post('/customer/dish/detail/list', params);
     },
-    // 客户点餐状态修改（上菜）
     customerDishDetailServed(params) {
         return post('/customer/dish/detail/served', params);
     },
-    // 客户点餐上菜状态
     customerDishDetailStatus(params) {
         return post('/customer/dish/detail/status', params);
     },
-    // 财务流水列表
     financeList(params) {
         return post('/finance/list', params);
     },
-    // 财务子类型
     financeSubType(params) {
         return post('/finance/sub/type', params);
     },
-    // 订单列表
     orderList(params) {
         return post('/order/list', params);
     },
-    //订单支付状态
     orderPayStatus(params) {
         return post('/order/pay/status', params);
     },
-    // 订单支付渠道
     orderChannel(params) {
         return post('/order/channel', params);
     },
-    // 订单详情
     orderShow(params) {
         return post('/order/show', params);
     },
-    // 门店列表
     storeList(params) {
         return post('/store/list', params);
     },
-    // 门店添加
     storeAdd(params) {
         return post('/store/add', params);
     },
-    // 门店修改
     storeUpdate(params) {
         return post('/store/update', params);
     },
-    // 数据统计
     dishWeekData(params) {
         return post('/static/dish/week/data', params);
     },

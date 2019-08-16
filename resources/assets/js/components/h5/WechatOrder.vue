@@ -142,9 +142,8 @@
             },
             getOpenIdApi(code) {
                 this.$api.getopenId({code: code}).then(res => {
-                    console.log(123122312);
                     if (res.status === 1) {
-                        console.log('pay_success');
+                        // console.log('pay_success');
                     } else if (res.status === 3) {
                         // Toast.fail(res.message);
                     } else {
@@ -189,7 +188,7 @@
                 //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
                 // }
 
-                console.log(this.customerDishDetail);
+                // console.log(this.customerDishDetail);
             },
             add(dish) {
                 let dishId = dish.id;
@@ -227,11 +226,11 @@
                 //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
                 // }
 
-                console.log(this.customerDishDetail);
+                // console.log(this.customerDishDetail);
                 // console.log(Number(dish.amount), this.totalAmount, dish.amount);
             },
             onSubmit() {
-                console.log(this.totalAmount);
+                // console.log(this.totalAmount);
                 if (this.totalAmount > 0) {
                     let amount = this.totalAmount;
                     let detail = this.customerDishDetail;

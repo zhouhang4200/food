@@ -7,7 +7,8 @@
                         <el-button
                                 type="primary"
                                 size="small"
-                                @click="storeAdd()">添加门店</el-button>
+                                @click="storeAdd()">添加门店
+                        </el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -24,9 +25,9 @@
                     width="100">
             </el-table-column>
             <!--<el-table-column-->
-                    <!--label="主门店"-->
-                    <!--prop="parent_name"-->
-                    <!--width="">-->
+            <!--label="主门店"-->
+            <!--prop="parent_name"-->
+            <!--width="">-->
             <!--</el-table-column>-->
             <el-table-column
                     label="门头照"
@@ -41,7 +42,8 @@
                     prop="banner1"
                     width="">
                 <template slot-scope="scope">
-                    <img v-if="scope.row.banner1" :src="scope.row.banner1" style="width: 100%;height: 100%;display: block;">
+                    <img v-if="scope.row.banner1" :src="scope.row.banner1"
+                         style="width: 100%;height: 100%;display: block;">
                 </template>
             </el-table-column>
             <el-table-column
@@ -49,7 +51,8 @@
                     prop="banner2"
                     width="">
                 <template slot-scope="scope">
-                    <img v-if="scope.row.banner2" :src="scope.row.banner2" style="width: 100%;height: 100%;display: block;">
+                    <img v-if="scope.row.banner2" :src="scope.row.banner2"
+                         style="width: 100%;height: 100%;display: block;">
                 </template>
             </el-table-column>
             <el-table-column
@@ -57,7 +60,8 @@
                     prop="banner3"
                     width="">
                 <template slot-scope="scope">
-                    <img v-if="scope.row.banner3" :src="scope.row.banner3" style="width: 100%;height: 100%;display: block;">
+                    <img v-if="scope.row.banner3" :src="scope.row.banner3"
+                         style="width: 100%;height: 100%;display: block;">
                 </template>
             </el-table-column>
             <el-table-column
@@ -65,7 +69,8 @@
                     prop="banner4"
                     width="">
                 <template slot-scope="scope">
-                    <img v-if="scope.row.banner4" :src="scope.row.banner4" style="width: 100%;height: 100%;display: block;">
+                    <img v-if="scope.row.banner4" :src="scope.row.banner4"
+                         style="width: 100%;height: 100%;display: block;">
                 </template>
             </el-table-column>
             <el-table-column
@@ -103,7 +108,8 @@
                     <el-button
                             type="primary"
                             size="small"
-                            @click="storeUpdate(scope.row)">编辑</el-button>
+                            @click="storeUpdate(scope.row)">编辑
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -207,109 +213,83 @@
         </el-dialog>
     </div>
 </template>
-<style>
-    .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-    .avatar-uploader .el-upload:hover {
-        border-color: #409EFF;
-    }
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 300px;
-        height: 200px;
-        line-height: 200px;
-        text-align: center;
-    }
-    .avatar {
-        width: 300px;
-        height: 200px;
-        display: block;
-    }
-</style>
 
 <script>
     export default {
-        data(){
+        data() {
             return {
-                imageUrl:'',
-                banner1:'',
-                banner2:'',
-                banner3:'',
-                banner4:'',
-                loading:true,
+                imageUrl: '',
+                banner1: '',
+                banner2: '',
+                banner3: '',
+                banner4: '',
+                loading: true,
                 tableHeight: 0,
-                isAdd:true,
-                isUpdate:false,
-                title:'添加',
-                url:'',
-                dialogFormVisible:false,
-                searchParams:{
-                    page:1,
+                isAdd: true,
+                isUpdate: false,
+                title: '添加',
+                url: '',
+                dialogFormVisible: false,
+                searchParams: {
+                    page: 1,
                 },
-                TotalPage:0,
+                TotalPage: 0,
                 tableData: [],
-                rules:{
-                    name:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
-                    address:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
-                    logo:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
+                rules: {
+                    name: [{required: true, message: '必填项不可为空!', trigger: 'blur'}],
+                    address: [{required: true, message: '必填项不可为空!', trigger: 'blur'}],
+                    logo: [{required: true, message: '必填项不可为空!', trigger: 'blur'}],
                 },
                 form: {
                     name: '',
                     address: '',
                     logo: '',
                     license_number: "",
-                    legal_person:"",
+                    legal_person: "",
                     legal_phone: "",
-                    banner1:'',
-                    banner2:'',
-                    banner3:'',
-                    banner4:''
+                    banner1: '',
+                    banner2: '',
+                    banner3: '',
+                    banner4: ''
                 },
-                categories:{
-                },
+                categories: {},
                 tagList: [],
             }
         },
-        created(){
+        created() {
             this.handleTableData();
             this.handleTableHeight();
             window.addEventListener('resize', this.handleTableHeight);
         },
         methods: {
             //新增按钮
-            storeAdd(){
-                this.form={};
-                this.isAdd=true;
-                this.isUpdate=false;
-                this.title='添加';
+            storeAdd() {
+                this.form = {};
+                this.isAdd = true;
+                this.isUpdate = false;
+                this.title = '添加';
                 this.dialogFormVisible = true;
-                this.tagList=[];
-                this.imageUrl=false;
-                this.banner1=false;
-                this.banner2=false;
-                this.banner3=false;
-                this.banner4=false;
+                this.tagList = [];
+                this.imageUrl = false;
+                this.banner1 = false;
+                this.banner2 = false;
+                this.banner3 = false;
+                this.banner4 = false;
             },
             // 编辑按钮
             storeUpdate(row) {
                 this.handleTableData();
-                this.tagList=[];
-                this.isAdd=false;
-                this.isUpdate=true;
-                this.title='修改';
+                this.tagList = [];
+                this.isAdd = false;
+                this.isUpdate = true;
+                this.title = '修改';
                 this.imageUrl = row.logo;
                 this.banner1 = row.banner1;
                 this.banner2 = row.banner2;
                 this.banner3 = row.banner3;
                 this.banner4 = row.banner4;
                 this.dialogFormVisible = true;
-                this.form=JSON.parse(JSON.stringify(row));
+                this.form = JSON.parse(JSON.stringify(row));
             },
             // 取消按钮
             storeCancel(formName) {
@@ -362,11 +342,11 @@
                 });
             },
             // 加载数据
-            handleTableData(){
+            handleTableData() {
                 this.$api.storeList(this.searchParams).then(res => {
                     this.tableData = res.data.data;
                     this.TotalPage = res.data.total;
-                    this.loading=false;
+                    this.loading = false;
                 }).catch(err => {
                     this.$alert('获取数据失败, 请重试!', '提示', {
                         confirmButtonText: '确定',
@@ -385,7 +365,7 @@
             },
             // 图片上传成功将地址回传给表单
             handleAvatarSuccess(res, file) {
-                console.log(res.status, res.name);
+                // console.log(res.status, res.name);
                 if (res.status > 0) {
                     let fileName = res.name;
                     if (fileName === 'logo') {
@@ -408,7 +388,6 @@
             },
             // 图片上传
             beforeAvatarUpload(file) {
-                console.log(file);
                 const isJPEG = file.type === 'image/jpeg';
                 // const isPng = file.type === 'image/png';
                 // const isJPG = file.type === 'image/jpg';
@@ -425,7 +404,6 @@
             tagChange(value) {
                 let checkedCount = value.length;
                 let tag = value.join(',');
-                console.log(value.join(','));
                 this.form.tag = tag;
             },
         },
@@ -435,3 +413,32 @@
 
     }
 </script>
+
+<style>
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 300px;
+        height: 200px;
+        line-height: 200px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 300px;
+        height: 200px;
+        display: block;
+    }
+</style>

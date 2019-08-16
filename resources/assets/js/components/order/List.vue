@@ -122,7 +122,8 @@
                     <el-button
                             type="primary"
                             size="small"
-                            @click="show(scope.row.id)">详情</el-button>
+                            @click="show(scope.row.id)">详情
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -165,68 +166,43 @@
         </el-dialog>
     </div>
 </template>
-<style>
-    .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-    .avatar-uploader .el-upload:hover {
-        border-color: #409EFF;
-    }
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 300px;
-        height: 200px;
-        line-height: 200px;
-        text-align: center;
-    }
-    .avatar {
-        width: 300px;
-        height: 200px;
-        display: block;
-    }
-</style>
 
 <script>
     export default {
-        data(){
+        data() {
             return {
-                showVisible:false,
+                showVisible: false,
                 tableHeight: 0,
-                url:'',
-                loading:false,
-                dialogFormVisible:false,
-                searchParams:{
-                    trade_no:'',
-                    table_id:'',
-                    seat_id:'',
-                    date:'',
-                    channel:'',
-                    pay_status:'',
-                    page:1,
+                url: '',
+                loading: false,
+                dialogFormVisible: false,
+                searchParams: {
+                    trade_no: '',
+                    table_id: '',
+                    seat_id: '',
+                    date: '',
+                    channel: '',
+                    pay_status: '',
+                    page: 1,
                 },
-                form:{
-                    trade_no:'',
-                    out_trade_no:'',
-                    channel_name:'',
-                    pay_status:'',
-                    created_at:'',
-                    dish_detail:'',
-                    amount:'',
-                    comment:'空',
+                form: {
+                    trade_no: '',
+                    out_trade_no: '',
+                    channel_name: '',
+                    pay_status: '',
+                    created_at: '',
+                    dish_detail: '',
+                    amount: '',
+                    comment: '空',
                 },
-                showData:{},
-                TotalPage:0,
-                channels:[],
-                pay_statuses:[],
+                showData: {},
+                TotalPage: 0,
+                channels: [],
+                pay_statuses: [],
                 tableData: [],
             }
         },
-        created(){
+        created() {
             this.handlePayStatuses();
             this.handleChannels();
             this.handleTableData();
@@ -234,9 +210,9 @@
             window.addEventListener('resize', this.handleTableHeight);
         },
         methods: {
-            handlePayStatuses(){
+            handlePayStatuses() {
                 this.$api.orderPayStatus().then(res => {
-                    this.pay_statuses=res.data;
+                    this.pay_statuses = res.data;
                 }).catch(err => {
                     this.$message({
                         type: 'error',
@@ -244,9 +220,9 @@
                     });
                 });
             },
-            handleChannels(){
+            handleChannels() {
                 this.$api.orderChannel().then(res => {
-                    this.channels=res.data;
+                    this.channels = res.data;
                 }).catch(err => {
                     this.$message({
                         type: 'error',
@@ -255,11 +231,11 @@
                 });
             },
             // 加载数据
-            handleTableData(){
+            handleTableData() {
                 this.$api.orderList(this.searchParams).then(res => {
                     this.tableData = res.data.data;
                     this.TotalPage = res.data.total;
-                    this.loading=false;
+                    this.loading = false;
                 }).catch(err => {
                     this.$alert('获取数据失败, 请重试!', '提示', {
                         confirmButtonText: '确定',
@@ -269,8 +245,8 @@
                 });
             },
             // 详情
-            show(id){
-                this.$api.orderShow({id:id}).then(res => {
+            show(id) {
+                this.$api.orderShow({id: id}).then(res => {
                     this.form = res.data;
                     this.showVisible = true;
                 }).catch(err => {
@@ -295,7 +271,6 @@
             tagChange(value) {
                 let checkedCount = value.length;
                 let tag = value.join(',');
-                console.log(value.join(','));
                 this.form.tag = tag;
             },
         },
@@ -305,3 +280,31 @@
 
     }
 </script>
+<style>
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 300px;
+        height: 200px;
+        line-height: 200px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 300px;
+        height: 200px;
+        display: block;
+    }
+</style>

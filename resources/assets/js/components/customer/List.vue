@@ -118,7 +118,8 @@
                             v-if="scope.row.status === 0"
                             type="primary"
                             size="small"
-                            @click="served(scope.row.id)">完成</el-button>
+                            @click="served(scope.row.id)">完成
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -133,64 +134,38 @@
         </el-pagination>
     </div>
 </template>
-<style>
-    .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-    .avatar-uploader .el-upload:hover {
-        border-color: #409EFF;
-    }
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 300px;
-        height: 200px;
-        line-height: 200px;
-        text-align: center;
-    }
-    .avatar {
-        width: 300px;
-        height: 200px;
-        display: block;
-    }
-</style>
 
 <script>
     export default {
-        data(){
+        data() {
             return {
-                loading:true,
+                loading: true,
                 tableHeight: 0,
-                url:'',
-                dialogFormVisible:false,
-                searchParams:{
-                    name:'',
-                    table_id:'',
-                    seat_id:'',
-                    date:'',
-                    status:'',
-                    page:1,
+                url: '',
+                dialogFormVisible: false,
+                searchParams: {
+                    name: '',
+                    table_id: '',
+                    seat_id: '',
+                    date: '',
+                    status: '',
+                    page: 1,
                 },
-                TotalPage:0,
+                TotalPage: 0,
                 tableData: [],
-                statuses:{
-                },
+                statuses: {},
             }
         },
-        created(){
+        created() {
             this.handleTableData();
             this.handleTableHeight();
             this.handleStatuses();
             window.addEventListener('resize', this.handleTableHeight);
         },
         methods: {
-            handleStatuses(){
+            handleStatuses() {
                 this.$api.customerDishDetailStatus().then(res => {
-                    this.statuses=res.data;
+                    this.statuses = res.data;
                 }).catch(err => {
                     this.$message({
                         type: 'error',
@@ -205,7 +180,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$api.customerDishDetailServed({id:id}).then(res => {
+                    this.$api.customerDishDetailServed({id: id}).then(res => {
                         this.$message({
                             showClose: true,
                             type: res.status === 1 ? 'success' : 'error',
@@ -221,11 +196,11 @@
                 });
             },
             // 加载数据
-            handleTableData(){
+            handleTableData() {
                 this.$api.customerDishDetailList(this.searchParams).then(res => {
                     this.tableData = res.data.data;
                     this.TotalPage = res.data.total;
-                    this.loading=false;
+                    this.loading = false;
                 }).catch(err => {
                     this.$alert('获取数据失败, 请重试!', '提示', {
                         confirmButtonText: '确定',
@@ -248,7 +223,6 @@
             tagChange(value) {
                 let checkedCount = value.length;
                 let tag = value.join(',');
-                console.log(value.join(','));
                 this.form.tag = tag;
             },
         },
@@ -258,3 +232,32 @@
 
     }
 </script>
+
+<style>
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 300px;
+        height: 200px;
+        line-height: 200px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 300px;
+        height: 200px;
+        display: block;
+    }
+</style>

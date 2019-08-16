@@ -202,31 +202,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -299,7 +274,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         tagChange: function tagChange(value) {
             var checkedCount = value.length;
             var tag = value.join(',');
-            console.log(value.join(','));
             this.form.tag = tag;
         }
     },

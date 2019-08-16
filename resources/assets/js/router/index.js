@@ -8,49 +8,49 @@ Vue.use(Router)
 const App = resolve => void (require(['../components/Main'], resolve));
 
 const router = new Router({
-    mode:'history',
+    mode: 'history',
     routes: [
         {
             name: "login",
             menu: false,
             path: "/login",
-            meta:{title:'登录'},
-            component: resolve => void(require(['../components/auth/Login'], resolve)),
+            meta: {title: '登录'},
+            component: resolve => void (require(['../components/auth/Login'], resolve)),
         },
         {
             name: "register",
             menu: false,
             path: "/register",
-            meta:{title:'注册'},
-            component: resolve => void(require(['../components/auth/Login'], resolve)),
+            meta: {title: '注册'},
+            component: resolve => void (require(['../components/auth/Login'], resolve)),
         },
         {
             name: "h5Auth",
             menu: false,
             path: "/h5/auth",
-            meta:{title:'身份认证'},
-            component: resolve => void(require(['../components/h5/Auth'], resolve)),
+            meta: {title: '身份认证'},
+            component: resolve => void (require(['../components/h5/Auth'], resolve)),
         },
         {
             name: "wechatOrder",
             menu: false,
             path: "/h5/wechat/order",
-            meta:{title:'h5订单'},
-            component: resolve => void(require(['../components/h5/WechatOrder'], resolve)),
+            meta: {title: 'h5订单'},
+            component: resolve => void (require(['../components/h5/WechatOrder'], resolve)),
         },
         {
             name: "alipayOrder",
             menu: false,
             path: "/h5/alipay/order",
-            meta:{title:'h5订单'},
-            component: resolve => void(require(['../components/h5/AlipayOrder'], resolve)),
+            meta: {title: 'h5订单'},
+            component: resolve => void (require(['../components/h5/AlipayOrder'], resolve)),
         },
         {
             name: "h5Order",
             menu: false,
             path: "/h5/order",
-            meta:{title:'h5订单'},
-            component: resolve => void(require(['../components/h5/Order'], resolve)),
+            meta: {title: 'h5订单'},
+            component: resolve => void (require(['../components/h5/Order'], resolve)),
         },
         {
             name: "customer",
@@ -190,35 +190,36 @@ function canVisit(to) {
 
 //vue-router 前置拦截器
 router.beforeEach((to, from, next) => {
-    if(to.name === 'login' || to.name === 'register') {
+    if (to.name === 'login' || to.name === 'register') {
         next();
-    } else if(to.name === 'h5Auth' || to.name === 'wechatOrder' || to.name === 'alipayOrder') {
+    } else if (to.name === 'h5Auth' || to.name === 'wechatOrder' || to.name === 'alipayOrder') {
         next();
-    } else if(to.name === 'h5Order') {
+    } else if (to.name === 'h5Order') {
         let ua = window.navigator.userAgent.toLowerCase();
         //判断是不是微信
-        if (ua.match(/MicroMessenger/i) == 'micromessenger' ) {
+        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
             let merchant_id = to.query.merchant_id;
             let table_id = to.query.table_id;
             let seat_id = to.query.seat_id;
             let open_id = to.query.open_id;
 
             next({
-                name:'wechatOrder',
-                query:{
-                    merchant_id:merchant_id,
-                    table_id:table_id,
-                    seat_id:seat_id,
-                    open_id:open_id
+                name: 'wechatOrder',
+                query: {
+                    merchant_id: merchant_id,
+                    table_id: table_id,
+                    seat_id: seat_id,
+                    open_id: open_id
                 }
             });
-        } else if (ua.match(/AlipayClient/i) == 'alipayclient') {         //判断是不是支付宝
+        //判断是不是支付宝
+        } else if (ua.match(/AlipayClient/i) == 'alipayclient') {
             next({
-                name:'alipayOrder',
-                query:{
-                    merchant_id:1,
-                    table_id:1,
-                    seat_id:1
+                name: 'alipayOrder',
+                query: {
+                    merchant_id: 1,
+                    table_id: 1,
+                    seat_id: 1
                 }
             });
         } else {
@@ -228,22 +229,21 @@ router.beforeEach((to, from, next) => {
             let open_id = to.query.open_id;
 
             next({
-                name:'wechatOrder',
-                query:{
-                    merchant_id:merchant_id,
-                    table_id:table_id,
-                    seat_id:seat_id,
-                    open_id:open_id
+                name: 'wechatOrder',
+                query: {
+                    merchant_id: merchant_id,
+                    table_id: table_id,
+                    seat_id: seat_id,
+                    open_id: open_id
                 }
             });
         }
-
-    } else if(to.name === 'dish' || to.name === 'order') {
-        if (! sessionStorage.getItem('token') || sessionStorage.getItem('token') == null) {
+    } else if (to.name === 'dish' || to.name === 'order') {
+        if (!sessionStorage.getItem('token') || sessionStorage.getItem('token') == null) {
             // next({path:'/login'});
             Vue.component('App', require('../components/Main.vue'));
             next();
-        } else  {
+        } else {
             Vue.component('App', require('../components/Main.vue'));
             next();
         }

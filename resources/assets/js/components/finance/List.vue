@@ -100,63 +100,38 @@
         </el-pagination>
     </div>
 </template>
-<style>
-    .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-    .avatar-uploader .el-upload:hover {
-        border-color: #409EFF;
-    }
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 300px;
-        height: 200px;
-        line-height: 200px;
-        text-align: center;
-    }
-    .avatar {
-        width: 300px;
-        height: 200px;
-        display: block;
-    }
-</style>
 
 <script>
     export default {
-        data(){
+        data() {
             return {
-                showVisible:false,
+                showVisible: false,
                 tableHeight: 0,
-                url:'',
-                loading:false,
-                dialogFormVisible:false,
-                searchParams:{
-                    trade_no:'',
-                    sub_type:'',
-                    date:'',
-                    page:1,
+                url: '',
+                loading: false,
+                dialogFormVisible: false,
+                searchParams: {
+                    trade_no: '',
+                    sub_type: '',
+                    date: '',
+                    page: 1,
                 },
-                showData:{},
-                TotalPage:0,
-                sub_types:[],
+                showData: {},
+                TotalPage: 0,
+                sub_types: [],
                 tableData: [],
             }
         },
-        created(){
+        created() {
             this.handleSubTypes();
             this.handleTableData();
             this.handleTableHeight();
             window.addEventListener('resize', this.handleTableHeight);
         },
         methods: {
-            handleSubTypes(){
+            handleSubTypes() {
                 this.$api.financeSubType().then(res => {
-                    this.sub_types=res.data;
+                    this.sub_types = res.data;
                 }).catch(err => {
                     this.$message({
                         type: 'error',
@@ -165,11 +140,11 @@
                 });
             },
             // 加载数据
-            handleTableData(){
+            handleTableData() {
                 this.$api.financeList(this.searchParams).then(res => {
                     this.tableData = res.data.data;
                     this.TotalPage = res.data.total;
-                    this.loading=false;
+                    this.loading = false;
                 }).catch(err => {
                     this.$alert('获取数据失败, 请重试!', '提示', {
                         confirmButtonText: '确定',
@@ -192,7 +167,6 @@
             tagChange(value) {
                 let checkedCount = value.length;
                 let tag = value.join(',');
-                console.log(value.join(','));
                 this.form.tag = tag;
             },
         },
@@ -202,3 +176,31 @@
 
     }
 </script>
+<style>
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 300px;
+        height: 200px;
+        line-height: 200px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 300px;
+        height: 200px;
+        display: block;
+    }
+</style>

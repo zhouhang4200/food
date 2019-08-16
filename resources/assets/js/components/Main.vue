@@ -44,7 +44,7 @@
             <el-container>
                 <el-header style="font-size: 30px;height:60px;line-height:60px">
                     <i class="icon-ios-menu" :class="rotateIcon" @click="handleCollapse"></i>
-                    <el-menu  class="el-menu-demo" mode="horizontal"  style="float: right">
+                    <el-menu class="el-menu-demo" mode="horizontal" style="float: right">
                         <el-menu-item index="1">
                             <i class="el-icon-bell"></i>
                         </el-menu-item>
@@ -81,16 +81,16 @@
 
 <script>
     export default {
-        name:"Main",
+        name: "Main",
         data() {
             return {
-                merchant_name:'',
+                merchant_name: '',
                 collapse: false,
-                menus:null,
-                openMenu:['1'],
-                menuMinHeight:'400px',
-                contentContainerStyle:{
-                    minHeight:'',
+                menus: null,
+                openMenu: ['1'],
+                menuMinHeight: '400px',
+                contentContainerStyle: {
+                    minHeight: '',
                 },
                 breadcrumbList: [],
             }
@@ -103,7 +103,7 @@
                 ];
             },
         },
-        created(){
+        created() {
             this.handleMerchantName();
             window.addEventListener('resize', this.handleContentContainerStyle);
             this.handleContentContainerStyle();
@@ -114,10 +114,10 @@
                 this.merchant_name = sessionStorage.getItem('name')
             },
             handleCollapse() {
-                if(this.collapse) {
+                if (this.collapse) {
                     this.collapse = false;
                     sessionStorage.setItem('collapse', '0');
-                }else {
+                } else {
                     this.collapse = true;
                     sessionStorage.setItem('collapse', '1');
                 }
@@ -136,8 +136,8 @@
                 currentThis.breadcrumbList = [];
                 matched.forEach(function (it) {
                     currentThis.breadcrumbList.push({
-                        name:it.meta.title,
-                        path:it.path
+                        name: it.meta.title,
+                        path: it.path
                     });
                 });
             },
@@ -155,7 +155,7 @@
                 });
             }
         },
-        beforeMount(){
+        beforeMount() {
             this.openMenu[0] = sessionStorage.getItem('openMenu')
         },
         mounted() {
@@ -176,16 +176,19 @@
 <style lang="less">
     /*全局样式*/
     .main {
-        margin:0 20px 20px;
+        margin: 0 20px 20px;
     }
+
     .content {
         padding: 20px;
         background: rgb(255, 255, 255);
     }
+
     .logo {
         background-color: #ff9900;
         padding: 14px 0;
     }
+
     .header-avatar {
         width: 40px;
         height: 40px;
@@ -195,51 +198,61 @@
         position: relative;
         top: 0;
         right: 10px;
-        background: url('/images/banner1.jpg');
+        background: url("/images/banner1.jpg");
         background-size: 100%;
     }
+
     .el-header {
         color: #333;
         line-height: 60px;
-        background:#fff;
-        box-shadow: 0 1px 4px rgba(0,21,41,.08);
+        background: #fff;
+        box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
     }
+
     .el-aside {
         color: #333;
-        box-shadow: 2px 0 6px rgba(0,21,41,.35);
-        -webkit-box-shadow: 2px 0 6px rgba(0,21,41,.35);
+        box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
+        -webkit-box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
     }
+
     .el-menu {
-        border-right:none;
+        border-right: none;
     }
+
     .side-menu {
         .el-menu-item {
             border-bottom-color: #ff9900;
             background-color: rgb(65, 72, 88) !important;
         }
+
         .menu-icon {
             -webkit-transition: all .3s;
             transition: all .3s;
         }
     }
+
     .side-menu:not(.el-menu--collapse) {
         width: 200px;
         min-height: 400px;
     }
+
     .rotate-icon {
         -webkit-transform: rotate(-90deg);
         transform: rotate(-90deg);
     }
+
     /*创建订单、查看订单、重发订单输入框左侧菜单样式*/
     .icon-button {
         line-height: 32px;
         font-size: 22px;
         height: 32px;
     }
+
     /*上传图片超过限制时隐藏增加图片按钮*/
     .exceed .el-upload {
         display: none;
     }
+
     /*预览图片*/
     .preview-image {
         width: auto;
@@ -249,36 +262,44 @@
         box-shadow: 0 0 0 0;
         -webkit-box-shadow: 0 0 0 0;
     }
+
     /*限制预览图片的最大宽度*/
-    .preview-image img{
+    .preview-image img {
         max-width: 800px;
     }
+
     /*全局重写*/
     .el-main {
         padding: 0;
     }
+
     .el-cascader,
     .el-select {
         width: 100%;
     }
+
     .el-message {
-        top:8px;
+        top: 8px;
     }
+
     .el-form-item.is-success .el-input__inner,
     .el-form-item.is-success .el-input__inner:focus, .el-form-item.is-success .el-textarea__inner,
     .el-form-item.is-success .el-textarea__inner:focus {
-        border-color:#DCDFE6;
+        border-color: #DCDFE6;
     }
+
     /*搜索表单样式*/
     .search-form-inline .el-select,
     .search-form-inline .el-date-editor--daterange.el-input__inner,
     .search-form-inline .el-form-item {
-        width:100%;
+        width: 100%;
     }
+
     .search-form-inline .el-range-separator {
-        width:10%;
+        width: 10%;
     }
+
     .search-form-inline .el-form-item__content {
-        width:80%;
+        width: 80%;
     }
 </style>

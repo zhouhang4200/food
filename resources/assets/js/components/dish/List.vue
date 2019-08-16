@@ -25,7 +25,8 @@
                         <el-button
                                 type="primary"
                                 size="small"
-                                @click="dishAdd()">新增菜品</el-button>
+                                @click="dishAdd()">新增菜品
+                        </el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -84,11 +85,13 @@
                     <el-button
                             type="primary"
                             size="small"
-                            @click="dishUpdate(scope.row)">编辑</el-button>
+                            @click="dishUpdate(scope.row)">编辑
+                    </el-button>
                     <el-button
                             type="primary"
                             size="small"
-                            @click="dishDelete(scope.row.id)">删除</el-button>
+                            @click="dishDelete(scope.row.id)">删除
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -158,59 +161,34 @@
         </el-dialog>
     </div>
 </template>
-<style>
-    .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-    .avatar-uploader .el-upload:hover {
-        border-color: #409EFF;
-    }
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 300px;
-        height: 200px;
-        line-height: 200px;
-        text-align: center;
-    }
-    .avatar {
-        width: 300px;
-        height: 200px;
-        display: block;
-    }
-</style>
 
 <script>
     export default {
-        data(){
+        data() {
             return {
-                timer:'',
-                imageUrl:'',
-                loading:true,
+                timer: '',
+                imageUrl: '',
+                loading: true,
                 tableHeight: 0,
-                isAdd:true,
-                isUpdate:false,
-                title:'添加',
-                url:'',
-                dialogFormVisible:false,
-                AccountBlackListName:{},
-                searchParams:{
-                    name:'',
-                    category_id:'',
-                    page:1,
+                isAdd: true,
+                isUpdate: false,
+                title: '添加',
+                url: '',
+                dialogFormVisible: false,
+                AccountBlackListName: {},
+                searchParams: {
+                    name: '',
+                    category_id: '',
+                    page: 1,
                 },
-                TotalPage:0,
+                TotalPage: 0,
                 tableData: [],
-                rules:{
-                    name:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
-                    amount:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
-                    original_amount:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
-                    category_id:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
-                    logo:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
+                rules: {
+                    name: [{required: true, message: '必填项不可为空!', trigger: 'blur'}],
+                    amount: [{required: true, message: '必填项不可为空!', trigger: 'blur'}],
+                    original_amount: [{required: true, message: '必填项不可为空!', trigger: 'blur'}],
+                    category_id: [{required: true, message: '必填项不可为空!', trigger: 'blur'}],
+                    logo: [{required: true, message: '必填项不可为空!', trigger: 'blur'}],
                 },
                 form: {
                     name: '',
@@ -218,21 +196,20 @@
                     tag: "",
                     material: '',
                     logo: '',
-                    thumb:'',
-                    like_count:"",
+                    thumb: '',
+                    like_count: "",
                     amount: '',
-                    original_amount:'',
+                    original_amount: '',
                     intro: ''
                 },
-                categories:{
-                },
+                categories: {},
                 tagList: [],
             }
         },
         methods: {
-            handleCategory(){
+            handleCategory() {
                 this.$api.category().then(res => {
-                    this.categories=res.data;
+                    this.categories = res.data;
                 }).catch(err => {
                     this.$message({
                         type: 'error',
@@ -241,29 +218,29 @@
                 });
             },
             //新增按钮
-            dishAdd(){
-                this.form={};
-                this.isAdd=true;
-                this.isUpdate=false;
-                this.title='添加';
+            dishAdd() {
+                this.form = {};
+                this.isAdd = true;
+                this.isUpdate = false;
+                this.title = '添加';
                 this.dialogFormVisible = true;
-                this.tagList=[];
-                this.imageUrl=false;
+                this.tagList = [];
+                this.imageUrl = false;
             },
             // 编辑按钮
             dishUpdate(row) {
                 this.handleTableData();
-                this.tagList=[];
-                this.isAdd=false;
-                this.isUpdate=true;
-                this.title='修改';
+                this.tagList = [];
+                this.isAdd = false;
+                this.isUpdate = true;
+                this.title = '修改';
                 this.imageUrl = row.logo;
                 this.dialogFormVisible = true;
-                this.form=JSON.parse(JSON.stringify(row));
-                this.form.tag='';
-                this.form.like_count='';
+                this.form = JSON.parse(JSON.stringify(row));
+                this.form.tag = '';
+                this.form.like_count = '';
                 if (row.tag) {
-                    this.tagList=row.tag.split(',');
+                    this.tagList = row.tag.split(',');
                 }
             },
             // 取消按钮
@@ -317,11 +294,11 @@
                 });
             },
             // 加载数据
-            handleTableData(){
+            handleTableData() {
                 this.$api.dishList(this.searchParams).then(res => {
                     this.tableData = res.data.data;
                     this.TotalPage = res.data.total;
-                    this.loading=false;
+                    this.loading = false;
                 }).catch(err => {
                     this.$alert('获取数据失败, 请重试!', '提示', {
                         confirmButtonText: '确定',
@@ -330,16 +307,8 @@
                     });
                 });
             },
-            handleName(){
-                // this.$api.AccountBlackListName(this.searchParams).then(res => {
-                //     this.AccountBlackListName = res;
-                // }).catch(err => {
-                //     this.$alert('获取数据失败, 请重试!', '提示', {
-                //         confirmButtonText: '确定',
-                //         callback: action => {
-                //         }
-                //     });
-                // });
+            handleName() {
+
             },
             handleSearch() {
                 this.handleTableData();
@@ -349,13 +318,13 @@
                 this.handleTableData();
             },
             // 删除
-            dishDelete (id) {
+            dishDelete(id) {
                 this.$confirm('您确定要删除吗？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$api.dishDelete({id:id}).then(res => {
+                    this.$api.dishDelete({id: id}).then(res => {
                         this.$message({
                             showClose: true,
                             type: res.status === 1 ? 'success' : 'error',
@@ -407,7 +376,7 @@
                 }
             },
         },
-        created(){
+        created() {
             this.handleTableData();
             this.handleName();
             this.handleTableHeight();
@@ -425,3 +394,31 @@
         },
     }
 </script>
+<style>
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 300px;
+        height: 200px;
+        line-height: 200px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 300px;
+        height: 200px;
+        display: block;
+    }
+</style>

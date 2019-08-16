@@ -315,25 +315,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -498,7 +479,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         // 图片上传成功将地址回传给表单
         handleAvatarSuccess: function handleAvatarSuccess(res, file) {
-            console.log(res.status, res.name);
+            // console.log(res.status, res.name);
             if (res.status > 0) {
                 var fileName = res.name;
                 if (fileName === 'logo') {
@@ -522,7 +503,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         // 图片上传
         beforeAvatarUpload: function beforeAvatarUpload(file) {
-            console.log(file);
             var isJPEG = file.type === 'image/jpeg';
             // const isPng = file.type === 'image/png';
             // const isJPG = file.type === 'image/jpg';
@@ -539,7 +519,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         tagChange: function tagChange(value) {
             var checkedCount = value.length;
             var tag = value.join(',');
-            console.log(value.join(','));
             this.form.tag = tag;
         }
     },
@@ -589,7 +568,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("添加门店")]
+                        [_vm._v("添加门店\n                    ")]
                       )
                     ],
                     1
@@ -793,7 +772,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("编辑")]
+                      [_vm._v("编辑\n                ")]
                     )
                   ]
                 }

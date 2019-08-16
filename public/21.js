@@ -242,9 +242,8 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
         },
         getOpenIdApi: function getOpenIdApi(code) {
             this.$api.getopenId({ code: code }).then(function (res) {
-                console.log(123122312);
                 if (res.status === 1) {
-                    console.log('pay_success');
+                    // console.log('pay_success');
                 } else if (res.status === 3) {
                     // Toast.fail(res.message);
                 } else {
@@ -289,7 +288,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
             // }
 
-            console.log(this.customerDishDetail);
+            // console.log(this.customerDishDetail);
         },
         add: function add(dish) {
             var dishId = dish.id;
@@ -327,11 +326,11 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
             // }
 
-            console.log(this.customerDishDetail);
+            // console.log(this.customerDishDetail);
             // console.log(Number(dish.amount), this.totalAmount, dish.amount);
         },
         onSubmit: function onSubmit() {
-            console.log(this.totalAmount);
+            // console.log(this.totalAmount);
             if (this.totalAmount > 0) {
                 var amount = this.totalAmount;
                 var detail = this.customerDishDetail;

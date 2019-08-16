@@ -172,28 +172,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -447,7 +425,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("新增类目")]
+                        [_vm._v("新增类目\n                    ")]
                       )
                     ],
                     1
@@ -498,7 +476,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("编辑")]
+                      [_vm._v("编辑\n                ")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -511,7 +489,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("删除")]
+                      [_vm._v("删除\n                ")]
                     )
                   ]
                 }

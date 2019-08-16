@@ -263,28 +263,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -444,17 +422,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             });
         },
-        handleName: function handleName() {
-            // this.$api.AccountBlackListName(this.searchParams).then(res => {
-            //     this.AccountBlackListName = res;
-            // }).catch(err => {
-            //     this.$alert('获取数据失败, 请重试!', '提示', {
-            //         confirmButtonText: '确定',
-            //         callback: action => {
-            //         }
-            //     });
-            // });
-        },
+        handleName: function handleName() {},
         handleSearch: function handleSearch() {
             this.handleTableData();
         },
@@ -655,7 +623,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("新增菜品")]
+                        [_vm._v("新增菜品\n                    ")]
                       )
                     ],
                     1
@@ -761,7 +729,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("编辑")]
+                      [_vm._v("编辑\n                ")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -774,7 +742,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("删除")]
+                      [_vm._v("删除\n                ")]
                     )
                   ]
                 }

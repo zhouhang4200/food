@@ -144,6 +144,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+
 
 
 
@@ -175,27 +178,10 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             customerDishDetail: []
         };
     },
-    created: function created() {
-        // let code=getUrlKey("code");
-        // if(code){
-        //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-        //     this.getOpenIdApi(code);
-        // }else{
-        //     this.getCodeApi("123");
-        // }
-    },
+    created: function created() {},
 
     computed: {},
     mounted: function mounted() {
-        // let code=this.getUrlKey("code");
-        // if(code){
-        //     console.log(code);
-        //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-        //     this.getOpenIdApi(code);
-        // }else{
-        //     console.log('code');
-        //     this.getCodeApi("123");
-        // }
         this.dishes();
     },
 
@@ -261,7 +247,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
             // }
 
-            console.log(this.customerDishDetail);
+            // console.log(this.customerDishDetail);
         },
         add: function add(dish) {
             var dishId = dish.id;
@@ -299,7 +285,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
             //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
             // }
 
-            console.log(this.customerDishDetail);
+            // console.log(this.customerDishDetail);
             // console.log(Number(dish.amount), this.totalAmount, dish.amount);
         },
         onSubmit: function onSubmit() {
@@ -312,7 +298,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vant
 
                 this.$api.h5Pay(params).then(function (res) {
                     if (res.status === 1) {
-                        console.log('pay_success');
+                        // console.log('pay_success');
                     } else if (res.status === 3) {
                         // Toast.fail(res.message);
                     } else {

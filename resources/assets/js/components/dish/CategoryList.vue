@@ -13,7 +13,8 @@
                         <el-button
                                 type="primary"
                                 size="small"
-                                @click="categoryAdd()">新增类目</el-button>
+                                @click="categoryAdd()">新增类目
+                        </el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -36,11 +37,13 @@
                     <el-button
                             type="primary"
                             size="small"
-                            @click="categoryUpdate(scope.row)">编辑</el-button>
+                            @click="categoryUpdate(scope.row)">编辑
+                    </el-button>
                     <el-button
                             type="primary"
                             size="small"
-                            @click="categoryDelete(scope.row.id)">删除</el-button>
+                            @click="categoryDelete(scope.row.id)">删除
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -67,81 +70,55 @@
         </el-dialog>
     </div>
 </template>
-<style>
-    .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-    .avatar-uploader .el-upload:hover {
-        border-color: #409EFF;
-    }
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 300px;
-        height: 200px;
-        line-height: 200px;
-        text-align: center;
-    }
-    .avatar {
-        width: 300px;
-        height: 200px;
-        display: block;
-    }
-</style>
 
 <script>
     export default {
-        data(){
+        data() {
             return {
-                searchParams:{
-                    name:'',
-                    page:1,
+                searchParams: {
+                    name: '',
+                    page: 1,
                 },
-                category_title:'',
-                category_visible:false,
-                form:{
-                    name:'',
+                category_title: '',
+                category_visible: false,
+                form: {
+                    name: '',
                 },
-                category_rules:{
-                    name:[{ required: true, message:'必填项不可为空!', trigger: 'blur' }],
+                category_rules: {
+                    name: [{required: true, message: '必填项不可为空!', trigger: 'blur'}],
                 },
-                timer:'',
-                loading:true,
+                timer: '',
+                loading: true,
                 tableHeight: 0,
-                isAdd:true,
-                isUpdate:false,
-                TotalPage:0,
+                isAdd: true,
+                isUpdate: false,
+                TotalPage: 0,
                 tableData: [],
-                categories:{
-                },
+                categories: {},
                 tagList: [],
             }
         },
         methods: {
-            categoryAdd(){
-                this.form={};
-                this.isAdd=true;
-                this.isUpdate=false;
-                this.title='类目添加';
+            categoryAdd() {
+                this.form = {};
+                this.isAdd = true;
+                this.isUpdate = false;
+                this.title = '类目添加';
                 this.category_visible = true;
-                this.tagList=[];
-                this.imageUrl=false;
+                this.tagList = [];
+                this.imageUrl = false;
             },
             // 编辑按钮
             categoryUpdate(row) {
                 this.handleTableData();
-                this.tagList=[];
-                this.isAdd=false;
-                this.isUpdate=true;
-                this.title='类目修改';
+                this.tagList = [];
+                this.isAdd = false;
+                this.isUpdate = true;
+                this.title = '类目修改';
                 this.category_visible = true;
-                this.form=JSON.parse(JSON.stringify(row));
+                this.form = JSON.parse(JSON.stringify(row));
                 if (row.tag) {
-                    this.tagList=row.tag.split(',');
+                    this.tagList = row.tag.split(',');
                 }
             },
             // 取消按钮
@@ -195,11 +172,11 @@
                 });
             },
             // 加载数据
-            handleTableData(){
+            handleTableData() {
                 this.$api.categoryList(this.searchParams).then(res => {
                     this.tableData = res.data.data;
                     this.TotalPage = res.data.total;
-                    this.loading=false;
+                    this.loading = false;
                 }).catch(err => {
                     this.$alert('获取数据失败, 请重试!', '提示', {
                         confirmButtonText: '确定',
@@ -208,7 +185,7 @@
                     });
                 });
             },
-            handleName(){
+            handleName() {
             },
             handleSearch() {
                 this.handleTableData();
@@ -218,13 +195,13 @@
                 this.handleTableData();
             },
             // 删除
-            categoryDelete (id) {
+            categoryDelete(id) {
                 this.$confirm('删除此类目将会使该类目下的所有菜品也删除，您确定要删除吗？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$api.categoryDelete({id:id}).then(res => {
+                    this.$api.categoryDelete({id: id}).then(res => {
                         this.$message({
                             showClose: true,
                             type: res.status === 1 ? 'success' : 'error',
@@ -247,7 +224,7 @@
 
             },
         },
-        created(){
+        created() {
             this.handleTableData();
             this.handleName();
             this.handleTableHeight();
@@ -264,3 +241,32 @@
         },
     }
 </script>
+
+<style>
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 300px;
+        height: 200px;
+        line-height: 200px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 300px;
+        height: 200px;
+        display: block;
+    }
+</style>

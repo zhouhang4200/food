@@ -21,8 +21,10 @@
                             <div slot="footer">
                                 <div class="amount_container">
                                     <div class="amount_box">
-                                        <van-button size="mini"  @click="sub(dish)">-</van-button>
-                                            <input type="number" style="width: 40px; text-align: center;" value=0 :id="'number'+dish.id" maxlength="2" pattern="[0-9]*" readonly="readonly"/>
+                                        <van-button size="mini" @click="sub(dish)">-</van-button>
+                                        <input type="number" style="width: 40px; text-align: center;" value=0
+                                               :id="'number'+dish.id" maxlength="2" pattern="[0-9]*"
+                                               readonly="readonly"/>
                                         <van-button size="mini" @click="add(dish)">+</van-button>
                                     </div>
                                 </div>
@@ -42,7 +44,8 @@
 </template>
 <script>
     import {Toast} from 'vant';
-    import { Sidebar, SidebarItem } from 'vant';
+    import {Sidebar, SidebarItem} from 'vant';
+
     Vue.use(Sidebar);
     Vue.use(SidebarItem);
     import Vue from 'vue';
@@ -66,55 +69,37 @@
                     "h5.keeper.test/images/banner1.jpg",
                     "h5.keeper.test/images/banner2.jpg",
                 ],
-                imageURL:"",
-                hot:'热卖中',
-                price:'',
-                originPrice:'',
-                desc:'微辣',
-                title:'',
-                number:0,
-                totalAmount:0,
+                imageURL: "",
+                hot: '热卖中',
+                price: '',
+                originPrice: '',
+                desc: '微辣',
+                title: '',
+                number: 0,
+                totalAmount: 0,
                 dishData: {},
-                customerDishDetail:[
-
-                ]
+                customerDishDetail: []
             };
         },
         created() {
-            // let code=getUrlKey("code");
-            // if(code){
-            //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-            //     this.getOpenIdApi(code);
-            // }else{
-            //     this.getCodeApi("123");
-            // }
         },
         computed: {},
         mounted() {
-            // let code=this.getUrlKey("code");
-            // if(code){
-            //     console.log(code);
-            //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-            //     this.getOpenIdApi(code);
-            // }else{
-            //     console.log('code');
-            //     this.getCodeApi("123");
-            // }
             this.dishes();
         },
         methods: {
-            getUrlKey(name){//获取url 参数
-                return decodeURIComponent((new RegExp('[?|&]'+name+'='+'([^&;]+?)(&|#|;|$)').exec(location.href)||[,""])[1].replace(/\+/g,'%20'))||null;
+            getUrlKey(name) {//获取url 参数
+                return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null;
             },
             getCodeApi(state) {//获取code
-                let urlNow=encodeURIComponent(window.location.href);
-                let scope='snsapi_base';    //snsapi_userinfo   //静默授权 用户无感知
-                let appid='wx5e0fd315aff830a4';
-                let url=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
+                let urlNow = encodeURIComponent(window.location.href);
+                let scope = 'snsapi_base';    //snsapi_userinfo   //静默授权 用户无感知
+                let appid = 'wx5e0fd315aff830a4';
+                let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${urlNow}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`;
                 window.location.replace(url);
             },
             getOpenIdApi(code) {
-                this.$api.getopenId({code:code}).then(res => {
+                this.$api.getopenId({code: code}).then(res => {
                     console.log(123122312);
                     if (res.status === 1) {
                         console.log('pay_success');
@@ -127,7 +112,7 @@
             },
             sub(dish) {
                 let dishId = dish.id;
-                let id='number'+ dishId;
+                let id = 'number' + dishId;
                 let numberObject = document.getElementById(id);
                 let numberValue = Number(numberObject.value);
                 let finalNumber = 0;
@@ -147,7 +132,7 @@
                                 }
 
                                 // 总价减去次价格
-                                this.totalAmount -= Number(dish.amount)*100;
+                                this.totalAmount -= Number(dish.amount) * 100;
                             }
                         }
                     }
@@ -162,11 +147,11 @@
                 //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
                 // }
 
-                console.log(this.customerDishDetail);
+                // console.log(this.customerDishDetail);
             },
             add(dish) {
                 let dishId = dish.id;
-                let id='number'+ dishId;
+                let id = 'number' + dishId;
                 let numberObject = document.getElementById(id);
                 let numberValue = Number(numberObject.value);
                 let finalNumber = 0;
@@ -181,7 +166,7 @@
                             this.customerDishDetail[i].number = finalNumber;
 
                             // 总价增加
-                            this.totalAmount += Number(dish.amount)*100;
+                            this.totalAmount += Number(dish.amount) * 100;
                         }
                     }
                 } else {
@@ -191,7 +176,7 @@
                     this.customerDishDetail.push(newJson);
 
                     // 总价增加
-                    this.totalAmount += Number(dish.amount)*100;
+                    this.totalAmount += Number(dish.amount) * 100;
                 }
 
                 // if (this.totalAmount > 0) {
@@ -200,7 +185,7 @@
                 //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
                 // }
 
-                console.log(this.customerDishDetail);
+                // console.log(this.customerDishDetail);
                 // console.log(Number(dish.amount), this.totalAmount, dish.amount);
             },
             onSubmit() {
@@ -213,7 +198,7 @@
 
                     this.$api.h5Pay(params).then(res => {
                         if (res.status === 1) {
-                            console.log('pay_success');
+                            // console.log('pay_success');
                         } else if (res.status === 3) {
                             // Toast.fail(res.message);
                         } else {
@@ -226,7 +211,7 @@
             dishes() {
                 let merchant_id = this.$route.query.merchant_id;
                 // console.log(merchant_id);
-                this.$api.h5DishList({merchant_id:merchant_id}).then(res => {
+                this.$api.h5DishList({merchant_id: merchant_id}).then(res => {
                     if (res.status === 1) {
                         this.dishData = res.data;
                     } else if (res.status === 3) {
@@ -279,6 +264,7 @@
         height: 100%;
         display: block;
     }
+
     .van-card__thumb {
         width: 100px;
         height: 70px;
@@ -309,9 +295,11 @@
         box-sizing: border-box;
         background-color: #fafafa;
     }
+
     .van-card__content, .van-card__header {
         height: 44px;
     }
+
     .van-card__title {
         line-height: 16px;
         max-height: 32px;

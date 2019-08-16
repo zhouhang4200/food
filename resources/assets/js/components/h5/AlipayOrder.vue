@@ -66,15 +66,14 @@
 
     Vue
         .use(GoodsAction)
-        // .use(GoodsActionBigBtn)
-        // .use(GoodsActionMiniBtn);
+    // .use(GoodsActionBigBtn)
+    // .use(GoodsActionMiniBtn);
 
     export default {
         data() {
             return {
-                categories:{
-                },
-                store:{},
+                categories: {},
+                store: {},
                 form: {
                     account: '',
                     fee: '',
@@ -86,40 +85,22 @@
                     "h5.keeper.test/images/banner1.jpg",
                     "h5.keeper.test/images/banner2.jpg",
                 ],
-                imageURL:"",
-                hot:'热卖中',
-                price:'',
-                originPrice:'',
-                desc:'微辣',
-                title:'',
-                number:0,
-                totalAmount:0,
+                imageURL: "",
+                hot: '热卖中',
+                price: '',
+                originPrice: '',
+                desc: '微辣',
+                title: '',
+                number: 0,
+                totalAmount: 0,
                 dishData: {},
-                customerDishDetail:[
-
-                ]
+                customerDishDetail: []
             };
         },
         created() {
-            // let code=getUrlKey("code");
-            // if(code){
-            //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-            //     this.getOpenIdApi(code);
-            // }else{
-            //     this.getCodeApi("123");
-            // }
         },
         computed: {},
         mounted() {
-            // let code=this.getUrlKey("code");
-            // if(code){
-            //     console.log(code);
-            //     //调用接口获取openId   参考文档https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-            //     this.getOpenIdApi(code);
-            // }else{
-            //     console.log('code');
-            //     this.getCodeApi("123");
-            // }
             this.handleCategories();
             this.handleBanner();
             this.dishes();
@@ -135,7 +116,7 @@
             dishes(category_id) {
                 let merchant_id = this.$route.query.merchant_id;
                 // console.log(merchant_id);
-                this.$api.h5DishList({merchant_id:merchant_id, category_id:category_id}).then(res => {
+                this.$api.h5DishList({merchant_id: merchant_id, category_id: category_id}).then(res => {
                     if (res.status === 1) {
                         this.dishData = res.data;
                     } else if (res.status === 3) {
@@ -146,10 +127,10 @@
                     }
                 });
             },
-            handleCategories(){
+            handleCategories() {
                 let merchant_id = this.$route.query.merchant_id;
-                this.$api.h5Category({merchant_id:merchant_id}).then(res => {
-                    this.categories=res.data;
+                this.$api.h5Category({merchant_id: merchant_id}).then(res => {
+                    this.categories = res.data;
                     // let category_id = res.data[0].id;
                     // this.dishes(category_id);
                 }).catch(err => {
@@ -159,10 +140,10 @@
                     });
                 });
             },
-            handleBanner(){
+            handleBanner() {
                 let merchant_id = this.$route.query.merchant_id;
-                this.$api.h5Banner({merchant_id:merchant_id}).then(res => {
-                    this.store=res.data;
+                this.$api.h5Banner({merchant_id: merchant_id}).then(res => {
+                    this.store = res.data;
                 }).catch(err => {
                     this.$message({
                         type: 'error',
@@ -172,7 +153,7 @@
             },
             sub(dish) {
                 let dishId = dish.id;
-                let id='number'+ dishId;
+                let id = 'number' + dishId;
                 let numberObject = document.getElementById(id);
                 let numberValue = Number(numberObject.value);
                 let finalNumber = 0;
@@ -192,7 +173,7 @@
                                 }
 
                                 // 总价减去次价格
-                                this.totalAmount -= Number(dish.amount)*100;
+                                this.totalAmount -= Number(dish.amount) * 100;
                             }
                         }
                     }
@@ -209,7 +190,7 @@
             },
             add(dish) {
                 let dishId = dish.id;
-                let id='number'+ dishId;
+                let id = 'number' + dishId;
                 let numberObject = document.getElementById(id);
                 let numberValue = Number(numberObject.value);
                 let finalNumber = 0;
@@ -224,7 +205,7 @@
                             this.customerDishDetail[i].number = finalNumber;
 
                             // 总价增加
-                            this.totalAmount += Number(dish.amount)*100;
+                            this.totalAmount += Number(dish.amount) * 100;
                         }
                     }
                 } else {
@@ -234,7 +215,7 @@
                     this.customerDishDetail.push(newJson);
 
                     // 总价增加
-                    this.totalAmount += Number(dish.amount)*100;
+                    this.totalAmount += Number(dish.amount) * 100;
                 }
 
                 // if (this.totalAmount > 0) {
@@ -243,11 +224,11 @@
                 //     document.getElementById('pay').attributes("style", "color: #fff;background-color: #fff;border: 1px solid #fff;")
                 // }
 
-                console.log(this.customerDishDetail);
+                // console.log(this.customerDishDetail);
                 // console.log(Number(dish.amount), this.totalAmount, dish.amount);
             },
             onSubmit() {
-                console.log(this.totalAmount);
+                // console.log(this.totalAmount);
                 if (this.totalAmount > 0) {
                     let amount = this.totalAmount;
                     let detail = this.customerDishDetail;
@@ -257,7 +238,15 @@
                     let table_id = this.$route.query.table_id;
                     let query = this.$route.query;
                     let jsApiParameters = '';
-                    this.$api.h5Pay({amount:amount, detail:detail, open_id:open_id, merchant_id:merchant_id, seat_id:seat_id, table_id:table_id, query:query}).then(res => {
+                    this.$api.h5Pay({
+                        amount: amount,
+                        detail: detail,
+                        open_id: open_id,
+                        merchant_id: merchant_id,
+                        seat_id: seat_id,
+                        table_id: table_id,
+                        query: query
+                    }).then(res => {
                         // this.$message({
                         //     type: 'info',
                         //     message: document.getElementsByTagName('body')[0].append(res.pay_form)
@@ -265,7 +254,7 @@
                         // alert(data.pay_form);
                         if (res.status === 1) {
                             // this.html = res.pay_form;
-                            let form= res.pay_form;
+                            let form = res.pay_form;
                             const div = document.createElement('div');
                             div.innerHTML = form;
                             document.body.appendChild(div);
@@ -327,6 +316,7 @@
         height: 100%;
         display: block;
     }
+
     .van-card__thumb {
         width: 100px;
         height: 70px;
@@ -357,9 +347,11 @@
         box-sizing: border-box;
         background-color: #fafafa;
     }
+
     .van-card__content, .van-card__header {
         height: 44px;
     }
+
     .van-card__title {
         line-height: 16px;
         max-height: 32px;
