@@ -40,17 +40,17 @@
             <el-table-column
                     prop="name"
                     label="菜肴名称"
-                    width="200">
+                    width="">
             </el-table-column>
             <el-table-column
                     label="价格(元)"
                     prop="amount"
-                    width="200">
+                    width="">
             </el-table-column>
             <el-table-column
                     label="所属类目"
                     prop="category_id"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     {{ scope.row.category.name }}
                 </template>
@@ -66,11 +66,11 @@
             <el-table-column
                     label="口味标记"
                     prop="tag"
-                    width="200">
+                    width="">
             </el-table-column>
             <el-table-column
                     label="操作"
-                    width="200">
+                    width="">
                 <template slot-scope="scope">
                     <el-button
                             type="primary"

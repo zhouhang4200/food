@@ -1,18 +1,18 @@
 webpackJsonp([4],{
 
-/***/ 876:
+/***/ 878:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(910)
+  __webpack_require__(916)
 }
 var normalizeComponent = __webpack_require__(202)
 /* script */
-var __vue_script__ = __webpack_require__(912)
+var __vue_script__ = __webpack_require__(918)
 /* template */
-var __vue_template__ = __webpack_require__(913)
+var __vue_template__ = __webpack_require__(919)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52,13 +52,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 910:
+/***/ 916:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(911);
+var content = __webpack_require__(917);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79,7 +79,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 911:
+/***/ 917:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(105)(false);
@@ -94,27 +94,11 @@ exports.push([module.i, "\n.avatar-uploader .el-upload {\n    border: 1px dashed
 
 /***/ }),
 
-/***/ 912:
+/***/ 918:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -392,7 +376,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 913:
+/***/ 919:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -406,213 +390,151 @@ var render = function() {
       _c(
         "el-form",
         {
-          staticClass: "search-form-inline",
+          staticClass: "demo-form-inline",
           attrs: { inline: true, model: _vm.searchParams, size: "small" }
         },
         [
           _c(
-            "el-row",
-            { attrs: { gutter: 12 } },
+            "el-form-item",
+            { attrs: { label: "订单号" } },
+            [
+              _c("el-input", {
+                model: {
+                  value: _vm.searchParams.trade_no,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchParams, "trade_no", $$v)
+                  },
+                  expression: "searchParams.trade_no"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "桌号" } },
+            [
+              _c("el-input", {
+                model: {
+                  value: _vm.searchParams.table_id,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchParams, "table_id", $$v)
+                  },
+                  expression: "searchParams.table_id"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "座号" } },
+            [
+              _c("el-input", {
+                model: {
+                  value: _vm.searchParams.seat_id,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchParams, "seat_id", $$v)
+                  },
+                  expression: "searchParams.seat_id"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "支付渠道" } },
             [
               _c(
-                "el-col",
-                { attrs: { span: 5 } },
-                [
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "订单号" } },
-                    [
-                      _c("el-input", {
-                        model: {
-                          value: _vm.searchParams.trade_no,
-                          callback: function($$v) {
-                            _vm.$set(_vm.searchParams, "trade_no", $$v)
-                          },
-                          expression: "searchParams.trade_no"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ],
+                "el-select",
+                {
+                  attrs: { placeholder: "请选择" },
+                  model: {
+                    value: _vm.searchParams.channel,
+                    callback: function($$v) {
+                      _vm.$set(_vm.searchParams, "channel", $$v)
+                    },
+                    expression: "searchParams.channel"
+                  }
+                },
+                _vm._l(_vm.channels, function(channel) {
+                  return _c("el-option", {
+                    key: channel.id,
+                    attrs: { label: channel.name, value: channel.id }
+                  })
+                }),
                 1
-              ),
-              _vm._v(" "),
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "支付状态" } },
+            [
               _c(
-                "el-col",
-                { attrs: { span: 4 } },
-                [
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "桌号" } },
-                    [
-                      _c("el-input", {
-                        model: {
-                          value: _vm.searchParams.table_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.searchParams, "table_id", $$v)
-                          },
-                          expression: "searchParams.table_id"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ],
+                "el-select",
+                {
+                  attrs: { placeholder: "请选择" },
+                  model: {
+                    value: _vm.searchParams.pay_status,
+                    callback: function($$v) {
+                      _vm.$set(_vm.searchParams, "pay_status", $$v)
+                    },
+                    expression: "searchParams.pay_status"
+                  }
+                },
+                _vm._l(_vm.pay_statuses, function(pay_status) {
+                  return _c("el-option", {
+                    key: pay_status.id,
+                    attrs: { label: pay_status.name, value: pay_status.id }
+                  })
+                }),
                 1
-              ),
-              _vm._v(" "),
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "日期" } },
+            [
+              _c("el-date-picker", {
+                attrs: {
+                  type: "daterange",
+                  align: "right",
+                  "unlink-panels": "",
+                  format: "yyyy-MM-dd",
+                  "value-format": "yyyy-MM-dd",
+                  "range-separator": "至",
+                  "start-placeholder": "开始日期",
+                  "end-placeholder": "结束日期"
+                },
+                model: {
+                  value: _vm.searchParams.date,
+                  callback: function($$v) {
+                    _vm.$set(_vm.searchParams, "date", $$v)
+                  },
+                  expression: "searchParams.date"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            [
               _c(
-                "el-col",
-                { attrs: { span: 4 } },
-                [
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "座号" } },
-                    [
-                      _c("el-input", {
-                        model: {
-                          value: _vm.searchParams.seat_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.searchParams, "seat_id", $$v)
-                          },
-                          expression: "searchParams.seat_id"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 6 } },
-                [
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "支付渠道" } },
-                    [
-                      _c(
-                        "el-select",
-                        {
-                          attrs: { placeholder: "请选择" },
-                          model: {
-                            value: _vm.searchParams.channel,
-                            callback: function($$v) {
-                              _vm.$set(_vm.searchParams, "channel", $$v)
-                            },
-                            expression: "searchParams.channel"
-                          }
-                        },
-                        _vm._l(_vm.channels, function(channel) {
-                          return _c("el-option", {
-                            key: channel.id,
-                            attrs: { label: channel.name, value: channel.id }
-                          })
-                        }),
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 6 } },
-                [
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "支付状态" } },
-                    [
-                      _c(
-                        "el-select",
-                        {
-                          attrs: { placeholder: "请选择" },
-                          model: {
-                            value: _vm.searchParams.pay_status,
-                            callback: function($$v) {
-                              _vm.$set(_vm.searchParams, "pay_status", $$v)
-                            },
-                            expression: "searchParams.pay_status"
-                          }
-                        },
-                        _vm._l(_vm.pay_statuses, function(pay_status) {
-                          return _c("el-option", {
-                            key: pay_status.id,
-                            attrs: {
-                              label: pay_status.name,
-                              value: pay_status.id
-                            }
-                          })
-                        }),
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 5 } },
-                [
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "日期" } },
-                    [
-                      _c("el-date-picker", {
-                        attrs: {
-                          type: "daterange",
-                          align: "right",
-                          "unlink-panels": "",
-                          format: "yyyy-MM-dd",
-                          "value-format": "yyyy-MM-dd",
-                          "range-separator": "至",
-                          "start-placeholder": "开始日期",
-                          "end-placeholder": "结束日期"
-                        },
-                        model: {
-                          value: _vm.searchParams.date,
-                          callback: function($$v) {
-                            _vm.$set(_vm.searchParams, "date", $$v)
-                          },
-                          expression: "searchParams.date"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 3 } },
-                [
-                  _c(
-                    "el-form-item",
-                    [
-                      _c(
-                        "el-button",
-                        {
-                          attrs: { type: "primary" },
-                          on: { click: _vm.handleSearch }
-                        },
-                        [_vm._v("查询")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
+                "el-button",
+                { attrs: { type: "primary" }, on: { click: _vm.handleSearch } },
+                [_vm._v("查询")]
               )
             ],
             1
