@@ -44,7 +44,6 @@ class User extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-//        throw (new ValidationException($validator->errors()->first()));
-        return response()->json(['status' => 0, 'content' => $validator->errors()->first(), 'data' => '']);
+        throw (new ValidationException($validator->errors()->first()));
     }
 }
