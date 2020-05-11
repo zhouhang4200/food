@@ -41,14 +41,14 @@ class Generate extends Command
     public function handle()
     {
         try {
-            User::create([
+            User::updateOrCreate(['id' => 1],[
                 'name' => '周航',
                 'phone' => '13437284998',
                 'password' => bcrypt('admin888'),
                 'date' => Carbon::now()->toDateString(),
             ]);
 
-            Merchant::create([
+            Merchant::updateOrCreate(['id' => 1],[
                 'name' => '周航',
                 'phone' => '13437284998',
                 'password' => bcrypt('admin888'),
