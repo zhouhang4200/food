@@ -24,7 +24,7 @@ class User extends FormRequest
     public function rules()
     {
         return [
-            'phone' => 'required|number',
+            'phone' => 'required|numeric',
             'password' => 'required|min:8|max:16',
         ];
     }
@@ -33,7 +33,7 @@ class User extends FormRequest
     {
         return [
             'phone.required' => '手机号必填',
-            'phone.number' => '手机号必须为数字',
+            'phone.numeric' => '手机号必须为数字',
             'password.required' => '密码必填',
             'password.min' => '密码最低8位',
             'password.max' => '密码最高16位',
