@@ -68,13 +68,13 @@ class LoginController extends Controller
             $merchant = Merchant::where('phone', $request->phone)->first();
 
             if (!$merchant)
-                return response()->json(['status' => 0, 'message' => '账号已被禁用', 'data' => '']);
+                return response()->json(['status' => 0, 'content' => '账号已被禁用', 'data' => '']);
 
             if (! Hash::check($request['password'], $merchant->password))
-                return response()->json(['status' => 0, 'message' => '密码错误', 'data' => '']);
+                return response()->json(['status' => 0, 'content' => '密码错误', 'data' => '']);
 
             if ($merchant->status == 0)
-                return response()->json(['status' => 0, 'message' => '账号已被禁用', 'data' => '']);
+                return response()->json(['status' => 0, 'content' => '账号已被禁用', 'data' => '']);
 
 
             // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -96,11 +96,11 @@ class LoginController extends Controller
             // user surpasses their maximum number of attempts they will get locked out.
             $this->incrementLoginAttempts($request);
 
-            return response()->json(['status' => 0, 'message' => '未知错误', 'data' => '']);
+            return response()->json(['status' => 0, 'content' => '未知错误', 'data' => '']);
         } catch (\Exception $e) {
             myLog('login', $e->getMessage());
 
-            return response()->json(['status' => 0, 'message' => '服务器错误', 'data' => '']);
+            return response()->json(['status' => 0, 'content' => '服务器错误', 'data' => '']);
         }
     }
 
