@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
 
 class User extends FormRequest
 {
@@ -38,5 +40,11 @@ class User extends FormRequest
             'password.min' => '密码最低8位',
             'password.max' => '密码最高16位',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+//        throw (new ValidationException($validator->errors()->first()));
+        return response()->json(['status' => 0, 'message' => $validator->errors()->first(), 'data' => '']);
     }
 }
