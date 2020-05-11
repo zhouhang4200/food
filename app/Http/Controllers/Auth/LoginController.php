@@ -61,14 +61,14 @@ class LoginController extends Controller
     {
         try {
             // 对前端转输数据进行解密
-            $request->password = clientRSADecrypt($request->password);
+            $request['password'] = clientRSADecrypt($request->password);
 
             $merchant = Merchant::where('phone', $request->phone)->first();
 
             if (!$merchant)
                 return response()->json(['status' => 0, 'message' => '账号已被禁用', 'data' => '']);
 
-            if (! Hash::check($request->password, $merchant->password))
+            if (! Hash::check($request['password'], $merchant->password))
                 return response()->json(['status' => 0, 'message' => '密码错误', 'data' => '']);
 
             if ($merchant->status == 0)
