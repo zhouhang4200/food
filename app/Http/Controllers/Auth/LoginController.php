@@ -97,8 +97,6 @@ class LoginController extends Controller
             $this->incrementLoginAttempts($request);
 
             return response()->json(['status' => 0, 'content' => '未知错误', 'data' => '']);
-        } catch (ValidationException $e) {
-            return response()->json(['status' => 0, 'content' => $e->getMessage(), 'data' => '']);
         } catch (\Exception $e) {
             myLog('login', $e->getMessage());
             return response()->json(['status' => 0, 'content' => '服务器错误', 'data' => '']);
