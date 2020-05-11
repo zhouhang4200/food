@@ -14,10 +14,10 @@ class ResponseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Response::macro('apiFail', function ($code = 10001) {
+        Response::macro('ajaxFail', function ($code = 10001) {
             return response()->json(['code' => $code, 'message' => config('data.error_code.' . $code), 'data' => null]);
         });
-        Response::macro('apiSuccess', function ($data = null) {
+        Response::macro('ajaxSuccess', function ($data = null) {
             return response()->json(['code' => 0, 'message' => '操作成功', 'data' => $data]);
         });
     }
