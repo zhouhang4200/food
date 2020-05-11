@@ -96,7 +96,7 @@ class LoginController extends Controller
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        return response()->json(['status' => 0, 'message' => '', 'data' => '']);
+        return response()->json(['status' => 0, 'message' => '未知错误', 'data' => '']);
     }
 
     /**
