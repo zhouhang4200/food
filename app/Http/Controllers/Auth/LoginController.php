@@ -7,6 +7,7 @@ use App\Models\Merchant;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -58,24 +59,20 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        $validator = \Validator::make($request->all(), [
-//            'geetest_challenge' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['status' => 0, 'message' => $validator->errors()->all()[0], 'data' => '']);
-        }
-
         // 对前端转输数据进行解密
-        $request['password'] = clientRSADecrypt($request->password);
+        $request->password = clientRSADecrypt($request->password);
 
         $merchant = Merchant::where('phone', $request->phone)->first();
 
-        if ($merchant && \Hash::check($request['password'], $merchant->password)) {
-            if ($merchant->status == 0) {
-                return response()->json(['status' => 0, 'message' => '账号已被禁用', 'data' => '']);
-            }
-        }
+        if (!$merchant)
+            return response()->json(['status' => 0, 'message' => '账号已被禁用', 'data' => '']);
+
+        if (! Hash::check($request->password, $merchant->password))
+            return response()->json(['status' => 0, 'message' => '密码错误', 'data' => '']);
+
+        if ($merchant->status == 0)
+            return response()->json(['status' => 0, 'message' => '账号已被禁用', 'data' => '']);
+
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -96,7 +93,7 @@ class LoginController extends Controller
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        return response()->json(['status' => 1, 'message' => '未知错误', 'data' => '123']);
+        return response()->json(['status' => 0, 'message' => '未知错误', 'data' => '']);
     }
 
     /**

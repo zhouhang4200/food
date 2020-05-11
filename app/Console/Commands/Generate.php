@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Merchant;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -41,6 +42,13 @@ class Generate extends Command
     {
         try {
             User::create([
+                'name' => '周航',
+                'phone' => '13437284998',
+                'password' => bcrypt('admin888'),
+                'date' => Carbon::now()->toDateString(),
+            ]);
+
+            Merchant::create([
                 'name' => '周航',
                 'phone' => '13437284998',
                 'password' => bcrypt('admin888'),
