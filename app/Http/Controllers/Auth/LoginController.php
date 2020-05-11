@@ -59,41 +59,47 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        // 对前端转输数据进行解密
-        $request->password = clientRSADecrypt($request->password);
+        try {
+            // 对前端转输数据进行解密
+            $request->password = clientRSADecrypt($request->password);
 
-        $merchant = Merchant::where('phone', $request->phone)->first();
+            $merchant = Merchant::where('phone', $request->phone)->first();
 
-        if (!$merchant)
-            return response()->json(['status' => 0, 'message' => '账号已被禁用', 'data' => '']);
+            if (!$merchant)
+                return response()->json(['status' => 0, 'message' => '账号已被禁用', 'data' => '']);
 
-        if (! Hash::check($request->password, $merchant->password))
-            return response()->json(['status' => 0, 'message' => '密码错误', 'data' => '']);
+            if (! Hash::check($request->password, $merchant->password))
+                return response()->json(['status' => 0, 'message' => '密码错误', 'data' => '']);
 
-        if ($merchant->status == 0)
-            return response()->json(['status' => 0, 'message' => '账号已被禁用', 'data' => '']);
+            if ($merchant->status == 0)
+                return response()->json(['status' => 0, 'message' => '账号已被禁用', 'data' => '']);
 
 
-        // If the class is using the ThrottlesLogins trait, we can automatically throttle
-        // the login attempts for this application. We'll key this by the username and
-        // the IP address of the client making these requests into this application.
-        if ($this->hasTooManyLoginAttempts($request)) {
-            $this->fireLockoutEvent($request);
+            // If the class is using the ThrottlesLogins trait, we can automatically throttle
+            // the login attempts for this application. We'll key this by the username and
+            // the IP address of the client making these requests into this application.
+            if ($this->hasTooManyLoginAttempts($request)) {
+                $this->fireLockoutEvent($request);
 
-            return $this->sendLockoutResponse($request);
-        }
-
-        if ($this->attemptLogin($request)) {
-            if ($this->sendLoginResponse($request)) {
-                return response()->json(['status' => 1, 'data' => $merchant->name]);
+                return $this->sendLockoutResponse($request);
             }
-        }
-        // If the login attempt was unsuccessful we will increment the number of attempts
-        // to login and redirect the user back to the login form. Of course, when this
-        // user surpasses their maximum number of attempts they will get locked out.
-        $this->incrementLoginAttempts($request);
 
-        return response()->json(['status' => 0, 'message' => '未知错误', 'data' => '']);
+            if ($this->attemptLogin($request)) {
+                if ($this->sendLoginResponse($request)) {
+                    return response()->json(['status' => 1, 'data' => $merchant->name]);
+                }
+            }
+            // If the login attempt was unsuccessful we will increment the number of attempts
+            // to login and redirect the user back to the login form. Of course, when this
+            // user surpasses their maximum number of attempts they will get locked out.
+            $this->incrementLoginAttempts($request);
+
+            return response()->json(['status' => 0, 'message' => '未知错误', 'data' => '']);
+        } catch (\Exception $e) {
+            myLog('login', $e->getMessage());
+
+            return response()->json(['status' => 0, 'message' => '服务器错误', 'data' => '']);
+        }
     }
 
     /**
