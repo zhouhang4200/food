@@ -29,7 +29,7 @@ class User extends FormRequest
     {
         return [
             'phone' => 'required|numeric',
-            'password' => 'required|min:8|max:16',
+            'password' => 'required|between:8,16',
         ];
     }
 
@@ -39,8 +39,7 @@ class User extends FormRequest
             'phone.required' => '手机号必填',
             'phone.numeric' => '手机号必须为数字',
             'password.required' => '密码必填',
-            'password.min' => '密码最低8位',
-            'password.max' => '密码最高16位',
+            'password.between' => '密码必须在8-16位之间',
         ];
     }
 
