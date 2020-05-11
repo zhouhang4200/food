@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 
 class User extends FormRequest
@@ -46,6 +48,6 @@ class User extends FormRequest
     {
         $error = $validator->errors()->first();
 
-        return response()->json(['status' => 0, 'content' => $error, 'data' => '']);
+        throw new HttpResponseException(response()->json(['status' => 0, 'content' => $error, 'data' => '']), Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

@@ -68,13 +68,13 @@ class LoginController extends Controller
             $merchant = Merchant::where('phone', $request->phone)->first();
 
             if (!$merchant)
-                return response()->json(['status' => 0, 'content' => '账号已被禁用', 'data' => '']);
+                return response()->json(['status' => 0, 'content' => '手机号不存在', 'data' => '']);
 
             if (! Hash::check($request['password'], $merchant->password))
                 return response()->json(['status' => 0, 'content' => '密码错误', 'data' => '']);
 
             if ($merchant->status == 0)
-                return response()->json(['status' => 0, 'content' => '账号已被禁用', 'data' => '']);
+                return response()->json(['status' => 0, 'content' => '手机号已被禁用', 'data' => '']);
 
 
             // If the class is using the ThrottlesLogins trait, we can automatically throttle
