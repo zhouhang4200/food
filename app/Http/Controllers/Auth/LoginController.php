@@ -63,7 +63,7 @@ class LoginController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->ajaxFail($validator->errors()->all()[0]);
+            return response()->json(['status' => 0, 'message' => $validator->errors()->all()[0], 'data' => '']);
         }
 
         // 对前端转输数据进行解密
@@ -73,7 +73,7 @@ class LoginController extends Controller
 
         if ($merchant && \Hash::check($request['password'], $merchant->password)) {
             if ($merchant->status == 0) {
-                return response()->ajaxFail(0, '您的账号已被禁用!');
+                return response()->json(['status' => 0, 'message' => '账号已被禁用', 'data' => '']);
             }
         }
 
@@ -96,7 +96,7 @@ class LoginController extends Controller
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        return response()->ajaxFail(0, '账号或密码错误');
+        return response()->json(['status' => 0, 'message' => '', 'data' => '']);
     }
 
     /**
