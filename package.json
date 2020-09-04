@@ -20,7 +20,7 @@
     "jquery": "^3.2",
     "laravel-mix": "^2.0",
     "lodash": "^4.17.4",
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.13.1",
     "popper.js": "^1.12",
     "script-loader": "^0.7.2",
     "vue": "^2.5.7",
